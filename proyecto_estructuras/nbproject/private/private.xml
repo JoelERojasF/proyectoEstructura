@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/le0jx/Downloads/proyecto_estructuras/proyecto_estructuras/src/ObjetosNegocio/Direccion.java</file>
-            <file>file:/C:/Users/le0jx/Downloads/proyecto_estructuras/proyecto_estructuras/src/ObjetosNegocio/Estudiante.java</file>
-            <file>file:/C:/Users/le0jx/Downloads/proyecto_estructuras/proyecto_estructuras/src/proyecto_estructuras/Ventana_principal.java</file>
-            <file>file:/C:/Users/le0jx/Downloads/proyecto_estructuras/proyecto_estructuras/src/ObjetosNegocio/Contacto.java</file>
-            <file>file:/C:/Users/le0jx/Downloads/proyecto_estructuras/proyecto_estructuras/src/ObjetosNegocio/SolicitudCalificacion.java</file>
-            <file>file:/C:/Users/le0jx/Downloads/proyecto_estructuras/proyecto_estructuras/src/proyecto_estructuras/Proyecto_estructuras.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/Interfaz/Ventana_principal.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/ObjetosNegocio/Curso.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/ObjetosNegocio/Contacto.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/ObjetosNegocio/Estudiante.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/Estructuras_de_datos/AVLTree.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/ObjetosNegocio/SolicitudCalificacion.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/ObjetosNegocio/Direccion.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/Interfaz/Proyecto_estructuras.java</file>
+            <file>file:/C:/Users/giova/OneDrive/Documentos/GitHub/proyectoEstructura/proyecto_estructuras/src/Estructuras_de_datos/RegistroEstudiantes.java</file>
         </group>
     </open-files>
 </project-private>
