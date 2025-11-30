@@ -12,6 +12,13 @@ public class ListaEnlazadaCircular<T> implements ILista<T>{
     protected NodoSimple<T> inicio;
     protected int nElementos;
 
+    public ListaEnlazadaCircular() {
+        inicio = null;
+        nElementos = 0;
+    }
+    
+    
+
     @Override
     public void agregar(T dato) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -34,12 +41,16 @@ public class ListaEnlazadaCircular<T> implements ILista<T>{
 
     @Override
     public boolean vacio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return inicio == null;
     }
 
     @Override
     public int tamanio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return nElementos;
+    }
+    
+    public String toString() {
+        return null;
     }
 
     @Override

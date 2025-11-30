@@ -171,6 +171,15 @@ public class ListaEnlazadaSimple<T> implements Iterable<T>, ILista<T>{
     
     @Override
     public int indexOf(T dato) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        NodoSimple<T> nodo = inicio;
+        int i=0;
+            while (nodo != null) {
+               i++;
+               if(nodo.getDato().equals(dato)){
+                   return i;
+               }
+               nodo = nodo.getSig();
+        }    
+        return 0;
     }
 }

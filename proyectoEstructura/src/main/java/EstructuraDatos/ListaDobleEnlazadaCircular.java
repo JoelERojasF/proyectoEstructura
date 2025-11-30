@@ -20,13 +20,7 @@ public class ListaDobleEnlazadaCircular<T> implements ILista<T> {
     }
     
     public void agregar(T dato){
-        NodoDoble<T> nodoNuevo = new NodoDoble<>(dato);
-        if(inicio == null){
-            inicio = nodoNuevo;
-        }else{
-            NodoDoble<T> nodo = inicio;
-            insertar(dato, nElementos);
-        }
+
     }
     
     public void insertar(T dato, int posicion){
