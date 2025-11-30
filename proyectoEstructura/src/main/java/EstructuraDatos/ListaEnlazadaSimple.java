@@ -16,21 +16,10 @@ package EstructuraDatos;
  *
  * @param <T> Tipo del dato almacenado
  */
-public class ListaEnlazadaSimple<T> implements Iterable<T> {
+public class ListaEnlazadaSimple<T> implements Iterable<T>, ILista<T>{
     protected NodoSimple<T> inicio;
     protected int nElementos;
 
-    /**
-     * Clase interna que representa un nodo de la lista enlazada
-     */
-    private class NodoSimple<T> {
-        private T dato;
-        private NodoSimple<T> sig;
-
-        public NodoSimple(T dato) {
-            this.dato = dato;
-        }
-    }
 
     /**
      * Clase interna que representa un iterador para la lista
@@ -49,8 +38,8 @@ public class ListaEnlazadaSimple<T> implements Iterable<T> {
 
         @Override
         public T next() {
-            T dato = nodoActual.dato;
-            nodoActual = nodoActual.sig;
+            T dato = nodoActual.getDato();
+            nodoActual = nodoActual.getSig();
             return dato;
         }
     }
@@ -66,74 +55,74 @@ public class ListaEnlazadaSimple<T> implements Iterable<T> {
     /**
      * Inserta un elemento al final de la lista
      */
-    public void agregar(T o) {
-        NodoSimple<T> nodoNuevo = new NodoSimple<>(o);
+    public void agregar(T dato) {
+        NodoSimple<T> nodoNuevo = new NodoSimple<>(dato);
         if (inicio == null) {
             inicio = nodoNuevo;
         } else {
             NodoSimple<T> nodo = inicio;
-            while (nodo.sig != null) {
-                nodo = nodo.sig;
+            while (nodo.getSig() != null) {
+                nodo = nodo.getSig();
             }
-            nodo.sig = nodoNuevo;
+            nodo.setSig(nodoNuevo);
         }
         nElementos++;
     }
 
     /**
-     * Inserta un elemento en la posición i de la lista
+     * Inserta un elemento en la posición de la lista
      */
-    public void insertar(T o, int i) throws Exception {
-        if (i < 0 || i > nElementos) {
+    public void insertar(T dato, int posicion) throws Exception {
+        if (posicion < 0 || posicion > nElementos) {
             throw new Exception("Índice fuera de límites");
         }
-        NodoSimple<T> nodoNuevo = new NodoSimple<>(o);
-        if (i == 0) {
-            nodoNuevo.sig = inicio;
+        NodoSimple<T> nodoNuevo = new NodoSimple<>(dato);
+        if (posicion == 0) {
+            nodoNuevo.setSig(inicio);
             inicio = nodoNuevo;
         } else {
             NodoSimple<T> nodo = inicio;
-            for (int j = 0; j < i - 1; j++) {
-                nodo = nodo.sig;
+            for (int j = 0; j < posicion - 1; j++) {
+                nodo = nodo.getSig();
             }
-            nodoNuevo.sig = nodo.sig;
-            nodo.sig = nodoNuevo;
+            nodoNuevo.setSig(nodo.getSig());
+            nodo.setSig(nodoNuevo);
         }
         nElementos++;
     }
 
     /**
-     * Obtiene el elemento en la posición i sin eliminarlo
+     * Obtiene el elemento en la posición sin eliminarlo
      */
-    public T obtener(int i) throws Exception {
+    public T obtener(int posicion) throws Exception {
         if (vacio()) throw new Exception("Lista vacía");
-        if (i < 0 || i >= nElementos) throw new Exception("Índice fuera de límites");
+        if (posicion < 0 || posicion >= nElementos) throw new Exception("Índice fuera de límites");
 
         NodoSimple<T> nodo = inicio;
-        for (int j = 0; j < i; j++) {
-            nodo = nodo.sig;
+        for (int j = 0; j < posicion; j++) {
+            nodo = nodo.getSig();
         }
-        return nodo.dato;
+        return nodo.getDato();
     }
 
     /**
-     * Elimina el elemento en la posición i y lo regresa
+     * Elimina el elemento en la posición y lo regresa
      */
-    public T eliminar(int i) throws Exception {
+    public T eliminar(int posicion) throws Exception {
         if (vacio()) throw new Exception("Lista vacía");
-        if (i < 0 || i >= nElementos) throw new Exception("Índice fuera de límites");
+        if (posicion < 0 || posicion >= nElementos) throw new Exception("Índice fuera de límites");
 
         T dato;
-        if (i == 0) {
-            dato = inicio.dato;
-            inicio = inicio.sig;
+        if (posicion == 0) {
+            dato = inicio.getDato();
+            inicio = inicio.getSig();
         } else {
             NodoSimple<T> nodo = inicio;
-            for (int j = 0; j < i - 1; j++) {
-                nodo = nodo.sig;
+            for (int j = 0; j < posicion - 1; j++) {
+                nodo = nodo.getSig();
             }
-            dato = nodo.sig.dato;
-            nodo.sig = nodo.sig.sig;
+            dato = nodo.getSig().getDato();
+            nodo.setSig(nodo.getSig().getSig());
         }
         nElementos--;
         return dato;
@@ -169,13 +158,19 @@ public class ListaEnlazadaSimple<T> implements Iterable<T> {
         String s = "[";
         NodoSimple<T> nodo = inicio;
         while (nodo != null) {
-            s += nodo.dato;
-            if (nodo.sig != null) {
+            s += nodo.getDato();
+            if (nodo.getSig() != null) {
                 s += ", ";
             }
-            nodo = nodo.sig;
+            nodo = nodo.getSig();
         }
         s += "]";
         return s;
+    }
+    
+    
+    @Override
+    public int indexOf(T dato) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

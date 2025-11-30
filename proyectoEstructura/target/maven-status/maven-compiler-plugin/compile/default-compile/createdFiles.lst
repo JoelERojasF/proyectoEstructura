@@ -1,5 +1,8 @@
+EstructuraDatos\NodoSimple.class
 ObjetosNegocio\Curso.class
 interfaz\Ventana_principal$PanelListaInscritos.class
+EstructuraDatos\ILista.class
+EstructuraDatos\NodoDoble.class
 interfaz\Ventana_principal$PanelInscribirEstudiante.class
 ObjetosNegocio\Direccion.class
 interfaz\ProyectoEstructura.class
@@ -26,6 +29,5 @@ interfaz\Ventana_principal$PanelDeshacerAccion.class
 interfaz\Ventana_principal.class
 EstructuraDatos\ArbolAVL.class
 EstructuraDatos\ArbolBinarioBusqueda.class
-EstructuraDatos\ListaEnlazadaSimple$NodoSimple.class
 interfaz\Ventana_principal$PanelEnviarSolicitud.class
 ObjetosNegocio\SolicitudCalificacion.class

@@ -16,7 +16,7 @@ import ObjetosNegocio.Estudiante;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroEstudiantes {
-    private ArbolBinarioBusqueda<Estudiante> arbol;
+    private static ArbolBinarioBusqueda<Estudiante> arbol;
 
     public RegistroEstudiantes() {
         arbol = new ArbolBinarioBusqueda<>();
