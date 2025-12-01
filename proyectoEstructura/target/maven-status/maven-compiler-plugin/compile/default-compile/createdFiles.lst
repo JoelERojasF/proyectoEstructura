@@ -24,6 +24,7 @@ EstructuraDatos\Cola.class
 EstructuraDatos\Pila.class
 interfaz\Ventana_principal$PanelRegistrarEstudiante.class
 interfaz\Ventana_principal$PanelListaEspera.class
+Persistencia\RegistroCursos.class
 interfaz\Ventana_principal$PanelAgregarCurso.class
 interfaz\Ventana_principal$PanelDeshacerAccion.class
 interfaz\Ventana_principal.class

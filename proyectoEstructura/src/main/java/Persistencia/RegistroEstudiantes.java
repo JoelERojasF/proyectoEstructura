@@ -5,14 +5,15 @@
 package Persistencia;
 
 import EstructuraDatos.ArbolBinarioBusqueda;
+import EstructuraDatos.ListaEnlazadaSimple;
+import EstructuraDatos.NodoSimple;
 import ObjetosNegocio.Estudiante;
 
-/*
-* Esta clase es para almacenar y gestionar los registros de cada estudiante
-* mediante un BST (BinarySearchTree)
-*/
+
 /**
- *
+ * Esta clase es para almacenar y gestionar los registros de cada estudiante
+ * mediante un BST (BinarySearchTree)
+ * 
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroEstudiantes {
@@ -22,16 +23,28 @@ public class RegistroEstudiantes {
         arbol = new ArbolBinarioBusqueda<>();
     }
 
-    public void agregarEstudiante(Estudiante e) {
-        arbol.insertar(e);
+    public void agregarEstudiante(Estudiante estudiante) {
+        arbol.insertar(estudiante);
     }
-
+    
+    public void eliminarEstudiante(String matricula) {
+        Estudiante estudiante = new Estudiante(matricula, "", null);
+        arbol.eliminar(estudiante);
+    }
+    
     public Estudiante buscarPorMatricula(String matricula) {
-        Estudiante dummy = new Estudiante(matricula, "", null);
-        return arbol.buscar(dummy);
+        Estudiante matriculaEstudiante = new Estudiante(matricula, "", null);
+        return arbol.buscar(matriculaEstudiante);
     }
-
+    /**
+     * Solo en consola
+     */
     public void mostrarEstudiantes() {
         arbol.recorridoInOrden();
     }
+    public ListaEnlazadaSimple<Estudiante> obtenerTodos() {
+        return arbol.obtenerTodos(); // delega al árbol
+    }
+
+    
 }

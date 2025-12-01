@@ -4,15 +4,17 @@
  */
 package ObjetosNegocio;
 
+import EstructuraDatos.ListaEnlazadaSimple;
+
 
 /**
  *
- * @author le0jx
+ * @author Joel Eduardo Rojas Fuentes
  */
-public class Curso {
+public class Curso implements Comparable<Curso>{
     private String clave;
     private String nombre;
-//    private LinkedList<Estudiante> listaEstudiantes;
+    private ListaEnlazadaSimple<Estudiante> listaEstudiantes;
     private int cupoMaximo;
 
     public Curso() {
@@ -22,6 +24,41 @@ public class Curso {
         this.clave = clave;
         this.nombre = nombre;
         this.cupoMaximo = cupoMaximo;
+    }
+    
+    /**
+     * Inscribe a un estudiante en el curso si hay cupo disponible.
+     * 
+     * @param estudiante Estudiante a inscribir.
+     * @return true si se inscribió, false si el curso está lleno.
+     */
+    public boolean inscribir(Estudiante estudiante) {
+        if (listaEstudiantes.tamanio() < cupoMaximo) {
+            listaEstudiantes.agregar(estudiante);
+            return true;
+        } else {
+            System.out.println("Curso lleno, no se pudo inscribir: " + estudiante.getNombreCompleto());
+            return false;
+        }
+    }
+
+    /**
+     * Remueve a un estudiante de la lista de inscritos.
+     * 
+     * @param estudiante Estudiante a remover.
+     * @return true si se removió, false si no estaba inscrito.
+     */
+    public boolean removerInscrito(Estudiante estudiante) {
+        int pos = listaEstudiantes.indexOf(estudiante);
+        if (pos != -1) {
+            try {
+                listaEstudiantes.eliminar(pos);
+                return true;
+            } catch (Exception ex) {
+                System.out.println("Error al remover estudiante: " + ex.getMessage());
+            }
+        }
+        return false;
     }
 
     public int getCupoMaximo() {
@@ -47,6 +84,9 @@ public class Curso {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    
+
+    @Override
+    public int compareTo(Curso otro) {
+        return this.clave.compareTo(otro.clave);
+    }
 }

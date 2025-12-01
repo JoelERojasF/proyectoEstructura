@@ -6,7 +6,10 @@ package EstructuraDatos;
 
 /**
  *
- * @author le0jx
+ * @author Joel Eduardo Rojas Fuentes
+ * 
+ * @param <T> Parametro de tipo para los objetos a almacenarse
+ * en el Nodo Simple
  */
 public class NodoSimple<T> {
         private T dato;

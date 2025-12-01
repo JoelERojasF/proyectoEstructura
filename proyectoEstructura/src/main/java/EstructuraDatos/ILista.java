@@ -5,8 +5,12 @@
 package EstructuraDatos;
 
 /**
- *
- * @author le0jx
+ * Esta clase ayuda a indicar a las clases de subtipo Lista
+ * que metodos mayormente deben tener.
+ * 
+ * @author Joel Eduardo Rojas Fuentes
+ * 
+ * @param <T>
  */
 public interface ILista<T> {
     public void agregar(T dato);
@@ -17,5 +21,4 @@ public interface ILista<T> {
     public int tamanio();
     public String toString();
     public int indexOf(T dato);
-    
 }

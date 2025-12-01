@@ -5,10 +5,10 @@
 package ObjetosNegocio;
 
 import EstructuraDatos.ListaEnlazadaSimple;
-import java.util.ArrayList;
 
 /**
- *
+ * Estudiante.java
+ * 
  * @author Carmen Andrea Lara Osuna
  */
 
@@ -30,9 +30,11 @@ public class Estudiante implements Comparable<Estudiante> {
     public String getMatricula() { 
         return matricula;
     }
+    
     public String getNombreCompleto() { 
         return nombreCompleto;
     }
+    
     public Contacto getContacto() { 
         return contacto;
     }
@@ -44,8 +46,25 @@ public class Estudiante implements Comparable<Estudiante> {
         this.contacto = contacto;
     }
 
-    public void agregarCalificacion(Double c) {
-        calificaciones.agregar(c);
+    public void agregarCalificacion(Double calificacion) {
+        calificaciones.agregar(calificacion);
+    }
+    
+    public void reemplazarCalificacion(Double calificacionNueva, Double calificacionAnterior) {
+        if (calificaciones == null || calificaciones.vacio()) return;
+
+        // Buscar la posición de la calificación nueva
+        int pos = calificaciones.indexOf(calificacionNueva);
+
+        if (pos != -1) {
+            try {
+                // Eliminar la nueva y poner la anterior en la misma posición
+                calificaciones.eliminar(pos);
+                calificaciones.insertar(calificacionAnterior, pos);
+            } catch (Exception e) {
+                System.out.println("Error al reemplazar calificación: " + e.getMessage());
+            }
+        }
     }
 
     public double calcularPromedio() throws Exception {
@@ -65,7 +84,8 @@ public class Estudiante implements Comparable<Estudiante> {
     @Override
     public String toString() {
         try {
-            return matricula + " - " + nombreCompleto + " Promedio: " + calcularPromedio();
+            return matricula + " - " + nombreCompleto + " Promedio: " + calcularPromedio() + 
+                   "Calificaciones: " + calificaciones;
         } catch (Exception e) {
             return matricula + " - " + nombreCompleto + " Promedio: N/A";
         }
@@ -84,4 +104,3 @@ public class Estudiante implements Comparable<Estudiante> {
         return Objects.hash(matricula);
     }
 }
-

@@ -4,25 +4,29 @@
  */
 package EstructuraDatos;
 
-/*
-* Esta clase cumple con el requisito de reutilizacion y genericidad
-*/
+
 /**
- *
- * @author Franco Giovanny Gastelum Barcelo
- */
+* ArbolAVL.java
+*
+* Esta clase implementa un arbol AVL generico
+*
+* @param <T> Parametro de tipo para los objetos a almacenarse
+* en el arbol
+*
+* @author Franco Giovanny Gastelum Barcelo
+*/
 public class ArbolAVL<T extends Comparable<T>> extends ArbolBinarioBusqueda<T> {
 
     @Override
     public void insertar(T dato) {
-        raiz = insertar(raiz, dato);
+        raiz = insertarRec(raiz, dato);
     }
-
-    private NodoArbolBinario<T> insertar(NodoArbolBinario<T> nodo, T dato) {
+    
+    private NodoArbolBinario<T> insertarRec(NodoArbolBinario<T> nodo, T dato) {
         if (nodo == null) return new NodoArbolBinario<>(dato);
 
-        if (dato.compareTo(nodo.dato) < 0) nodo.hijoIzq = insertar(nodo.hijoIzq, dato);
-        else nodo.hijoDer = insertar(nodo.hijoDer, dato);
+        if (dato.compareTo(nodo.dato) < 0) nodo.hijoIzq = insertarRec(nodo.hijoIzq, dato);
+        else nodo.hijoDer = insertarRec(nodo.hijoDer, dato);
 
         return reBalancear(nodo);
     }
@@ -71,13 +75,13 @@ public class ArbolAVL<T extends Comparable<T>> extends ArbolBinarioBusqueda<T> {
 
     @Override
     public String toString() {
-        return "[" + toStringInOrden(raiz) + "]";
+        return "[" + toStringEnOrden(raiz) + "]";
     }
 
-    private String toStringInOrden(NodoArbolBinario<T> nodo) {
+    private String toStringEnOrden(NodoArbolBinario<T> nodo) {
         if (nodo == null) return "";
-        return toStringInOrden(nodo.hijoIzq)
+        return toStringEnOrden(nodo.hijoIzq)
              + "(" + nodo.dato + ", " + altura(nodo) + ", " + factorBalance(nodo) + "), "
-             + toStringInOrden(nodo.hijoDer);
+             + toStringEnOrden(nodo.hijoDer);
     }
 }
