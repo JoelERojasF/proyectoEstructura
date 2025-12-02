@@ -10,12 +10,15 @@ import ObjetosNegocio.Estudiante;
 import ObjetosNegocio.SolicitudCalificacion;
 import ObjetosNegocio.EstudiantePromedio;
 import EstructuraDatos.ArbolAVL;
+import EstructuraDatos.Pila;
+import ObjetosNegocio.Accion;
 /**
+ * RegistroCalificaciones.java
  * 
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroCalificaciones {
-
+    private Pila<Accion> acciones = new Pila<>(); // Requerida en el documento
     private Cola<SolicitudCalificacion> solicitudes;
     private RegistroEstudiantes registroEstudiantes;
 
@@ -39,6 +42,21 @@ public class RegistroCalificaciones {
             }
         }
     }
+    
+    public void deshacer() {
+        if (acciones.vacio()) {
+            System.out.println("No hay acciones para deshacer.");
+            return;
+        }
+
+        try {
+            Accion ultima = acciones.eliminar();
+            ultima.revertir();
+            System.out.println("Se deshizo la accion: " + ultima);
+        } catch (Exception e) {
+            System.out.println("Error al deshacer accion: " + e.getMessage());
+        }
+    }
 
     public void mostrarListadoPromedios() throws Exception {
         ArbolAVL<EstudiantePromedio> arbolConPromedios = new ArbolAVL<>();
@@ -48,5 +66,77 @@ public class RegistroCalificaciones {
         }
 
         System.out.println(arbolConPromedios.toString()); // recorrido in-orden del AVL
+    }
+    
+    /**
+     * Procesa la siguiente solicitud de calificacion en la cola.
+     * Extrae la solicitud
+     * Actualiza la calificación del estudiante
+     * Registra la acción en la pila para poder deshacer
+     */
+    public void procesarSiguiente() {
+        if (solicitudes.vacio()) {
+            System.out.println("No hay solicitudes pendientes.");
+            return;
+        }
+
+        try {
+            // 1. Tomar la siguiente solicitud
+            SolicitudCalificacion solicitud = solicitudes.eliminar();
+
+            // 2. Buscar estudiante en el registro usando la matrícula
+            Estudiante estudiante = registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
+            if (estudiante == null) {
+                System.out.println("No se encontró estudiante con matrícula: " + solicitud.getMatricula());
+                return;
+            }
+
+            Double calificacionNueva = solicitud.getNuevaCalificacion();
+            Double calificacionAnterior = null;
+
+            // 3. Guardar calificación anterior (si existe)
+            if (!estudiante.getCalificaciones().vacio()) {
+                int ultimaPos = estudiante.getCalificaciones().tamanio() - 1;
+                calificacionAnterior = estudiante.getCalificaciones().obtener(ultimaPos);
+            }
+
+            // 4. Agregar la nueva calificación
+            estudiante.getCalificaciones().agregar(calificacionNueva);
+
+            // 5. Registrar acción en la pila
+            Accion accion = new Accion(
+                Accion.TipoAccion.CALIFICACION,
+                estudiante,
+                null,
+                calificacionAnterior,
+                calificacionNueva
+            );
+            acciones.agregar(accion);
+
+            System.out.println("Procesada solicitud: " + estudiante.getNombreCompleto() +
+                               " nueva calificación = " + calificacionNueva);
+        } catch (Exception e) {
+            System.out.println("Error al procesar solicitud: " + e.getMessage());
+        }
+
+        }
+        
+    public Estudiante getEstudianteSiguienteSolicitud() {
+        if (solicitudes.vacio()) return null;
+        try {
+            SolicitudCalificacion solicitud = solicitudes.obtener(0);
+            return registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Estudiante getEstudianteUltimaAccion() {
+        if (acciones.vacio()) return null;
+        try {
+            return acciones.obtener(0).getEstudiante();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

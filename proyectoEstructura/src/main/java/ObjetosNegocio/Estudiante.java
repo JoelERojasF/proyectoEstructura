@@ -45,7 +45,10 @@ public class Estudiante implements Comparable<Estudiante> {
     public void setContacto(Contacto contacto) { 
         this.contacto = contacto;
     }
-
+    
+    public ListaEnlazadaSimple<Double> getCalificaciones() {
+        return calificaciones;
+    }
     public void agregarCalificacion(Double calificacion) {
         calificaciones.agregar(calificacion);
     }
@@ -84,8 +87,7 @@ public class Estudiante implements Comparable<Estudiante> {
     @Override
     public String toString() {
         try {
-            return matricula + " - " + nombreCompleto + " Promedio: " + calcularPromedio() + 
-                   "Calificaciones: " + calificaciones;
+            return matricula + " - " + nombreCompleto + " Promedio: " + calcularPromedio();
         } catch (Exception e) {
             return matricula + " - " + nombreCompleto + " Promedio: N/A";
         }

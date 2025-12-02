@@ -44,7 +44,5 @@ public class RegistroEstudiantes {
     }
     public ListaEnlazadaSimple<Estudiante> obtenerTodos() {
         return arbol.obtenerTodos(); // delega al árbol
-    }
-
-    
+    }  
 }

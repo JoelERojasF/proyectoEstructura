@@ -1,6 +1,7 @@
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\EstructuraDatos\ArbolAVL.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\EstructuraDatos\ArbolBinarioBusqueda.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\EstructuraDatos\Cola.java
+C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\EstructuraDatos\Diccionario.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\EstructuraDatos\ILista.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\EstructuraDatos\ListaDobleEnlazadaCircular.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\EstructuraDatos\ListaEnlazadaCircular.java
@@ -10,10 +11,15 @@ C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\EstructuraDatos\Pila.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\interfaz\ProyectoEstructura.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\interfaz\Ventana_principal.java
+C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\ObjetosNegocio\Accion.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\ObjetosNegocio\Contacto.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\ObjetosNegocio\Curso.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\ObjetosNegocio\Direccion.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\ObjetosNegocio\Estudiante.java
+C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\ObjetosNegocio\EstudiantePromedio.java
+C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\ObjetosNegocio\Inscripcion.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\ObjetosNegocio\SolicitudCalificacion.java
+C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\Persistencia\RegistroCalificaciones.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\Persistencia\RegistroCursos.java
 C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\Persistencia\RegistroEstudiantes.java
+C:\Users\giova\OneDrive\Documentos\GitHub\proyectoEstructura\proyectoEstructura\src\main\java\Persistencia\RegistroInscripciones.java

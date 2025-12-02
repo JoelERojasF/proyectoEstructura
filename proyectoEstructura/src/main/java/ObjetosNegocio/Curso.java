@@ -4,40 +4,57 @@
  */
 package ObjetosNegocio;
 
+import EstructuraDatos.ListaDobleEnlazadaCircular;
+import EstructuraDatos.ListaEnlazadaCircular;
 import EstructuraDatos.ListaEnlazadaSimple;
 
 
 /**
- *
+ * Curso.java
+ * 
  * @author Joel Eduardo Rojas Fuentes
+ * @author Franco Giovanny Gastelum Barcelo
  */
 public class Curso implements Comparable<Curso>{
     private String clave;
     private String nombre;
     private ListaEnlazadaSimple<Estudiante> listaEstudiantes;
+    private ListaDobleEnlazadaCircular<Estudiante> listaEspera;
+    private ListaEnlazadaCircular<Estudiante> roles;
+    private static final int CUPO_MAXIMO = 15;
     private int cupoMaximo;
 
     public Curso() {
+        this.cupoMaximo = CUPO_MAXIMO;
+        this.listaEstudiantes = new ListaEnlazadaSimple<>();
+        this.listaEspera = new ListaDobleEnlazadaCircular<>();
+        this.roles = new ListaEnlazadaCircular<>();
     }
 
-    public Curso(String clave, String nombre, int cupoMaximo) {
+    public Curso(String clave, String nombre) {
         this.clave = clave;
         this.nombre = nombre;
-        this.cupoMaximo = cupoMaximo;
+        this.cupoMaximo = CUPO_MAXIMO;
+        this.listaEstudiantes = new ListaEnlazadaSimple<>();
+        this.listaEspera = new ListaDobleEnlazadaCircular<>();
+        this.roles = new ListaEnlazadaCircular<>();
     }
     
     /**
      * Inscribe a un estudiante en el curso si hay cupo disponible.
+     * Si no hay cupo, lo manda a la lista de espera.
      * 
      * @param estudiante Estudiante a inscribir.
-     * @return true si se inscribió, false si el curso está lleno.
+     * @return true si se inscribió, false si fue enviado a lista de espera.
      */
     public boolean inscribir(Estudiante estudiante) {
         if (listaEstudiantes.tamanio() < cupoMaximo) {
             listaEstudiantes.agregar(estudiante);
+            System.out.println("Estudiante inscrito: " + estudiante.getNombreCompleto());
             return true;
         } else {
-            System.out.println("Curso lleno, no se pudo inscribir: " + estudiante.getNombreCompleto());
+            System.out.println("Curso lleno, se envía a lista de espera: " + estudiante.getNombreCompleto());
+            listaEspera.agregar(estudiante);  
             return false;
         }
     }
@@ -46,7 +63,7 @@ public class Curso implements Comparable<Curso>{
      * Remueve a un estudiante de la lista de inscritos.
      * 
      * @param estudiante Estudiante a remover.
-     * @return true si se removió, false si no estaba inscrito.
+     * @return true si se removio, false si no estaba inscrito.
      */
     public boolean removerInscrito(Estudiante estudiante) {
         int pos = listaEstudiantes.indexOf(estudiante);
@@ -59,6 +76,31 @@ public class Curso implements Comparable<Curso>{
             }
         }
         return false;
+    }
+    
+    public void agregarAListaEspera(Estudiante estudiante) {
+        listaEspera.agregar(estudiante);
+    }
+    
+    public void mostrarListaEspera(int n) throws Exception {
+        if (listaEspera.vacio()) {
+            System.out.println("No hay estudiantes en lista de espera.");
+            return;
+        }
+        for (int i = 0; i < n && i < listaEspera.tamanio(); i++) {
+            System.out.println(listaEspera.obtener(i));
+        }
+    }
+    
+    public Estudiante rotarRol() throws Exception {
+        if (roles.vacio()) return null;
+        // El tutor/lider actual es el inicio
+        Estudiante actual = roles.obtener(0);
+        // Lo mandamos al final y eliminamos del inicio
+        roles.insertar(actual, roles.tamanio());
+        roles.eliminar(0);
+        // Nuevo tutor/lider
+        return roles.obtener(0);
     }
 
     public int getCupoMaximo() {

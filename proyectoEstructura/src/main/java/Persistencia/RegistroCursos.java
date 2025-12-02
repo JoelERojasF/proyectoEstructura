@@ -19,7 +19,7 @@ public class RegistroCursos implements Comparable<Curso>{
     }
 
     public Curso buscarPorClave(String clave) {
-        Curso claveCurso = new Curso(clave, "", 0);
+        Curso claveCurso = new Curso(clave, "");
         return arbol.buscar(claveCurso);
     }
 
