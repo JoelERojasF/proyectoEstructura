@@ -7,8 +7,8 @@ package Persistencia;
 
 import EstructuraDatos.Cola;
 import ObjetosNegocio.Estudiante;
-import ObjetosNegocio.SolicitudCalificacion;
-import ObjetosNegocio.EstudiantePromedio;
+import ObjetosNegocio.Calificacion;
+import ObjetosNegocio.Promedio;
 import EstructuraDatos.ArbolAVL;
 import EstructuraDatos.Pila;
 import ObjetosNegocio.Accion;
@@ -19,7 +19,7 @@ import ObjetosNegocio.Accion;
  */
 public class RegistroCalificaciones {
     private Pila<Accion> acciones = new Pila<>(); // Requerida en el documento
-    private Cola<SolicitudCalificacion> solicitudes;
+    private Cola<Calificacion> solicitudes;
     private RegistroEstudiantes registroEstudiantes;
 
     public RegistroCalificaciones(RegistroEstudiantes registroEstudiantes) {
@@ -28,14 +28,14 @@ public class RegistroCalificaciones {
     }
 
     // Registrar una nueva solicitud en la cola
-    public void registrarSolicitud(SolicitudCalificacion solicitud) {
+    public void registrarSolicitud(Calificacion solicitud) {
         solicitudes.agregar(solicitud); // FIFO
     }
 
     // Procesar solicitudes en orden FIFO
     public void procesarSolicitudes() throws Exception {
         while (!solicitudes.vacio()) {
-            SolicitudCalificacion solicitud = solicitudes.eliminar(); // atiende la más antigua
+            Calificacion solicitud = solicitudes.eliminar(); // atiende la más antigua
             Estudiante estudiante = registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
             if (estudiante != null) {
                 estudiante.agregarCalificacion(solicitud.getNuevaCalificacion());
@@ -59,10 +59,10 @@ public class RegistroCalificaciones {
     }
 
     public void mostrarListadoPromedios() throws Exception {
-        ArbolAVL<EstudiantePromedio> arbolConPromedios = new ArbolAVL<>();
+        ArbolAVL<Promedio> arbolConPromedios = new ArbolAVL<>();
 
         for (Estudiante e : registroEstudiantes.obtenerTodos()) {
-            arbolConPromedios.insertar(new EstudiantePromedio(e.calcularPromedio(), e));
+            arbolConPromedios.insertar(new Promedio(e.calcularPromedio(), e));
         }
 
         System.out.println(arbolConPromedios.toString()); // recorrido in-orden del AVL
@@ -82,7 +82,7 @@ public class RegistroCalificaciones {
 
         try {
             // 1. Tomar la siguiente solicitud
-            SolicitudCalificacion solicitud = solicitudes.eliminar();
+            Calificacion solicitud = solicitudes.eliminar();
 
             // 2. Buscar estudiante en el registro usando la matrícula
             Estudiante estudiante = registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
@@ -124,7 +124,7 @@ public class RegistroCalificaciones {
     public Estudiante getEstudianteSiguienteSolicitud() {
         if (solicitudes.vacio()) return null;
         try {
-            SolicitudCalificacion solicitud = solicitudes.obtener(0);
+            Calificacion solicitud = solicitudes.obtener(0);
             return registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
         } catch (Exception e) {
             return null;

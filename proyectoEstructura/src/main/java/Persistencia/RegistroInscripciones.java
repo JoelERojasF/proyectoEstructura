@@ -53,9 +53,10 @@ public class RegistroInscripciones {
         return estudiantes;
     }
 
-    public void mostrarInscripciones() {
-        for (Inscripcion i : inscripciones) {
-            System.out.println(i);
-        }
+    public ListaEnlazadaSimple<Inscripcion> mostrarInscripciones() {
+//        for (Inscripcion i : inscripciones) {
+//            System.out.println(i);
+//        }
+        return inscripciones;
     }
 }

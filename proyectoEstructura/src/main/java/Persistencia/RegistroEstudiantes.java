@@ -36,12 +36,14 @@ public class RegistroEstudiantes {
         Estudiante matriculaEstudiante = new Estudiante(matricula, "", null);
         return arbol.buscar(matriculaEstudiante);
     }
+    
     /**
      * Solo en consola
      */
     public void mostrarEstudiantes() {
         arbol.recorridoInOrden();
     }
+    
     public ListaEnlazadaSimple<Estudiante> obtenerTodos() {
         return arbol.obtenerTodos(); // delega al árbol
     }  

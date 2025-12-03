@@ -5,7 +5,7 @@
 package Persistencia;
 
 import ObjetosNegocio.Estudiante;
-import ObjetosNegocio.SolicitudCalificacion;
+import ObjetosNegocio.Calificacion;
 import ObjetosNegocio.Contacto;
 import ObjetosNegocio.Direccion;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ public class RegistroCalificacionesTest {
     @Test
     void testRegistrarYProcesarSolicitud() throws Exception {
         // Crear solicitud para Ana
-        SolicitudCalificacion solicitud = new SolicitudCalificacion("001", 95.0);
+        Calificacion solicitud = new Calificacion("001", 95.0);
         registroCalificaciones.registrarSolicitud(solicitud);
 
         // Procesar
@@ -56,7 +56,7 @@ public class RegistroCalificacionesTest {
 
     @Test
     void testAccionRegistradaEnPila() {
-        SolicitudCalificacion solicitud = new SolicitudCalificacion("002", 80.0);
+        Calificacion solicitud = new Calificacion("002", 80.0);
         registroCalificaciones.registrarSolicitud(solicitud);
 
         registroCalificaciones.procesarSiguiente();
@@ -68,7 +68,7 @@ public class RegistroCalificacionesTest {
 
     @Test
     void testDeshacerUltimaAccion() throws Exception {
-        SolicitudCalificacion solicitud = new SolicitudCalificacion("001", 70.0);
+        Calificacion solicitud = new Calificacion("001", 70.0);
         registroCalificaciones.registrarSolicitud(solicitud);
 
         registroCalificaciones.procesarSiguiente();
@@ -86,8 +86,8 @@ public class RegistroCalificacionesTest {
     @Test
     void testMostrarListadoPromedios() throws Exception {
         // Agregar calificaciones
-        registroCalificaciones.registrarSolicitud(new SolicitudCalificacion("001", 90.0));
-        registroCalificaciones.registrarSolicitud(new SolicitudCalificacion("002", 80.0));
+        registroCalificaciones.registrarSolicitud(new Calificacion("001", 90.0));
+        registroCalificaciones.registrarSolicitud(new Calificacion("002", 80.0));
 
         registroCalificaciones.procesarSolicitudes();
 

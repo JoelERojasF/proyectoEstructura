@@ -12,5 +12,6 @@ public class ProyectoEstructura {
 
     public static void main(String[] args) {
         Ventana_principal v  = new Ventana_principal();
-        v.setVisible(true);    }
+        v.setVisible(true);    
+    }
 }

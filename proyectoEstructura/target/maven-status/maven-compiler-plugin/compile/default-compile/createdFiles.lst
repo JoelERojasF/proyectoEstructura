@@ -1,6 +1,10 @@
 EstructuraDatos\Diccionario.class
+ObjetosNegocio\Calificacion.class
+Persistencia\Fachada.class
 EstructuraDatos\NodoSimple.class
+ObjetosNegocio\Promedio.class
 ObjetosNegocio\Curso.class
+Validadores\Validadores.class
 interfaz\Ventana_principal$PanelListaInscritos.class
 EstructuraDatos\ILista.class
 EstructuraDatos\NodoDoble.class
@@ -31,7 +35,6 @@ EstructuraDatos\Pila.class
 interfaz\Ventana_principal$PanelRegistrarEstudiante.class
 EstructuraDatos\Diccionario$Entrada.class
 interfaz\Ventana_principal$PanelListaEspera.class
-ObjetosNegocio\EstudiantePromedio.class
 Persistencia\RegistroCursos.class
 interfaz\Ventana_principal$PanelAgregarCurso.class
 interfaz\Ventana_principal$PanelDeshacerAccion.class
@@ -39,4 +42,3 @@ interfaz\Ventana_principal.class
 EstructuraDatos\ArbolAVL.class
 EstructuraDatos\ArbolBinarioBusqueda.class
 interfaz\Ventana_principal$PanelEnviarSolicitud.class
-ObjetosNegocio\SolicitudCalificacion.class

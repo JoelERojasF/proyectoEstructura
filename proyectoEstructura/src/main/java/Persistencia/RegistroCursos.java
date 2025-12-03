@@ -5,6 +5,7 @@
 package Persistencia;
 
 import EstructuraDatos.ArbolBinarioBusqueda;
+import EstructuraDatos.ListaEnlazadaSimple;
 import ObjetosNegocio.Curso;
 
 public class RegistroCursos implements Comparable<Curso>{
@@ -19,12 +20,12 @@ public class RegistroCursos implements Comparable<Curso>{
     }
 
     public Curso buscarPorClave(String clave) {
-        Curso claveCurso = new Curso(clave, "");
+        Curso claveCurso = new Curso(clave, "", 0);
         return arbol.buscar(claveCurso);
     }
 
-    public void mostrarCursos() {
-        arbol.recorridoInOrden();
+    public ListaEnlazadaSimple<Curso> mostrarCursos() {
+        return arbol.obtenerTodos();
     }
 
     // Metodo implementado por Comparable<T>

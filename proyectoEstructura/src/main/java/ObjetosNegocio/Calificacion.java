@@ -8,12 +8,12 @@ package ObjetosNegocio;
  *
  * @author Carmen Andrea Lara Osuna
  */
-public class SolicitudCalificacion {
+public class Calificacion {
 
     private String matricula;
     private Double nuevaCalificacion;
 
-    public SolicitudCalificacion(String matricula, Double nuevaCalificacion) {
+    public Calificacion(String matricula, Double nuevaCalificacion) {
         this.matricula = matricula;
         this.nuevaCalificacion = nuevaCalificacion;
     }

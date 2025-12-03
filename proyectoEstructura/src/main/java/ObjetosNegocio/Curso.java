@@ -21,20 +21,20 @@ public class Curso implements Comparable<Curso>{
     private ListaEnlazadaSimple<Estudiante> listaEstudiantes;
     private ListaDobleEnlazadaCircular<Estudiante> listaEspera;
     private ListaEnlazadaCircular<Estudiante> roles;
-    private static final int CUPO_MAXIMO = 15;
+//    private int CUPO_MAXIMO;
     private int cupoMaximo;
 
     public Curso() {
-        this.cupoMaximo = CUPO_MAXIMO;
+//        this.cupoMaximo = CUPO_MAXIMO;
         this.listaEstudiantes = new ListaEnlazadaSimple<>();
         this.listaEspera = new ListaDobleEnlazadaCircular<>();
         this.roles = new ListaEnlazadaCircular<>();
     }
 
-    public Curso(String clave, String nombre) {
+    public Curso(String clave, String nombre, int cupoMaximo) {
         this.clave = clave;
         this.nombre = nombre;
-        this.cupoMaximo = CUPO_MAXIMO;
+        this.cupoMaximo = cupoMaximo;
         this.listaEstudiantes = new ListaEnlazadaSimple<>();
         this.listaEspera = new ListaDobleEnlazadaCircular<>();
         this.roles = new ListaEnlazadaCircular<>();

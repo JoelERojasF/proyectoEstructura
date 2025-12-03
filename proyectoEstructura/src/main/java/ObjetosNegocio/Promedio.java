@@ -11,11 +11,11 @@ import EstructuraDatos.ListaEnlazadaSimple;
  *
  * @author Franco Giovanny Gastelum Barcelo
  */
-public class EstudiantePromedio implements Comparable<EstudiantePromedio> {
+public class Promedio implements Comparable<Promedio> {
     private double promedio;
     private Estudiante estudiante;
 
-    public EstudiantePromedio(double promedio, Estudiante estudiante) {
+    public Promedio(double promedio, Estudiante estudiante) {
         this.promedio = promedio;
         this.estudiante = estudiante;
     }
@@ -28,7 +28,7 @@ public class EstudiantePromedio implements Comparable<EstudiantePromedio> {
     }
     
     @Override
-    public int compareTo(EstudiantePromedio otro) {
+    public int compareTo(Promedio otro) {
         return Double.compare(this.promedio, otro.promedio);
     }
 
