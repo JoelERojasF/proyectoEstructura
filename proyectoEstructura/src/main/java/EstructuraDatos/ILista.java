@@ -8,7 +8,9 @@ package EstructuraDatos;
  * Esta clase ayuda a indicar a las clases de subtipo Lista
  * que metodos mayormente deben tener.
  * 
+ * @author Carmen Andrea Lara Osuna
  * @author Joel Eduardo Rojas Fuentes
+ * @author Franco Giovanny Gastelum Barcelo
  * 
  * @param <T>
  */

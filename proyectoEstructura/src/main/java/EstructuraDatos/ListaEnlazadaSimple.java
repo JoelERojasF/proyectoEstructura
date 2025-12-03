@@ -9,6 +9,8 @@ package EstructuraDatos;
  *
  * Implementa una lista dinámica sobre una lista enlazada simple.
  *
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  *
  * @param <T> Tipo del dato almacenado

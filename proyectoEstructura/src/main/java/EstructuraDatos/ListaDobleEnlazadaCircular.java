@@ -10,6 +10,7 @@ package EstructuraDatos;
  * Implementacion generica de una lista doblemente enlazada circular.
  * El ultimo nodo apunta al primero y el primero al ultimo.
  * 
+ * @author Carmen Andrea Lara Osuna
  * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  * 

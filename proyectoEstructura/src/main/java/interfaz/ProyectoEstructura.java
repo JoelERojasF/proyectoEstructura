@@ -6,7 +6,9 @@ package interfaz;
 
 /**
  *
- * @author le0jx
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
+ * @author Franco Giovanny Gastelum Barcelo
  */
 public class ProyectoEstructura {
 

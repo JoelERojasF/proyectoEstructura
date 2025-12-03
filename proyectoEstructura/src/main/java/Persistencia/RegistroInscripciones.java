@@ -14,6 +14,8 @@ import ObjetosNegocio.Inscripcion;
  * 
  * Gestiona las inscripciones de estudiantes en cursos usando ListaEnlazadaSimple.
  * 
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroInscripciones {
@@ -53,10 +55,9 @@ public class RegistroInscripciones {
         return estudiantes;
     }
 
-    public ListaEnlazadaSimple<Inscripcion> mostrarInscripciones() {
-//        for (Inscripcion i : inscripciones) {
-//            System.out.println(i);
-//        }
-        return inscripciones;
+    public void mostrarInscripciones() {
+        for (Inscripcion i : inscripciones) {
+            System.out.println(i);
+        }
     }
 }

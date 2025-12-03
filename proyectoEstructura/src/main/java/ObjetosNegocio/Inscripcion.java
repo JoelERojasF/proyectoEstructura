@@ -7,6 +7,8 @@ package ObjetosNegocio;
 /**
  * Inscripcion.java
  * 
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class Inscripcion {

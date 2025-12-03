@@ -8,6 +8,8 @@ import Persistencia.RegistroEstudiantes;
 
 /**
  *
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class Accion {

@@ -6,7 +6,9 @@ package EstructuraDatos;
 
 /**
  *
+ * @author Carmen Andrea Lara Osuna
  * @author Joel Eduardo Rojas Fuentes
+ * @author Franco Giovanny Gastelum Barcelo
  * 
  * @param <T> Parametro de tipo para los objetos a almacenarse
  * en el Nodo Simple

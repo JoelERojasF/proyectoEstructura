@@ -24,8 +24,8 @@ public class RegistroCursosTest {
 
     @Test
     void testAgregarYBuscarCurso() {
-        Curso c1 = new Curso("C001", "Matematicas");
-        Curso c2 = new Curso("C002", "Programacion");
+        Curso c1 = new Curso("C001", "Matematicas", 30);
+        Curso c2 = new Curso("C002", "Programacion", 30);
 
         registro.agregarCurso(c1);
         registro.agregarCurso(c2);
@@ -42,7 +42,7 @@ public class RegistroCursosTest {
 
     @Test
     void testBuscarCursoNoExistente() {
-        Curso c1 = new Curso("C001", "Matematicas");
+        Curso c1 = new Curso("C001", "Matematicas", 30);
         registro.agregarCurso(c1);
 
         Curso buscado = registro.buscarPorClave("C999");
@@ -51,9 +51,9 @@ public class RegistroCursosTest {
 
     @Test
     void testMostrarCursos() {
-        Curso c1 = new Curso("C001", "Matematicas");
-        Curso c2 = new Curso("C002", "Programacion");
-        Curso c3 = new Curso("C003", "Historia");
+        Curso c1 = new Curso("C001", "Matematicas", 30);
+        Curso c2 = new Curso("C002", "Programacion", 30);
+        Curso c3 = new Curso("C003", "Historia", 30);
 
         registro.agregarCurso(c1);
         registro.agregarCurso(c2);

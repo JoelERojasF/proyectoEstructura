@@ -12,6 +12,8 @@ import java.util.Iterator;
  * @param <K> Tipo de la clave (debe implementar hashCode y equals correctamente).
  * @param <V> Tipo del valor asociado a la clave.
  * 
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class Diccionario<K, V> {

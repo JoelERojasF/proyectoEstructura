@@ -14,6 +14,8 @@ import ObjetosNegocio.Estudiante;
  * Esta clase es para almacenar y gestionar los registros de cada estudiante
  * mediante un BST (BinarySearchTree)
  * 
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroEstudiantes {

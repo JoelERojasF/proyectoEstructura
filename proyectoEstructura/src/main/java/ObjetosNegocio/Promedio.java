@@ -9,6 +9,8 @@ import EstructuraDatos.ListaEnlazadaSimple;
 
 /**
  *
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class Promedio implements Comparable<Promedio> {

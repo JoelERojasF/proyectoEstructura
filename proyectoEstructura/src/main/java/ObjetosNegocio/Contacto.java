@@ -7,6 +7,8 @@ package ObjetosNegocio;
 /**
  *
  * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
+ * @author Franco Giovanny Gastelum Barcelo
  */
 public class Contacto {
 
@@ -42,5 +44,9 @@ public class Contacto {
 
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
+    }
+    
+    public String toString(){
+        return "telefono: "+ telefono + ", e-mail: " + email;
     }
 }

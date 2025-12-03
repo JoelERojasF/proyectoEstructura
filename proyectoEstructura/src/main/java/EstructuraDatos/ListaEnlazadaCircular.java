@@ -10,6 +10,7 @@ package EstructuraDatos;
  * Esta clase implementa una Lista Enlazada Circular generica.
  * El ultimo nodo apunta siempre al primero, formando un ciclo.
  * 
+ * @author Carmen Andrea Lara Osuna
  * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  * 

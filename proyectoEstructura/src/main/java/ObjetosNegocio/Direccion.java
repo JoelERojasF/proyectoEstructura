@@ -7,6 +7,8 @@ package ObjetosNegocio;
 /**
  *
  * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
+ * @author Franco Giovanny Gastelum Barcelo
  */
 public class Direccion {
 
@@ -52,5 +54,9 @@ public class Direccion {
 
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+    
+    public String toString(){
+        return calle + ", " + numero + ", " + colonia + ", " + ciudad;
     }
 }

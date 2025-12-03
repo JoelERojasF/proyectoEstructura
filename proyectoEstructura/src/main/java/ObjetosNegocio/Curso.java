@@ -12,6 +12,7 @@ import EstructuraDatos.ListaEnlazadaSimple;
 /**
  * Curso.java
  * 
+ * @author Carmen Andrea Lara Osuna
  * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  */
@@ -21,7 +22,7 @@ public class Curso implements Comparable<Curso>{
     private ListaEnlazadaSimple<Estudiante> listaEstudiantes;
     private ListaDobleEnlazadaCircular<Estudiante> listaEspera;
     private ListaEnlazadaCircular<Estudiante> roles;
-//    private int CUPO_MAXIMO;
+//    private final int CUPO_MAXIMO = 15;
     private int cupoMaximo;
 
     public Curso() {
@@ -130,5 +131,9 @@ public class Curso implements Comparable<Curso>{
     @Override
     public int compareTo(Curso otro) {
         return this.clave.compareTo(otro.clave);
+    }
+    
+    public String toString(){
+        return clave + ", " + nombre + ", capacidad: " + cupoMaximo;
     }
 }

@@ -7,7 +7,12 @@ package Persistencia;
 import EstructuraDatos.ArbolBinarioBusqueda;
 import EstructuraDatos.ListaEnlazadaSimple;
 import ObjetosNegocio.Curso;
-
+/**
+ * 
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
+ * @author Franco Giovanny Gastelum Barcelo
+ */
 public class RegistroCursos implements Comparable<Curso>{
     private static ArbolBinarioBusqueda<Curso> arbol;
 
@@ -17,6 +22,10 @@ public class RegistroCursos implements Comparable<Curso>{
 
     public void agregarCurso(Curso curso) {
         arbol.insertar(curso);
+    }
+    
+    public void eliminarCurso(Curso curso){
+        arbol.eliminar(curso);
     }
 
     public Curso buscarPorClave(String clave) {

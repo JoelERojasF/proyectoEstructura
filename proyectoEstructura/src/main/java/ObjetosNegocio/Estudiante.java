@@ -9,7 +9,9 @@ import EstructuraDatos.ListaEnlazadaSimple;
 /**
  * Estudiante.java
  * 
- * @author Carmen Andrea Lara Osuna
+ * @author Carmen Andrea Lara Osuna@author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
+ * @author Franco Giovanny Gastelum Barcelo
  */
 
 import java.util.Objects;

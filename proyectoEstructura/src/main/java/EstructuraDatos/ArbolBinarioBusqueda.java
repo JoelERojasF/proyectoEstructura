@@ -11,6 +11,8 @@ package EstructuraDatos;
  * 
  * @param <T> Parametro de tipo para almacenarse en el arbol
  * 
+ * @author Carmen Andrea Lara Osuna
+ * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class ArbolBinarioBusqueda<T extends Comparable<T>> {
@@ -50,7 +52,7 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> {
     * @param dato Dato a eliminar del arbol
     */
     public void eliminar(T dato) {
-    raiz = eliminar(raiz, dato);
+    raiz = eliminarRec(raiz, dato);
     }
     /**
     * Metodo recursivo para eliminar un nodo del arbol
@@ -58,7 +60,7 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> {
     * nodo
     * @return Subarbol del que se elimino recursivamente el nodo
     */
-    private NodoArbolBinario<T> eliminar(NodoArbolBinario<T> nodo,
+    private NodoArbolBinario<T> eliminarRec(NodoArbolBinario<T> nodo,
     T dato) {
         // Caso base
         // Si el nodo a borrar no esta en el subarbol
@@ -92,15 +94,15 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> {
         nodo.dato = nodoMenor.dato;
         // Elimina recursivamente el nodo con el dato mas
         // pequeño que sea mayor al dato del nodo a borrar.
-        nodo.hijoDer = eliminar(nodo.hijoDer, nodoMenor.dato);
+        nodo.hijoDer = eliminarRec(nodo.hijoDer, nodoMenor.dato);
         }
         // Casos recursivos
         // Se determina de que subarbol se eliminara el nodo
         if(dato.compareTo(nodo.dato) < 0) {
-            nodo.hijoIzq = eliminar(nodo.hijoIzq, dato);
+            nodo.hijoIzq = eliminarRec(nodo.hijoIzq, dato);
         }
         else {
-            nodo.hijoDer = eliminar(nodo.hijoDer, dato);
+            nodo.hijoDer = eliminarRec(nodo.hijoDer, dato);
         }
         return nodo;
     }
