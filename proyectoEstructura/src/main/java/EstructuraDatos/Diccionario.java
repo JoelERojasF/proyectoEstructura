@@ -33,7 +33,7 @@ public class Diccionario<K, V> {
 
     public void put(K clave, V valor) {
         int indice = hash(clave);
-        for (Entrada<K,V> e : tabla[indice]) { // aquí necesitas que tu ListaEnlazadaSimple implemente Iterable
+        for (Entrada<K,V> e : tabla[indice]) { 
             if (e.getClave().equals(clave)) {
                 e.setValor(valor);
                 return;

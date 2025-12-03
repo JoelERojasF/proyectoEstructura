@@ -7,7 +7,7 @@ package EstructuraDatos;
 /**
  * Pila.java
  * 
- * Esta clase implementa una Pila
+ * Esta clase implementa una Pila generica
  * 
  * @author Joel Eduardo Rojas Fuentes
  * 
