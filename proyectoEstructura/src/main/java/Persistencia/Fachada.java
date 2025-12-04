@@ -14,7 +14,7 @@ import Validadores.Validadores;
 import java.util.NoSuchElementException;
 
 /**
- *esta clase sera la que se conecte la interfaz con el resto de registros
+ * Esta clase sera la que conecte o haga de puente con la interfaz con el resto de registros
  * 
  * @author Carmen Andrea Lara Osuna
  * @author Joel Eduardo Rojas Fuentes
@@ -141,7 +141,41 @@ public class Fachada {
         return inscripciones.obtenerInscripciones();
     }
     
-    //calificaciones
-    //aun no estoy seguro de como implementarlos aqui
+    // Clase auxiliar interna
+    private static class SolicitudCalificacion {
+        private String matriculaEstudiante;
+        private double calificacion;
+
+        public SolicitudCalificacion(String matriculaEstudiante, double calificacion) {
+            this.matriculaEstudiante = matriculaEstudiante;
+            this.calificacion = calificacion;
+        }
+
+        public String getMatriculaEstudiante() { return matriculaEstudiante; }
+        public double getCalificacion() { return calificacion; }
+
+        @Override
+        public String toString() {
+            return "SolicitudCalificacion{matricula=" + matriculaEstudiante + ", calificacion=" + calificacion + "}";
+        }
+    }
     
+    private ListaEnlazadaSimple<SolicitudCalificacion> solicitudes = new ListaEnlazadaSimple<>();
+
+    public void enviarSolicitudCalificacion(String matriculaEstudiante, double calificacion) {
+        Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
+        if (e == null) throw new NoSuchElementException("Estudiante no encontrado");
+
+        SolicitudCalificacion solicitud = new SolicitudCalificacion(matriculaEstudiante, calificacion);
+        solicitudes.agregar(solicitud);
+    }
+
+    public ListaEnlazadaSimple<SolicitudCalificacion> listarSolicitudesCalificacion() {
+        return solicitudes;
+    }
+
+    
+    //calificaciones
+    
+    //aun no estoy seguro de como implementarlos aqui
 }

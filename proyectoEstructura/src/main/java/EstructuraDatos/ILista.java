@@ -5,6 +5,8 @@
 package EstructuraDatos;
 
 /**
+ * ILista.java
+ * 
  * Esta clase ayuda a indicar a las clases de subtipo Lista
  * que metodos mayormente deben tener.
  * 
