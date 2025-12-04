@@ -59,7 +59,7 @@ public class Accion {
                 // Si la acción fue registrar un estudiante, al deshacer se elimina del BST
                 if (estudiante != null) {
                 RegistroEstudiantes registro = new RegistroEstudiantes();
-                registro.eliminarEstudiante(estudiante.getMatricula());
+                registro.eliminarEstudiante(estudiante);
             }
                 break;
             case INSCRIPCION:

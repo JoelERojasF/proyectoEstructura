@@ -12,16 +12,19 @@ package ObjetosNegocio;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class Inscripcion {
+    private String id;
     private Estudiante estudiante;
     private Curso curso;
 
-    public Inscripcion(Estudiante estudiante, Curso curso) {
+    public Inscripcion(String id, Estudiante estudiante, Curso curso) {
+        this.id = id;
         this.estudiante = estudiante;
         this.curso = curso;
     }
 
     public Estudiante getEstudiante() { return estudiante; }
     public Curso getCurso() { return curso; }
+    public String getId(){ return id; }
 
     @Override
     public String toString() {

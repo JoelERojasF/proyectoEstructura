@@ -11,6 +11,7 @@ import ObjetosNegocio.Direccion;
 import ObjetosNegocio.Estudiante;
 import ObjetosNegocio.Inscripcion;
 import Validadores.Validadores;
+import java.util.NoSuchElementException;
 
 /**
  *esta clase sera la que se conecte la interfaz con el resto de registros
@@ -27,7 +28,7 @@ public class Fachada {
     Validadores val = new Validadores();
     
     //estudiantes
-    public void agregarEstudiante(String matricula, String nombre, String telefono, String email, String calle, String numero, String colonia, String ciudad){
+    public void agregarEstudiante(String nombre, String telefono, String email, String calle, String numero, String colonia, String ciudad){
         
         if(!val.validarNombreEstudiante(nombre)){
             throw new IllegalArgumentException("nombre de estudiante invalido");
@@ -52,17 +53,23 @@ public class Fachada {
         }
         Direccion d = new Direccion(calle, numero, colonia, ciudad);
         Contacto c= new Contacto(telefono, email, d);
+        
+        String matricula = String.format("EST%04d", estudiantes.tamanio()+1);
         Estudiante e = new Estudiante(matricula, nombre, c);
         
         estudiantes.agregarEstudiante(e);
     }
     
     public void eliminarEstudiante(String id){
-        estudiantes.eliminarEstudiante(id);
+        Estudiante e = estudiantes.buscarPorMatricula(id);
+        if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
+        estudiantes.eliminarEstudiante(e);
     }
     
     public Estudiante buscarEstudiante(String id){
-        return estudiantes.buscarPorMatricula(id);
+        Estudiante e = estudiantes.buscarPorMatricula(id);
+        if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
+        return e;
     }
     
     public ListaEnlazadaSimple listarEstudiantes(){
@@ -70,7 +77,7 @@ public class Fachada {
     }
     
     //cursos
-    public void agregarCurso(String clave, String nombre, String capacidad){
+    public void agregarCurso(String nombre, String capacidad){
             if(!val.validarNombreCurso(nombre)){
             throw new IllegalArgumentException("nombre de curso invalido");
         }
@@ -79,16 +86,21 @@ public class Fachada {
         }
         int cupo= Integer.parseInt(capacidad);
         
+        String clave = String.format("CUR%04d", cursos.tamanio()+1);
         Curso c  = new Curso(clave, nombre, cupo);
         cursos.agregarCurso(c);
     }
     
     public Curso buscarCurso(String clave){
+        Curso c = cursos.buscarPorClave(clave);
+        if(c == null) throw new NoSuchElementException("Curso no encontrado");
         return cursos.buscarPorClave(clave);
     }
     
     public void eliminarCurso(String clave){
-        cursos.eliminarCurso(cursos.buscarPorClave(clave));
+        Curso c = cursos.buscarPorClave(clave);
+        if(c == null) throw new NoSuchElementException("Curso no encontrado");
+        cursos.eliminarCurso(c);
     }
     
     public ListaEnlazadaSimple<Curso> listarCursos(){
@@ -100,16 +112,22 @@ public class Fachada {
         Curso c = cursos.buscarPorClave(claveCurso);
         Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
         
-        inscripciones.inscribirEstudianteEnCurso(e, c);
+        String clave = String.format("INS%04d", inscripciones.tamanio()+1);
+        Inscripcion i = new Inscripcion(clave, e, c);
+        inscripciones.inscribirEstudianteEnCurso(i);
     }
     
-    //pendiente
-    public Inscripcion buscarInscripcion(){
-        return null;
+    public Inscripcion buscarInscripcion(String id){
+        Inscripcion i = inscripciones.buscarInscripcion(id);
+        if(i == null) throw new NoSuchElementException("Inscripcion no encontrada");
+        return i;
     }
     
-    //pendiente
-    public void eliminarInscripcion(){}
+    public void eliminarInscripcion(String id) throws Exception{
+        Inscripcion i = inscripciones.buscarInscripcion(id);
+        if(i == null) throw new NoSuchElementException("Inscripcion no encontrada");
+        inscripciones.eliminarInscripcion(i);
+    }
     
     public ListaEnlazadaSimple<Curso> listarInscripcionesDeEstudiante(String matriculaEstudiante){
         return inscripciones.obtenerCursosPorEstudiante(matriculaEstudiante);

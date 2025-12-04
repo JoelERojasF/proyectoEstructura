@@ -19,16 +19,25 @@ import ObjetosNegocio.Inscripcion;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroInscripciones {
-
-    private ListaEnlazadaSimple<Inscripcion> inscripciones;
+    private static ListaEnlazadaSimple<Inscripcion> inscripciones;
 
     public RegistroInscripciones() {
         inscripciones = new ListaEnlazadaSimple<>();
     }
 
-    public void inscribirEstudianteEnCurso(Estudiante e, Curso c) {
-        Inscripcion inscripcion = new Inscripcion(e, c);
+    public void inscribirEstudianteEnCurso(Inscripcion inscripcion) {
         inscripciones.agregar(inscripcion);
+    }
+    
+    public void eliminarInscripcion(Inscripcion ins) throws Exception{
+        inscripciones.eliminar(inscripciones.indexOf(ins));
+    }
+    
+    public Inscripcion buscarInscripcion(String id){
+        for(Inscripcion i : inscripciones){
+        if(i.getId() == id) return i;
+        }
+        return null;
     }
 
     public ListaEnlazadaSimple<Inscripcion> obtenerInscripciones() {
@@ -59,5 +68,9 @@ public class RegistroInscripciones {
         for (Inscripcion i : inscripciones) {
             System.out.println(i);
         }
+    }
+    
+    public int tamanio(){
+    return inscripciones.tamanio();
     }
 }

@@ -15,10 +15,7 @@ import java.util.regex.Pattern;
  */
 public class Validadores {
     //estudiante
-    public boolean validarMatricula(String matricula){
-        return false;
-    }
-    
+
     public boolean validarNombreEstudiante(String nombre){
         String patron = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{1,50}$";
         Pattern p = Pattern.compile(patron);
@@ -76,10 +73,7 @@ public class Validadores {
     }
     
     //curso
-    public boolean validarClaveCurso(String clave){
-        return false;
-    }
-    
+
     public boolean validarNombreCurso(String nombre){
         String patron = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{1,50}$";
         Pattern p = Pattern.compile(patron);

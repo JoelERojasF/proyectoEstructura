@@ -29,8 +29,8 @@ public class RegistroEstudiantes {
         arbol.insertar(estudiante);
     }
     
-    public void eliminarEstudiante(String matricula) {
-        Estudiante estudiante = new Estudiante(matricula, "", null);
+    public void eliminarEstudiante(Estudiante estudiante) {
+//        Estudiante estudiante = new Estudiante(matricula, "", null);
         arbol.eliminar(estudiante);
     }
     
@@ -49,4 +49,8 @@ public class RegistroEstudiantes {
     public ListaEnlazadaSimple<Estudiante> obtenerTodos() {
         return arbol.obtenerTodos(); // delega al árbol
     }  
+    
+    public int tamanio(){
+        return obtenerTodos().tamanio();
+    }
 }

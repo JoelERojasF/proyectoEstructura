@@ -36,6 +36,10 @@ public class RegistroCursos implements Comparable<Curso>{
     public ListaEnlazadaSimple<Curso> mostrarCursos() {
         return arbol.obtenerTodos();
     }
+    
+    public int tamanio(){
+        return mostrarCursos().tamanio();
+    }
 
     // Metodo implementado por Comparable<T>
     @Override
