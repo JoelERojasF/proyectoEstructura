@@ -98,7 +98,7 @@ public class Fachada {
         return cursos.buscarPorClave(clave);
     }
     
-    public void eliminarCurso(String clave){
+    public void eliminarCurso(String clave) throws Exception{
         Curso c = cursos.buscarPorClave(clave);
         if(c == null) throw new NoSuchElementException("Curso no encontrado");
         cursos.eliminarCurso(c);

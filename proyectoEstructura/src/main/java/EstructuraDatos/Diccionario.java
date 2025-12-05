@@ -4,6 +4,7 @@
  */
 package EstructuraDatos;
 
+import ObjetosNegocio.Curso;
 import java.util.Iterator;
 /**
  * Clase Diccionario genérico implementado con tabla hash y manejo de colisiones
@@ -34,6 +35,10 @@ public class Diccionario<K, V> {
     }
 
     public void put(K clave, V valor) {
+        if(tamanio() == capacidad){
+            redimensionar();
+        }
+        
         int indice = hash(clave);
         for (Entrada<K,V> e : tabla[indice]) { 
             if (e.getClave().equals(clave)) {
@@ -66,12 +71,45 @@ public class Diccionario<K, V> {
         }
     }
 
-    public void mostrarTodos() {
+    public ListaEnlazadaSimple<V> obtenerTodos() {
+        ListaEnlazadaSimple<V> lista = new ListaEnlazadaSimple<V>();
         for (int i = 0; i < capacidad; i++) {
             for (Entrada<K,V> e : tabla[i]) {
-                System.out.println(e);
+               lista.agregar(e.valor);
             }
         }
+        return lista;
+    }
+    
+    public int tamanio() {
+        int total = 0;
+        for (int i = 0; i < capacidad; i++) {
+            for (Entrada<K,V> e : tabla[i]) {
+                total++;
+            }
+        }
+
+        return total;
+    }
+    
+    private void redimensionar() {
+        int nuevaCapacidad = capacidad +1;
+
+        ListaEnlazadaSimple<Entrada<K, V>>[] nuevaTabla = new ListaEnlazadaSimple[nuevaCapacidad];
+
+        for (int i = 0; i < nuevaCapacidad; i++) {
+            nuevaTabla[i] = new ListaEnlazadaSimple<>();
+        }
+
+        for (int i = 0; i < capacidad; i++) {
+            for (Entrada<K, V> entrada : tabla[i]) {
+                int nuevoIndice = Math.abs(entrada.getClave().hashCode()) % nuevaCapacidad;
+                nuevaTabla[nuevoIndice].agregar(entrada);
+            }
+        }
+
+        tabla = nuevaTabla;
+        capacidad = nuevaCapacidad;
     }
 
     // Clase interna Entrada

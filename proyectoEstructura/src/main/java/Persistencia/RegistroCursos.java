@@ -5,6 +5,7 @@
 package Persistencia;
 
 import EstructuraDatos.ArbolBinarioBusqueda;
+import EstructuraDatos.Diccionario;
 import EstructuraDatos.ListaEnlazadaSimple;
 import ObjetosNegocio.Accion;
 import ObjetosNegocio.Curso;
@@ -15,15 +16,15 @@ import ObjetosNegocio.Curso;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroCursos implements Comparable<Curso>{
-    private static ArbolBinarioBusqueda<Curso> arbol;
+    private static Diccionario<String ,Curso> arbol;
     RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroCursos() {
-        arbol = new ArbolBinarioBusqueda<>();
+        arbol = new Diccionario<>(30);
     }
 
     public void agregarCurso(Curso curso) {
-        arbol.insertar(curso);
+        arbol.put(curso.getClave(),curso);
         Accion accion = new Accion(
                 Accion.TipoAccion.REGISTRO,
                 null,
@@ -35,8 +36,8 @@ public class RegistroCursos implements Comparable<Curso>{
             acciones.registrarAccion(accion);
     }
     
-    public void eliminarCurso(Curso curso){
-        arbol.eliminar(curso);
+    public void eliminarCurso(Curso curso) throws Exception{
+        arbol.remove(curso.getClave());
         Accion accion = new Accion(
                 Accion.TipoAccion.REGISTRO,
                 null,
@@ -49,8 +50,7 @@ public class RegistroCursos implements Comparable<Curso>{
     }
 
     public Curso buscarPorClave(String clave) {
-        Curso claveCurso = new Curso(clave, "", 0);
-        return arbol.buscar(claveCurso);
+        return arbol.get(clave);
     }
 
     public ListaEnlazadaSimple<Curso> mostrarCursos() {
@@ -58,7 +58,7 @@ public class RegistroCursos implements Comparable<Curso>{
     }
     
     public int tamanio(){
-        return mostrarCursos().tamanio();
+        return arbol.tamanio();
     }
 
     // Metodo implementado por Comparable<T>
