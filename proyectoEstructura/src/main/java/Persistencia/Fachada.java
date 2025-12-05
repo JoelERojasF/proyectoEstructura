@@ -232,4 +232,13 @@ public class Fachada {
         }
         return matricula;
     }
+    
+    public void procesarSiguienteSolicitud() throws Exception {
+        calificaciones.procesarSiguienteSolicitud();
+    }
+
+    public void procesarTodasSolicitudes() throws Exception {
+        calificaciones.procesarTodasSolicitudes();
+    }
+
 }

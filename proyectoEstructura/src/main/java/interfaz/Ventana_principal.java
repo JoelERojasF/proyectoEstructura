@@ -10,9 +10,9 @@ import javax.swing.*;
 import Persistencia.Fachada;
 import EstructuraDatos.ListaEnlazadaSimple;
 import ObjetosNegocio.*;
-import java.awt.image.*;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -472,18 +472,43 @@ public class Ventana_principal extends JFrame {
 
 
     class PanelListarCursos extends JPanel {
-        private JTextArea areaListado;
-        private JButton btnListar;
-        private Fachada fachada;
+    private JTable tabla;
+    private JButton btnListar;
+    private Fachada fachada;
 
-        public PanelListarCursos() {
-            setLayout(new BorderLayout());
-            String[] cols = {"Clave", "Nombre", "Capacidad"};
-            JTable tabla = new JTable(new Object[][]{}, cols);
-            add(new JScrollPane(tabla), BorderLayout.CENTER);
-            add(new JButton("Listar"), BorderLayout.SOUTH);
-        }
+    public PanelListarCursos() {
+        fachada = new Fachada();
+        setLayout(new BorderLayout());
+
+        String[] cols = {"Clave", "Nombre", "Capacidad"};
+        DefaultTableModel modelo = new DefaultTableModel(cols, 0);
+        tabla = new JTable(modelo);
+
+        add(new JScrollPane(tabla), BorderLayout.CENTER);
+
+        btnListar = new JButton("Listar");
+        add(btnListar, BorderLayout.SOUTH);
+
+        // Acción del botón
+        btnListar.addActionListener(e -> {
+            try {
+                // Limpiar la tabla antes de llenarla
+                modelo.setRowCount(0);
+
+                ListaEnlazadaSimple<Curso> cursos = fachada.listarCursos();
+                for (Curso c : cursos) {
+                    Object[] fila = {c.getClave(), c.getNombre(), c.getCupoMaximo()};
+                    modelo.addRow(fila);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Error al listar cursos: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
+}
+
 
     //  Inscripciones 
     class PanelInscribirEstudiante extends JPanel {
@@ -689,31 +714,99 @@ public class Ventana_principal extends JFrame {
 
 
     class PanelProcesarSolicitud extends JPanel {
+        private JButton btnProcesar;
+        private Fachada fachada;
 
         public PanelProcesarSolicitud() {
+            fachada = new Fachada();
             setLayout(new FlowLayout());
-            add(new JButton("Procesar siguiente solicitud"));
+
+            btnProcesar = new JButton("Procesar siguiente solicitud");
+            add(btnProcesar);
+
+            btnProcesar.addActionListener(e -> {
+                try {
+                    fachada.procesarSiguienteSolicitud();
+                    JOptionPane.showMessageDialog(this,
+                            "Solicitud procesada correctamente",
+                            "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this,
+                            "Error al procesar la solicitud: " + ex.getMessage(),
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
         }
     }
+
 
 //  Acciones 
     class PanelDeshacerAccion extends JPanel {
+        private JButton btnDeshacer;
+        private Fachada fachada;
 
         public PanelDeshacerAccion() {
+            fachada = new Fachada();
             setLayout(new FlowLayout());
-            add(new JButton("Deshacer última acción"));
+
+            btnDeshacer = new JButton("Deshacer última acción");
+            add(btnDeshacer);
+
+            // Acción del botón
+            btnDeshacer.addActionListener(e -> {
+                try {
+                    fachada.deshacerUltimaAccion();
+                    JOptionPane.showMessageDialog(this,
+                            "Se deshizo la última acción correctamente",
+                            "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this,
+                            "No se pudo deshacer la acción: " + ex.getMessage(),
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
         }
     }
+
 
 //  Reportes 
     class PanelListarPorPromedio extends JPanel {
+        private JButton btnListar;
+        private JTextArea txtResultados;
+        private Fachada fachada;
 
         public PanelListarPorPromedio() {
+            fachada = new Fachada();
             setLayout(new BorderLayout());
-            add(new JButton("Listar estudiantes por promedio"), BorderLayout.NORTH);
-            add(new JScrollPane(new JTextArea("Resultados...")), BorderLayout.CENTER);
+
+            btnListar = new JButton("Listar estudiantes por promedio");
+            add(btnListar, BorderLayout.NORTH);
+
+            txtResultados = new JTextArea("Resultados...");
+            txtResultados.setEditable(false);
+            add(new JScrollPane(txtResultados), BorderLayout.CENTER);
+
+            // Acción del botón
+            btnListar.addActionListener(e -> {
+                try {
+                    ListaEnlazadaSimple<Promedio> promedios = fachada.listarPromedios();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Listado de estudiantes por promedio:\n\n");
+                    for (Promedio p : promedios) {
+                        sb.append("Estudiante: ").append(p.getEstudiante().getNombreCompleto())
+                          .append(" | Promedio: ").append(p.getPromedio())
+                          .append("\n");
+                    }
+
+                    txtResultados.setText(sb.toString());
+                } catch (Exception ex) {
+                    txtResultados.setText("Error al listar promedios: " + ex.getMessage());
+                }
+            });
         }
     }
+
 
     class PanelRotarRol extends JPanel {
     private Image backgroundImage;
