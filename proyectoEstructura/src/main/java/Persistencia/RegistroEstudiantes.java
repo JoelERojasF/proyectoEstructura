@@ -33,7 +33,7 @@ public class RegistroEstudiantes {
                 Accion.TipoAccion.REGISTRO,
                 estudiante,
                 null,
-                -1.0,
+                null,
                 -1.0,
                 true
             );
@@ -47,7 +47,7 @@ public class RegistroEstudiantes {
                 Accion.TipoAccion.REGISTRO,
                 estudiante,
                 null,
-                -1.0,
+                null,
                 -1.0,
                 false
             );

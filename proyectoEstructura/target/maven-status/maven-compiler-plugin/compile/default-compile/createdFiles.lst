@@ -6,6 +6,7 @@ interfaz\Ventana_principal$PanelListaInscritos.class
 EstructuraDatos\ILista.class
 ObjetosNegocio\Direccion.class
 interfaz\Ventana_principal$PanelEnviarSolicitud$1.class
+Persistencia\RegistroAcciones.class
 ObjetosNegocio\Estudiante.class
 EstructuraDatos\ListaDobleEnlazadaCircular.class
 interfaz\Ventana_principal$PanelListarCursos.class
@@ -22,6 +23,7 @@ interfaz\Ventana_principal$PanelConFondo.class
 interfaz\Ventana_principal$PanelDeshacerAccion.class
 interfaz\Ventana_principal.class
 EstructuraDatos\ArbolAVL.class
+interfaz\gestion.class
 interfaz\Ventana_principal$PanelEnviarSolicitud.class
 Persistencia\Fachada.class
 EstructuraDatos\NodoSimple.class
@@ -29,7 +31,6 @@ ObjetosNegocio\Curso.class
 Validadores\Validadores.class
 EstructuraDatos\NodoDoble.class
 interfaz\Ventana_principal$PanelInscribirEstudiante.class
-interfaz\ProyectoEstructura.class
 interfaz\Ventana_principal$PanelRotarRol.class
 Persistencia\RegistroEstudiantes.class
 interfaz\Ventana_principal$PanelBuscarEstudiante.class
@@ -38,7 +39,6 @@ ObjetosNegocio\Inscripcion.class
 EstructuraDatos\ListaEnlazadaSimple.class
 ObjetosNegocio\Accion$TipoAccion.class
 EstructuraDatos\ListaEnlazadaCircular.class
-Persistencia\Fachada$SolicitudCalificacion.class
 interfaz\Ventana_principal$PanelEliminarCurso.class
 Persistencia\RegistroCalificaciones.class
 interfaz\Ventana_principal$PanelEliminarCurso$1.class
@@ -49,3 +49,4 @@ interfaz\Ventana_principal$PanelRegistrarEstudiante$1.class
 interfaz\Ventana_principal$PanelAgregarCurso.class
 interfaz\Ventana_principal$PanelInscribirEstudiante$1.class
 EstructuraDatos\ArbolBinarioBusqueda.class
+ObjetosNegocio\SolicitudCalificacion.class

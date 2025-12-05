@@ -20,7 +20,7 @@ public class Estudiante implements Comparable<Estudiante> {
     private String matricula;
     private String nombreCompleto;
     private Contacto contacto;
-    private ListaEnlazadaSimple<Double> calificaciones; 
+    private ListaEnlazadaSimple<Calificacion> calificaciones; 
 
     public Estudiante(String matricula, String nombreCompleto, Contacto contacto) {
         this.matricula = matricula;
@@ -48,35 +48,33 @@ public class Estudiante implements Comparable<Estudiante> {
         this.contacto = contacto;
     }
     
-    public ListaEnlazadaSimple<Double> getCalificaciones() {
+    public ListaEnlazadaSimple<Calificacion> getCalificaciones() {
         return calificaciones;
     }
-    public void agregarCalificacion(Double calificacion) {
+    public void agregarCalificacion(Calificacion calificacion) {
         calificaciones.agregar(calificacion);
     }
     
-    public void reemplazarCalificacion(Double calificacionNueva, Double calificacionAnterior) {
+    public void reemplazarCalificacion(Double calificacionNueva, Calificacion calificacionAnterior) throws Exception {
         if (calificaciones == null || calificaciones.vacio()) return;
 
         // Buscar la posición de la calificación nueva
-        int pos = calificaciones.indexOf(calificacionNueva);
+        int pos = calificaciones.indexOf(calificacionAnterior);
 
         if (pos != -1) {
-            try {
-                // Eliminar la nueva y poner la anterior en la misma posición
-                calificaciones.eliminar(pos);
-                calificaciones.insertar(calificacionAnterior, pos);
-            } catch (Exception e) {
-                System.out.println("Error al reemplazar calificación: " + e.getMessage());
-            }
+//            try {
+                calificaciones.obtener(pos).setCalificacion(calificacionNueva);
+//            } catch (Exception e) {
+//                System.out.println("Error al reemplazar calificación: " + e.getMessage());
+//            }
         }
     }
 
     public double calcularPromedio() throws Exception {
         if (calificaciones.tamanio() == 0) return 0.0;
         double suma = 0;
-        for (Double c : calificaciones) {
-            suma += c;
+        for (Calificacion c : calificaciones) {
+            suma += c.getCalificacion();
         }
         return suma / calificaciones.tamanio();
     }

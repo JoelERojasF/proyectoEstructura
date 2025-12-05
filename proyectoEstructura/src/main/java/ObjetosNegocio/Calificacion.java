@@ -12,27 +12,27 @@ package ObjetosNegocio;
  */
 public class Calificacion {
 
-    private String matricula;
-    private Double nuevaCalificacion;
+    private Curso curso;
+    private Double calificacion;
 
-    public Calificacion(String matricula, Double nuevaCalificacion) {
-        this.matricula = matricula;
-        this.nuevaCalificacion = nuevaCalificacion;
+    public Calificacion(Curso curso, Double calificacion) {
+        this.curso = curso;
+        this.calificacion = calificacion;
     }
 
-    public String getMatricula() {
-        return matricula;
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
-    public Double getNuevaCalificacion() {
-        return nuevaCalificacion;
+    public Double getCalificacion() {
+        return calificacion;
     }
 
-    public void setNuevaCalificacion(Double nuevaCalificacion) {
-        this.nuevaCalificacion = nuevaCalificacion;
+    public void setCalificacion(Double calificacion) {
+        this.calificacion = calificacion;
     }
 }

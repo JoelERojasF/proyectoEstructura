@@ -6,6 +6,8 @@ package Persistencia;
 
 import EstructuraDatos.Pila;
 import ObjetosNegocio.Accion;
+import ObjetosNegocio.Estudiante;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -22,14 +24,22 @@ public class RegistroAcciones {
     
     public Accion deshacerUltimaAccion() throws Exception{
     if (acciones.vacio()) {
-            System.out.println("No hay acciones para deshacer.");
-            return null;
+            throw new NoSuchElementException("No hay solicitudes pendientes");
         }
 
             Accion ultima = acciones.eliminar();
             ultima.revertir();
-            System.out.println("Se deshizo la accion: " + ultima);
+//            System.out.println("Se deshizo la accion: " + ultima);
             return ultima;
+    }
+    
+    public Estudiante getEstudianteUltimaAccion() {
+        if (acciones.vacio()) return null;
+        try {
+            return ultimaAccion().getEstudiante();
+        } catch (Exception e) {
+            return null;
+        }
     }
     
     public Accion ultimaAccion() throws Exception{

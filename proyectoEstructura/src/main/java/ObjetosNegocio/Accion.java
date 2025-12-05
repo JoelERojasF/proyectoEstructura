@@ -24,7 +24,7 @@ public class Accion {
     private TipoAccion tipo;
     private Estudiante estudiante;
     private Curso curso;
-    private Double calificacionAnterior;
+    private Calificacion calificacionAnterior;
     private Double calificacionNueva;
     private Boolean aniadido;
     RegistroEstudiantes registroEstudiante = new RegistroEstudiantes();
@@ -40,7 +40,7 @@ public class Accion {
      * @param calificacionNueva Calificación nueva (si aplica).
      */
     public Accion(TipoAccion tipo, Estudiante estudiante, Curso curso,
-                  Double calificacionAnterior, Double calificacionNueva, Boolean aniadido) {
+                  Calificacion calificacionAnterior, Double calificacionNueva, Boolean aniadido) {
         this.tipo = tipo;
         this.estudiante = estudiante;
         this.curso = curso;
@@ -101,7 +101,8 @@ public class Accion {
                     if(aniadido){
                         estudiante.reemplazarCalificacion(calificacionNueva, calificacionAnterior);
                     }else{
-                        estudiante.reemplazarCalificacion(calificacionAnterior, calificacionNueva);
+                        Calificacion c = new Calificacion(calificacionAnterior.getCurso(), calificacionNueva);
+                        estudiante.reemplazarCalificacion(calificacionAnterior.getCalificacion(), c);
                     }
                 }
                 break;
@@ -120,7 +121,7 @@ public class Accion {
         return curso;
     }
 
-    public Double getCalificacionAnterior() {
+    public Calificacion getCalificacionAnterior() {
         return calificacionAnterior;
     }
 

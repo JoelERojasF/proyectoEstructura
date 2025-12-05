@@ -595,7 +595,7 @@ public class Ventana_principal extends JFrame {
     }
 
     class PanelEnviarSolicitud extends JPanel {
-    private JTextField txtMatricula;
+    private JTextField txtMatricula, txtClaveCurso;
     private JSpinner spCalificacion;
     private JButton btnEnviar;
     private Fachada fachada;
@@ -628,14 +628,26 @@ public class Ventana_principal extends JFrame {
         panelForm.setLayout(new BoxLayout(panelForm, BoxLayout.Y_AXIS));
         panelForm.setOpaque(false);
 
-        JLabel lblMatricula = new JLabel("Matrícula:");
-        lblMatricula.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelForm.add(lblMatricula);
+        JLabel lblMatriculaEstudiante = new JLabel("Matrícula del estudiante:");
+        lblMatriculaEstudiante.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(lblMatriculaEstudiante);
 
         txtMatricula = new JTextField();
         txtMatricula.setMaximumSize(new Dimension(180, 25)); // campo más pequeño
         txtMatricula.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelForm.add(txtMatricula);
+        
+        
+        JLabel lblMatriculaCurso = new JLabel("Clave del curso:");
+        lblMatriculaCurso.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(lblMatriculaCurso);
+
+        txtClaveCurso = new JTextField();
+        txtClaveCurso.setMaximumSize(new Dimension(180, 25)); // campo más pequeño
+        txtClaveCurso.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(txtClaveCurso);
+        
+        
 
         panelForm.add(Box.createRigidArea(new Dimension(0, 10))); // espacio
 
@@ -660,10 +672,11 @@ public class Ventana_principal extends JFrame {
         // Acción del botón
         btnEnviar.addActionListener(e -> {
             try {
-                String matricula = txtMatricula.getText();
+                String matriculaEstudiante = txtMatricula.getText();
+                String calveCurso = txtClaveCurso.getText();
                 double calificacion = (double) spCalificacion.getValue();
 
-                fachada.enviarSolicitudCalificacion(matricula, calificacion);
+                fachada.registrarSolicitudCalificacion(matriculaEstudiante, calveCurso, calificacion);
 
                 JOptionPane.showMessageDialog(this, "Solicitud enviada correctamente");
             } catch (Exception ex) {

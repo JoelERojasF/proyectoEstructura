@@ -29,7 +29,7 @@ public class RegistroCursos implements Comparable<Curso>{
                 Accion.TipoAccion.REGISTRO,
                 null,
                 curso,
-                -1.0,
+                null,
                 -1.0,
                 true
             );
@@ -42,7 +42,7 @@ public class RegistroCursos implements Comparable<Curso>{
                 Accion.TipoAccion.REGISTRO,
                 null,
                 curso,
-                -1.0,
+                null,
                 -1.0,
                 false
             );

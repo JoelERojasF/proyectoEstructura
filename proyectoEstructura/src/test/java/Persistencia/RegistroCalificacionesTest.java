@@ -7,7 +7,9 @@ package Persistencia;
 import ObjetosNegocio.Estudiante;
 import ObjetosNegocio.Calificacion;
 import ObjetosNegocio.Contacto;
+import ObjetosNegocio.Curso;
 import ObjetosNegocio.Direccion;
+import ObjetosNegocio.SolicitudCalificacion;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,20 +45,25 @@ public class RegistroCalificacionesTest {
 
     @Test
     void testRegistrarYProcesarSolicitud() throws Exception {
+        Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
+        Curso c1 = new Curso("C001", "Matematicas", 30);
+        Calificacion cal = new Calificacion(c1, 95.0);
         // Crear solicitud para Ana
-        Calificacion solicitud = new Calificacion("001", 95.0);
+        SolicitudCalificacion solicitud = new SolicitudCalificacion(e1, cal);
         registroCalificaciones.registrarSolicitud(solicitud);
 
         // Procesar
         registroCalificaciones.procesarSiguienteSolicitud();
 
-        Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
         assertEquals(95.0, e1.getCalificaciones().obtener(0));
     }
 
     @Test
-    void testAccionRegistradaEnPila() {
-        Calificacion solicitud = new Calificacion("002", 80.0);
+    void testAccionRegistradaEnPila() throws Exception {
+        Estudiante e2 = registroEstudiantes.buscarPorMatricula("002");
+        Curso c1 = new Curso("C001", "Matematicas", 30);
+        Calificacion cal = new Calificacion(c1, 80.0);
+        SolicitudCalificacion solicitud = new SolicitudCalificacion(e2, cal);
         registroCalificaciones.registrarSolicitud(solicitud);
 
         registroCalificaciones.procesarSiguienteSolicitud();
@@ -68,12 +75,14 @@ public class RegistroCalificacionesTest {
 
     @Test
     void testDeshacerUltimaAccion() throws Exception {
-        Calificacion solicitud = new Calificacion("001", 70.0);
+        Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
+        Curso c1 = new Curso("C001", "Matematicas", 30);
+        Calificacion cal = new Calificacion(c1, 70.0);
+        SolicitudCalificacion solicitud = new SolicitudCalificacion(e1, cal);        
         registroCalificaciones.registrarSolicitud(solicitud);
 
         registroCalificaciones.procesarSiguienteSolicitud();
 
-        Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
         assertEquals(70.0, e1.getCalificaciones().obtener(0));
 
 
@@ -84,13 +93,20 @@ public class RegistroCalificacionesTest {
     @Test
     void testMostrarListadoPromedios() throws Exception {
         // Agregar calificaciones
-        registroCalificaciones.registrarSolicitud(new Calificacion("001", 90.0));
-        registroCalificaciones.registrarSolicitud(new Calificacion("002", 80.0));
+        Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
+        Curso c1 = new Curso("C001", "Matematicas", 30);
+        Calificacion cal = new Calificacion(c1, 70.0);
+        SolicitudCalificacion solicitud1 = new SolicitudCalificacion(e1, cal);   
+        
+        Estudiante e2 = registroEstudiantes.buscarPorMatricula("002");
+        SolicitudCalificacion solicitud2 = new SolicitudCalificacion(e2, cal);
+        
+        
+        registroCalificaciones.registrarSolicitud(solicitud2);
+        registroCalificaciones.registrarSolicitud(solicitud1);
 
         registroCalificaciones.procesarTodasSolicitudes();
 
-        Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
-        Estudiante e2 = registroEstudiantes.buscarPorMatricula("002");
 
         assertEquals(90.0, e1.calcularPromedio());
         assertEquals(80.0, e2.calcularPromedio());

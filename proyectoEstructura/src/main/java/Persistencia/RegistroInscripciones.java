@@ -33,7 +33,7 @@ public class RegistroInscripciones {
                 Accion.TipoAccion.INSCRIPCION,
                 inscripcion.getEstudiante(),
                 inscripcion.getCurso(),
-                -1.0,
+                null,
                 -1.0,
                 true
             );
@@ -46,7 +46,7 @@ public class RegistroInscripciones {
                 Accion.TipoAccion.BAJA,
                 ins.getEstudiante(),
                 ins.getCurso(),
-                -1.0,
+                null,
                 -1.0,
                 true
             );

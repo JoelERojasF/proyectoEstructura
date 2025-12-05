@@ -4,7 +4,9 @@
  */
 package Persistencia;
 
+import ObjetosNegocio.Calificacion;
 import ObjetosNegocio.Contacto;
+import ObjetosNegocio.Curso;
 import ObjetosNegocio.Direccion;
 import ObjetosNegocio.Estudiante;
 import org.junit.jupiter.api.Test;
@@ -67,10 +69,17 @@ public class RegistroEstudiantesTest {
         Direccion d = new Direccion("Av. Reforma", "20", "Industrial", "Hermosillo");
         Contacto c = new Contacto("6625554321", "correo3@example.com", d);
         Estudiante e1 = new Estudiante("A003", "Luis Martinez", c);
+        Curso c1 = new Curso();
+        Curso c2 = new Curso();
+        Curso c3 = new Curso();
+        
+        Calificacion cal1 = new Calificacion(c1, 90.0);
+        Calificacion cal2 = new Calificacion(c2, 80.0);
+        Calificacion cal3 = new Calificacion(c3, 100.0);
 
-        e1.agregarCalificacion(90.0);
-        e1.agregarCalificacion(80.0);
-        e1.agregarCalificacion(100.0);
+        e1.agregarCalificacion(cal1);
+        e1.agregarCalificacion(cal2);
+        e1.agregarCalificacion(cal3);
 
         registro.agregarEstudiante(e1);
 

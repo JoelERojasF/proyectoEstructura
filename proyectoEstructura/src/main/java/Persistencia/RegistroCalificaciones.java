@@ -10,8 +10,11 @@ import ObjetosNegocio.Estudiante;
 import ObjetosNegocio.Calificacion;
 import ObjetosNegocio.Promedio;
 import EstructuraDatos.ArbolAVL;
+import EstructuraDatos.ListaEnlazadaSimple;
 import EstructuraDatos.Pila;
 import ObjetosNegocio.Accion;
+import ObjetosNegocio.SolicitudCalificacion;
+import java.util.NoSuchElementException;
 /**
  * RegistroCalificaciones.java
  * 
@@ -21,7 +24,7 @@ import ObjetosNegocio.Accion;
  */
 public class RegistroCalificaciones {
     RegistroAcciones acciones = new RegistroAcciones();
-    private Cola<Calificacion> solicitudes;
+    private Cola<SolicitudCalificacion> solicitudes;
     private RegistroEstudiantes registroEstudiantes;
 
     public RegistroCalificaciones(RegistroEstudiantes registroEstudiantes) {
@@ -30,26 +33,33 @@ public class RegistroCalificaciones {
     }
 
     // Registrar una nueva solicitud en la cola
-    public void registrarSolicitud(Calificacion solicitud) {
+    public void registrarSolicitud(SolicitudCalificacion solicitud) {
         solicitudes.agregar(solicitud); // FIFO
     }
 
     // Procesar solicitudes en orden FIFO
     public void procesarTodasSolicitudes() throws Exception {
+        if (solicitudes.vacio()) {
+            throw new NoSuchElementException("No hay solicitudes pendientes");
+        }
         while (!solicitudes.vacio()) {
-            Calificacion solicitud = solicitudes.eliminar(); // atiende la más antigua
-            Estudiante estudiante = registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
+            SolicitudCalificacion solicitud = solicitudes.eliminar(); // atiende la más antigua
+            Estudiante estudiante = registroEstudiantes.buscarPorMatricula(solicitud.getEstudiante().getMatricula());
             if (estudiante != null) {
                 
-                Double calificacionNueva = solicitud.getNuevaCalificacion();
-                Double calificacionAnterior = 0.0;
+                Double calificacionNueva = solicitud.getCalificacion().getCalificacion();
+                Calificacion calificacionAnterior = new Calificacion(solicitud.getCalificacion().getCurso(), 0.0);
                 
                 if (!estudiante.getCalificaciones().vacio()) {
-                    int ultimaPos = estudiante.getCalificaciones().tamanio() - 1;
-                    calificacionAnterior = estudiante.getCalificaciones().obtener(ultimaPos);
+                    ListaEnlazadaSimple<Calificacion> lista = estudiante.getCalificaciones();
+                    for(Calificacion i : lista){
+                        if(i.getCurso().equals(solicitud.getCalificacion().getCurso())){
+                            calificacionAnterior = i;
+                        }
+                    }
                 }
                 
-                estudiante.agregarCalificacion(calificacionNueva);
+                estudiante.agregarCalificacion(solicitud.getCalificacion());
                 
                 Accion accion = new Accion(
                 Accion.TipoAccion.CALIFICACION,
@@ -63,16 +73,6 @@ public class RegistroCalificaciones {
             }
         }
     }
-
-    public void mostrarListadoPromedios() throws Exception {
-        ArbolAVL<Promedio> arbolConPromedios = new ArbolAVL<>();
-
-        for (Estudiante e : registroEstudiantes.obtenerTodos()) {
-            arbolConPromedios.insertar(new Promedio(e.calcularPromedio(), e));
-        }
-
-        System.out.println(arbolConPromedios.toString()); // recorrido in-orden del AVL
-    }
     
     /**
      * Procesa la siguiente solicitud de calificacion en la cola.
@@ -80,34 +80,36 @@ public class RegistroCalificaciones {
      * Actualiza la calificación del estudiante
      * Registra la acción en la pila para poder deshacer
      */
-    public void procesarSiguienteSolicitud() {
+    public void procesarSiguienteSolicitud() throws Exception {
         if (solicitudes.vacio()) {
-            System.out.println("No hay solicitudes pendientes.");
-            return;
+            throw new NoSuchElementException("No hay solicitudes pendientes");
         }
 
-        try {
+//        try {
             // 1. Tomar la siguiente solicitud
-            Calificacion solicitud = solicitudes.eliminar();
+            SolicitudCalificacion solicitud = solicitudes.eliminar();
 
             // 2. Buscar estudiante en el registro usando la matrícula
-            Estudiante estudiante = registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
+            Estudiante estudiante = registroEstudiantes.buscarPorMatricula(solicitud.getEstudiante().getMatricula());
             if (estudiante == null) {
-                System.out.println("No se encontró estudiante con matrícula: " + solicitud.getMatricula());
-                return;
+                throw new NoSuchElementException("Estudiante de la solicitud no encontrado");
             }
 
-            Double calificacionNueva = solicitud.getNuevaCalificacion();
-            Double calificacionAnterior = null;
+            Double calificacionNueva = solicitud.getCalificacion().getCalificacion();
+                Calificacion calificacionAnterior = new Calificacion(solicitud.getCalificacion().getCurso(), 0.0);
 
             // 3. Guardar calificación anterior (si existe)
             if (!estudiante.getCalificaciones().vacio()) {
-                int ultimaPos = estudiante.getCalificaciones().tamanio() - 1;
-                calificacionAnterior = estudiante.getCalificaciones().obtener(ultimaPos);
-            }
+                    ListaEnlazadaSimple<Calificacion> lista = estudiante.getCalificaciones();
+                    for(Calificacion i : lista){
+                        if(i.getCurso().equals(solicitud.getCalificacion().getCurso())){
+                            calificacionAnterior = i;
+                        }
+                    }
+                }
 
             // 4. Agregar la nueva calificación
-            estudiante.getCalificaciones().agregar(calificacionNueva);
+            estudiante.agregarCalificacion(solicitud.getCalificacion());
 
             // 5. Registrar acción en la pila
             Accion accion = new Accion(
@@ -122,17 +124,32 @@ public class RegistroCalificaciones {
 
             System.out.println("Procesada solicitud: " + estudiante.getNombreCompleto() +
                                " nueva calificación = " + calificacionNueva);
-        } catch (Exception e) {
-            System.out.println("Error al procesar solicitud: " + e.getMessage());
+//        } catch (Exception e) {
+//            System.out.println("Error al procesar solicitud: " + e.getMessage());
+//        }
+
+    }
+    
+    public ListaEnlazadaSimple<Promedio> obtenerListadoPromedios() throws Exception {
+        ArbolAVL<Promedio> arbolConPromedios = new ArbolAVL<>();
+
+        for (Estudiante e : registroEstudiantes.obtenerTodos()) {
+            arbolConPromedios.insertar(new Promedio(e.calcularPromedio(), e));
         }
 
-        }
+        return arbolConPromedios.obtenerTodos();
+    }
+    
+    public Cola<SolicitudCalificacion> obtenerListaSolicitudes(){
+        return solicitudes;
+    }
+    
         
     public Estudiante getEstudianteSiguienteSolicitud() {
         if (solicitudes.vacio()) return null;
         try {
-            Calificacion solicitud = solicitudes.obtener(0);
-            return registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
+            SolicitudCalificacion solicitud = solicitudes.obtener(0);
+            return registroEstudiantes.buscarPorMatricula(solicitud.getEstudiante().getMatricula());
         } catch (Exception e) {
             return null;
         }

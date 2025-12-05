@@ -2,6 +2,7 @@ Persistencia\RegistroCalificacionesTest.class
 EstructuraDatos\ListaEnlazadaSimpleTest.class
 EstructuraDatos\ArbolBinarioBusquedaTest.class
 EstructuraDatos\ColaTest.class
+Persistencia\RegistroInscripcionesTest.class
 EstructuraDatos\PilaTest.class
 Persistencia\RegistroEstudiantesTest.class
 Persistencia\RegistroCursosTest.class

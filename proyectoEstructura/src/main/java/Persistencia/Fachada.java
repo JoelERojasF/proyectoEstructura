@@ -5,11 +5,14 @@
 package Persistencia;
 
 import EstructuraDatos.ListaEnlazadaSimple;
+import ObjetosNegocio.Calificacion;
 import ObjetosNegocio.Contacto;
 import ObjetosNegocio.Curso;
 import ObjetosNegocio.Direccion;
 import ObjetosNegocio.Estudiante;
 import ObjetosNegocio.Inscripcion;
+import ObjetosNegocio.Promedio;
+import ObjetosNegocio.SolicitudCalificacion;
 import Validadores.Validadores;
 import java.util.NoSuchElementException;
 
@@ -22,7 +25,7 @@ import java.util.NoSuchElementException;
  */
 public class Fachada {
     RegistroEstudiantes estudiantes = new RegistroEstudiantes();
-//    RegistroCalificaciones calificaciones = new RegistroCalificaciones();
+    RegistroCalificaciones calificaciones = new RegistroCalificaciones(estudiantes);
     RegistroCursos cursos = new RegistroCursos();
     RegistroInscripciones inscripciones = new RegistroInscripciones();
     RegistroAcciones acciones = new RegistroAcciones();
@@ -55,8 +58,7 @@ public class Fachada {
         Direccion d = new Direccion(calle, numero, colonia, ciudad);
         Contacto c= new Contacto(telefono, email, d);
         
-        String matricula = String.format("EST%04d", estudiantes.tamanio()+1);
-        Estudiante e = new Estudiante(matricula, nombre, c);
+        Estudiante e = new Estudiante(crearIdEstudiante(), nombre, c);
         
         estudiantes.agregarEstudiante(e);
     }
@@ -87,8 +89,7 @@ public class Fachada {
         }
         int cupo= Integer.parseInt(capacidad);
         
-        String clave = String.format("CUR%04d", cursos.tamanio()+1);
-        Curso c  = new Curso(clave, nombre, cupo);
+        Curso c  = new Curso(crearIdCurso(), nombre, cupo);
         cursos.agregarCurso(c);
     }
     
@@ -113,8 +114,7 @@ public class Fachada {
         Curso c = cursos.buscarPorClave(claveCurso);
         Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
         
-        String clave = String.format("INS%04d", inscripciones.tamanio()+1);
-        Inscripcion i = new Inscripcion(clave, e, c);
+        Inscripcion i = new Inscripcion(crearIdInscripcion(), e, c);
         inscripciones.inscribirEstudianteEnCurso(i);
     }
     
@@ -142,46 +142,94 @@ public class Fachada {
         return inscripciones.obtenerInscripciones();
     }
     
-    // Clase auxiliar interna
-    private static class SolicitudCalificacion {
-        private String matriculaEstudiante;
-        private double calificacion;
-
-        public SolicitudCalificacion(String matriculaEstudiante, double calificacion) {
-            this.matriculaEstudiante = matriculaEstudiante;
-            this.calificacion = calificacion;
-        }
-
-        public String getMatriculaEstudiante() { return matriculaEstudiante; }
-        public double getCalificacion() { return calificacion; }
-
-        @Override
-        public String toString() {
-            return "SolicitudCalificacion{matricula=" + matriculaEstudiante + ", calificacion=" + calificacion + "}";
-        }
-    }
-    
-    private ListaEnlazadaSimple<SolicitudCalificacion> solicitudes = new ListaEnlazadaSimple<>();
-
-    public void enviarSolicitudCalificacion(String matriculaEstudiante, double calificacion) {
-        Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
-        if (e == null) throw new NoSuchElementException("Estudiante no encontrado");
-
-        SolicitudCalificacion solicitud = new SolicitudCalificacion(matriculaEstudiante, calificacion);
-        solicitudes.agregar(solicitud);
-    }
-
-    public ListaEnlazadaSimple<SolicitudCalificacion> listarSolicitudesCalificacion() {
-        return solicitudes;
-    }
+//    // Clase auxiliar interna
+//    private static class SolicitudCalificacion {
+//        private String matriculaEstudiante;
+//        private double calificacion;
+//
+//        public SolicitudCalificacion(String matriculaEstudiante, double calificacion) {
+//            this.matriculaEstudiante = matriculaEstudiante;
+//            this.calificacion = calificacion;
+//        }
+//
+//        public String getMatriculaEstudiante() { return matriculaEstudiante; }
+//        public double getCalificacion() { return calificacion; }
+//
+//        @Override
+//        public String toString() {
+//            return "SolicitudCalificacion{matricula=" + matriculaEstudiante + ", calificacion=" + calificacion + "}";
+//        }
+//    }
+//    
+//    private ListaEnlazadaSimple<SolicitudCalificacion> solicitudes = new ListaEnlazadaSimple<>();
+//
+//    public void enviarSolicitudCalificacion(String matriculaEstudiante, double calificacion) {
+//        Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
+//        if (e == null) throw new NoSuchElementException("Estudiante no encontrado");
+//
+//        SolicitudCalificacion solicitud = new SolicitudCalificacion(matriculaEstudiante, calificacion);
+//        solicitudes.agregar(solicitud);
+//    }
+//
+//    public ListaEnlazadaSimple<SolicitudCalificacion> listarSolicitudesCalificacion() {
+//        return solicitudes;
+//    }
 
     
     //calificaciones
+    public void registrarSolicitudCalificacion(String matriculaEstudiante, String matriculaCurso, double calificacion){
+        if(!val.validarCalificacion(matriculaCurso)){
+            throw new IllegalArgumentException("calificacion invalida");
+        }
+        
+        Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
+        if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
+        Curso c = cursos.buscarPorClave(matriculaCurso);
+        if(c == null) throw new NoSuchElementException("Curso no encontrado");
+        
+        Calificacion cal = new Calificacion(c, calificacion);
+        SolicitudCalificacion s = new SolicitudCalificacion(e, cal);
+        
+        calificaciones.registrarSolicitud(s);
+    }
     
-    //aun no estoy seguro de como implementarlos aqui
     
+    public ListaEnlazadaSimple<Promedio> listarPromedios() throws Exception{
+        return calificaciones.obtenerListadoPromedios();
+    } 
+        
     //acciones
     public void deshacerUltimaAccion() throws Exception{
         acciones.deshacerUltimaAccion();
+    }
+    
+    private String crearIdEstudiante(){
+        int numero =estudiantes.tamanio()+1;
+        String matricula = String.format("EST%04d", numero);
+        while(estudiantes.buscarPorMatricula(matricula) != null){
+            numero++;
+            matricula = String.format("EST%04d", numero);
+        }
+        return matricula;
+    }
+    
+    private String crearIdCurso(){
+        int numero =cursos.tamanio()+1;
+        String matricula = String.format("CUR%04d", numero);
+        while(cursos.buscarPorClave(matricula) != null){
+            numero++;
+            matricula = String.format("CUR%04d", numero);
+        }
+        return matricula;
+    }
+    
+    private String crearIdInscripcion(){
+        int numero =inscripciones.tamanio()+1;
+        String matricula = String.format("INS%04d", numero);
+        while(inscripciones.buscarInscripcion(matricula) != null){
+            numero++;
+            matricula = String.format("INS%04d", numero);
+        }
+        return matricula;
     }
 }
