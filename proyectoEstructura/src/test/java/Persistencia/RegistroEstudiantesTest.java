@@ -9,6 +9,7 @@ import ObjetosNegocio.Contacto;
 import ObjetosNegocio.Curso;
 import ObjetosNegocio.Direccion;
 import ObjetosNegocio.Estudiante;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,8 +50,7 @@ public class RegistroEstudiantesTest {
 
         registro.agregarEstudiante(e1);
 
-        // Ahora esperamos una excepción en lugar de null
-        assertThrows(java.util.NoSuchElementException.class, () -> {
+        assertThrows(NoSuchElementException.class, () -> {
             registro.buscarPorMatricula("EST9999");
         });
     }
@@ -65,18 +65,14 @@ public class RegistroEstudiantesTest {
         Curso c2 = new Curso("CUR0002", "Historia", 30);
         Curso c3 = new Curso("CUR0003", "Programación", 30);
         
-        Calificacion cal1 = new Calificacion(c1, 90.0);
-        Calificacion cal2 = new Calificacion(c2, 80.0);
-        Calificacion cal3 = new Calificacion(c3, 100.0);
-
-        e1.agregarCalificacion(cal1);
-        e1.agregarCalificacion(cal2);
-        e1.agregarCalificacion(cal3);
+        e1.agregarCalificacion(new Calificacion(c1, 90.0));
+        e1.agregarCalificacion(new Calificacion(c2, 80.0));
+        e1.agregarCalificacion(new Calificacion(c3, 100.0));
 
         registro.agregarEstudiante(e1);
 
         Estudiante buscado = registro.buscarPorMatricula("EST0003");
-        assertEquals(90.0, buscado.calcularPromedio(), 0.01); // (90+80+100)/3 = 90
+        assertEquals(90.0, buscado.calcularPromedio(), 0.01);
     }
 
     @Test
@@ -98,3 +94,6 @@ public class RegistroEstudiantesTest {
         assertNotNull(registro.buscarPorMatricula("EST0002"));
     }
 }
+
+
+

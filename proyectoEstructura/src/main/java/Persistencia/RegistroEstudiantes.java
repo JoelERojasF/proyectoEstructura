@@ -9,6 +9,7 @@ import EstructuraDatos.ListaEnlazadaSimple;
 import EstructuraDatos.NodoSimple;
 import ObjetosNegocio.Accion;
 import ObjetosNegocio.Estudiante;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -56,8 +57,13 @@ public class RegistroEstudiantes {
     
     public Estudiante buscarPorMatricula(String matricula) {
         Estudiante matriculaEstudiante = new Estudiante(matricula, "", null);
-        return arbol.buscar(matriculaEstudiante);
+        Estudiante encontrado = arbol.buscar(matriculaEstudiante);
+        if (encontrado == null) {
+            throw new NoSuchElementException("No se encontró estudiante con matrícula: " + matricula);
+        }
+        return encontrado;
     }
+
     
     /**
      * Solo en consola

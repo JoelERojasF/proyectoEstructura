@@ -1,47 +1,27 @@
 -------------------------------------------------------------------------------
 Test set: Persistencia.RegistroEstudiantesTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 3, Errors: 1, Skipped: 0, Time elapsed: 0.076 s <<< FAILURE! -- in Persistencia.RegistroEstudiantesTest
-Persistencia.RegistroEstudiantesTest.testMostrarEstudiantes -- Time elapsed: 0.033 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: not <null>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:30)
-	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:304)
-	at Persistencia.RegistroEstudiantesTest.testMostrarEstudiantes(RegistroEstudiantesTest.java:97)
+Tests run: 4, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.058 s <<< FAILURE! -- in Persistencia.RegistroEstudiantesTest
+Persistencia.RegistroEstudiantesTest.testMostrarEstudiantes -- Time elapsed: 0.024 s <<< ERROR!
+java.util.NoSuchElementException: No se encontró estudiante con matrícula: EST0001
+	at Persistencia.RegistroEstudiantes.buscarPorMatricula(RegistroEstudiantes.java:62)
+	at Persistencia.RegistroEstudiantesTest.testMostrarEstudiantes(RegistroEstudiantesTest.java:93)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-Persistencia.RegistroEstudiantesTest.testBuscarEstudianteNoExistente -- Time elapsed: 0.005 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: Expected java.util.NoSuchElementException to be thrown, but nothing was thrown.
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
-	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
-	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3115)
-	at Persistencia.RegistroEstudiantesTest.testBuscarEstudianteNoExistente(RegistroEstudiantesTest.java:53)
+Persistencia.RegistroEstudiantesTest.testCalificacionesYPromedio -- Time elapsed: 0.003 s <<< ERROR!
+java.util.NoSuchElementException: No se encontró estudiante con matrícula: EST0003
+	at Persistencia.RegistroEstudiantes.buscarPorMatricula(RegistroEstudiantes.java:62)
+	at Persistencia.RegistroEstudiantesTest.testCalificacionesYPromedio(RegistroEstudiantesTest.java:74)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 
-Persistencia.RegistroEstudiantesTest.testCalificacionesYPromedio -- Time elapsed: 0.006 s <<< ERROR!
-java.lang.NullPointerException: Cannot invoke "ObjetosNegocio.Estudiante.calcularPromedio()" because "buscado" is null
-	at Persistencia.RegistroEstudiantesTest.testCalificacionesYPromedio(RegistroEstudiantesTest.java:79)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Persistencia.RegistroEstudiantesTest.testAgregarYBuscarEstudiante -- Time elapsed: 0.002 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: not <null>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:30)
-	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:304)
-	at Persistencia.RegistroEstudiantesTest.testAgregarYBuscarEstudiante(RegistroEstudiantesTest.java:39)
+Persistencia.RegistroEstudiantesTest.testAgregarYBuscarEstudiante -- Time elapsed: 0.001 s <<< ERROR!
+java.util.NoSuchElementException: No se encontró estudiante con matrícula: EST0001
+	at Persistencia.RegistroEstudiantes.buscarPorMatricula(RegistroEstudiantes.java:62)
+	at Persistencia.RegistroEstudiantesTest.testAgregarYBuscarEstudiante(RegistroEstudiantesTest.java:38)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)

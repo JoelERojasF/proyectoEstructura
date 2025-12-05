@@ -342,64 +342,93 @@ public class Ventana_principal extends JFrame {
 
 //  Cursos 
     class PanelAgregarCurso extends JPanel {
-        private JTextField txtNombreCurso;
-        private JButton btnAgregar;
-        private Fachada fachada;
-        private Image fondoAgregarCurso;
+    private JTextField txtNombreCurso;
+    private JTextField txtCapacidad;   // campo para capacidad
+    private JButton btnAgregar;
+    private Fachada fachada;
+    private Image fondoAgregarCurso;
 
-        public PanelAgregarCurso(Fachada fachada) {
-            this.fachada = fachada;
+    public PanelAgregarCurso(Fachada fachada) {
+        this.fachada = fachada;
 
-            try {
-                // Carga la imagen desde archivo (ajusta la ruta a tu imagen)
-                fondoAgregarCurso = ImageIO.read(new File("imagenes/fondoAgregarCurso.png"));
-            } catch (Exception e) {
-                System.out.println("No se pudo cargar la imagen de fondo: " + e.getMessage());
-            }
-
-            setLayout(new BorderLayout());
-
-            JPanel centro = new JPanel();
-            centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
-            centro.setOpaque(false); // transparente para que se vea el fondo
-
-            JPanel filaNombre = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-            filaNombre.setOpaque(false);
-            filaNombre.add(new JLabel("Nombre curso:"));
-            txtNombreCurso = new JTextField(15);
-            filaNombre.add(txtNombreCurso);
-            centro.add(filaNombre);
-
-            JPanel filaBoton = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-            filaBoton.setOpaque(false);
-            btnAgregar = new JButton("Agregar");
-            btnAgregar.setPreferredSize(new Dimension(120, 30));
-            filaBoton.add(btnAgregar);
-            centro.add(filaBoton);
-
-            add(centro, BorderLayout.CENTER);
-
-            btnAgregar.addActionListener(e -> {
-                try {
-                    String nombre = txtNombreCurso.getText().trim();
-                    fachada.agregarCurso(nombre, "15");
-                    JOptionPane.showMessageDialog(this, "Curso agregado correctamente");
-                    txtNombreCurso.setText("");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            });
+        try {
+            fondoAgregarCurso = ImageIO.read(new File("imagenes/fondoAgregarCurso.png"));
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la imagen de fondo: " + e.getMessage());
         }
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (fondoAgregarCurso != null) {
-                // Dibuja la imagen escalada al tamaño del panel
-                g.drawImage(fondoAgregarCurso, 0, 0, getWidth(), getHeight(), this);
+
+        setLayout(new BorderLayout());
+
+        JPanel centro = new JPanel();
+        centro.setLayout(new BoxLayout(centro, BoxLayout.Y_AXIS));
+        centro.setOpaque(false);
+
+        // Fila nombre
+        JPanel filaNombre = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        filaNombre.setOpaque(false);
+        filaNombre.add(new JLabel("Nombre curso:"));
+        txtNombreCurso = new JTextField(15);
+        filaNombre.add(txtNombreCurso);
+        centro.add(filaNombre);
+
+        // Fila capacidad
+        JPanel filaCapacidad = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        filaCapacidad.setOpaque(false);
+        filaCapacidad.add(new JLabel("Capacidad:"));
+        txtCapacidad = new JTextField(5);
+        filaCapacidad.add(txtCapacidad);
+        centro.add(filaCapacidad);
+
+        // Fila botón
+        JPanel filaBoton = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        filaBoton.setOpaque(false);
+        btnAgregar = new JButton("Agregar");
+        btnAgregar.setPreferredSize(new Dimension(120, 30));
+        filaBoton.add(btnAgregar);
+        centro.add(filaBoton);
+
+        add(centro, BorderLayout.CENTER);
+
+        // Acción del botón
+        btnAgregar.addActionListener(e -> {
+            try {
+                String nombre = txtNombreCurso.getText().trim();
+                String capacidadStr = txtCapacidad.getText().trim();
+
+                if (nombre.isEmpty() || capacidadStr.isEmpty()) {
+                    throw new IllegalArgumentException("Debe ingresar nombre y capacidad");
+                }
+
+                int capacidad = Integer.parseInt(capacidadStr);
+                if (capacidad <= 0) {
+                    throw new IllegalArgumentException("La capacidad debe ser mayor que cero");
+                }
+
+                fachada.agregarCurso(nombre, String.valueOf(capacidad));
+                JOptionPane.showMessageDialog(this, "Curso agregado correctamente");
+
+                // limpiar campos
+                txtNombreCurso.setText("");
+                txtCapacidad.setText("");
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(this, "La capacidad debe ser un número entero",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
+        });
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (fondoAgregarCurso != null) {
+            g.drawImage(fondoAgregarCurso, 0, 0, getWidth(), getHeight(), this);
         }
     }
+}
+
 
     class PanelEliminarCurso extends JPanel {
     private JTextField txtClave;

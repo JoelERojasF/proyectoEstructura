@@ -32,7 +32,7 @@ public class Fachada {
     Validadores val = new Validadores();
     
     //estudiantes
-    public void agregarEstudiante(String nombre, String telefono, String email, String calle, String numero, String colonia, String ciudad){
+    public Estudiante agregarEstudiante(String nombre, String telefono, String email, String calle, String numero, String colonia, String ciudad){
         
         if(!val.validarNombreEstudiante(nombre)){
             throw new IllegalArgumentException("nombre de estudiante invalido");
@@ -61,6 +61,7 @@ public class Fachada {
         Estudiante e = new Estudiante(crearIdEstudiante(), nombre, c);
         
         estudiantes.agregarEstudiante(e);
+        return e;
     }
     
     public void eliminarEstudiante(String id){
