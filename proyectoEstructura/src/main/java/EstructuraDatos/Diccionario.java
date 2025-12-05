@@ -34,17 +34,24 @@ public class Diccionario<K, V> {
     }
 
     public void put(K clave, V valor) {
-        if(tamanio() == capacidad){
+        if (tamanio() == capacidad) {
             redimensionar();
         }
-        
+
         int indice = hash(clave);
-        for (Entrada<K,V> e : tabla[indice]) { 
+
+        // crear la lista si no existe
+        if (tabla[indice] == null) {
+            tabla[indice] = new ListaEnlazadaSimple<Entrada<K,V>>();   // o el tipo de lista que uses
+        }
+
+        for (Entrada<K, V> e : tabla[indice]) {
             if (e.getClave().equals(clave)) {
                 e.setValor(valor);
                 return;
             }
         }
+
         tabla[indice].agregar(new Entrada<>(clave, valor));
     }
 

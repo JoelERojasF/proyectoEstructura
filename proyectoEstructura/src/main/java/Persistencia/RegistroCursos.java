@@ -16,15 +16,15 @@ import ObjetosNegocio.Curso;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroCursos implements Comparable<Curso>{
-    private static Diccionario<String ,Curso> arbol;
+    private static Diccionario<String ,Curso> cursos;
     RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroCursos() {
-        arbol = new Diccionario<>();
+        cursos = new Diccionario<>();
     }
 
     public void agregarCurso(Curso curso) {
-        arbol.put(curso.getClave(),curso);
+        cursos.put(curso.getClave(), curso);
         Accion accion = new Accion(
                 Accion.TipoAccion.REGISTRO,
                 null,
@@ -37,7 +37,7 @@ public class RegistroCursos implements Comparable<Curso>{
     }
     
     public void eliminarCurso(Curso curso) throws Exception{
-        arbol.remove(curso.getClave());
+        cursos.remove(curso.getClave());
         Accion accion = new Accion(
                 Accion.TipoAccion.REGISTRO,
                 null,
@@ -50,15 +50,15 @@ public class RegistroCursos implements Comparable<Curso>{
     }
 
     public Curso buscarPorClave(String clave) {
-        return arbol.get(clave);
+        return cursos.get(clave);
     }
 
     public ListaEnlazadaSimple<Curso> mostrarCursos() {
-        return arbol.obtenerTodos();
+        return cursos.obtenerTodos();
     }
     
     public int tamanio(){
-        return arbol.tamanio();
+        return cursos.tamanio();
     }
 
     // Metodo implementado por Comparable<T>

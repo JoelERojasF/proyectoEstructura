@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: Persistencia.RegistroCursosTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.134 s <<< FAILURE! -- in Persistencia.RegistroCursosTest
-Persistencia.RegistroCursosTest.testAgregarYBuscarCurso -- Time elapsed: 0.072 s <<< FAILURE!
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.113 s <<< FAILURE! -- in Persistencia.RegistroCursosTest
+Persistencia.RegistroCursosTest.testAgregarYBuscarCurso -- Time elapsed: 0.068 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: not <null>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -10,20 +10,7 @@ org.opentest4j.AssertionFailedError: expected: not <null>
 	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
 	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:30)
 	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:304)
-	at Persistencia.RegistroCursosTest.testAgregarYBuscarCurso(RegistroCursosTest.java:36)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-
-Persistencia.RegistroCursosTest.testMostrarCursos -- Time elapsed: 0.007 s <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: not <null>
-	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
-	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
-	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
-	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:30)
-	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:304)
-	at Persistencia.RegistroCursosTest.testMostrarCursos(RegistroCursosTest.java:66)
+	at Persistencia.RegistroCursosTest.testAgregarYBuscarCurso(RegistroCursosTest.java:38)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)

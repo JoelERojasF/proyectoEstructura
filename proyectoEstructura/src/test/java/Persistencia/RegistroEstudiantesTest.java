@@ -39,6 +39,8 @@ public class RegistroEstudiantesTest {
 
         registro.agregarEstudiante(e1);
         registro.agregarEstudiante(e2);
+        
+        System.out.println("tamaño: " + registro.tamanio());
 
         Estudiante buscado1 = registro.buscarPorMatricula("A001");
         Estudiante buscado2 = registro.buscarPorMatricula("A002");

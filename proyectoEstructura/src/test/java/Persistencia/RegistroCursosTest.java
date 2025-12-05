@@ -29,6 +29,8 @@ public class RegistroCursosTest {
 
         registro.agregarCurso(c1);
         registro.agregarCurso(c2);
+        
+        System.out.println("tamaño " + registro.tamanio());
 
         Curso buscado1 = registro.buscarPorClave("C001");
         Curso buscado2 = registro.buscarPorClave("C002");
