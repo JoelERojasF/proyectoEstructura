@@ -5,6 +5,7 @@ ObjetosNegocio\Promedio.class
 interfaz\Ventana_principal$PanelListaInscritos.class
 EstructuraDatos\ILista.class
 ObjetosNegocio\Direccion.class
+interfaz\Ventana_principal$PanelEnviarSolicitud$1.class
 ObjetosNegocio\Estudiante.class
 EstructuraDatos\ListaDobleEnlazadaCircular.class
 interfaz\Ventana_principal$PanelListarCursos.class
@@ -46,4 +47,5 @@ EstructuraDatos\Pila.class
 EstructuraDatos\Diccionario$Entrada.class
 interfaz\Ventana_principal$PanelRegistrarEstudiante$1.class
 interfaz\Ventana_principal$PanelAgregarCurso.class
+interfaz\Ventana_principal$PanelInscribirEstudiante$1.class
 EstructuraDatos\ArbolBinarioBusqueda.class

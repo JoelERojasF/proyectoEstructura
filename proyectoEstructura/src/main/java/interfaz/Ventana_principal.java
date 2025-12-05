@@ -487,46 +487,84 @@ public class Ventana_principal extends JFrame {
 
     //  Inscripciones 
     class PanelInscribirEstudiante extends JPanel {
-        private JTextField txtClaveCurso;
-        private JTextField txtMatriculaEstudiante;
-        private JButton btnInscribir;
-        private Fachada fachada;
+    private JTextField txtClaveCurso;
+    private JTextField txtMatriculaEstudiante;
+    private JButton btnInscribir;
+    private Fachada fachada;
+    private Image fondo;
 
-        public PanelInscribirEstudiante() {
-            fachada = new Fachada();
+    public PanelInscribirEstudiante() {
+        fachada = new Fachada();
+        setLayout(new BorderLayout(10, 10));
 
-            setLayout(new GridLayout(0, 2, 8, 8));
-
-            // Clave del curso
-            add(new JLabel("Clave del curso:"));
-            txtClaveCurso = new JTextField();
-            add(txtClaveCurso);
-
-            // Matrícula del estudiante
-            add(new JLabel("Matrícula del estudiante:"));
-            txtMatriculaEstudiante = new JTextField();
-            add(txtMatriculaEstudiante);
-
-            // Botón
-            add(new JLabel()); // espacio vacío
-            btnInscribir = new JButton("Inscribir");
-            add(btnInscribir);
-
-            // Conexión con la fachada
-            btnInscribir.addActionListener(e -> {
-                try {
-                    fachada.agregarInscripcion(
-                        txtClaveCurso.getText(),
-                        txtMatriculaEstudiante.getText()
-                    );
-                    JOptionPane.showMessageDialog(this, "Inscripción realizada correctamente");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                            "Error", JOptionPane.ERROR_MESSAGE);
+        // Panel de imagen a la izquierda
+        JPanel panelImagen = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (fondo != null) {
+                    g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
                 }
-            });
+            }
+        };
+        try {
+            fondo = ImageIO.read(new File("imagenes/fondoInscribirEstudianteCurso.png"));
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la imagen de fondo: " + e.getMessage());
         }
+        panelImagen.setPreferredSize(new Dimension(350, 0)); // ancho fijo para la imagen
+        add(panelImagen, BorderLayout.WEST);
+
+        // Panel del formulario a la derecha
+        JPanel panelForm = new JPanel();
+        panelForm.setLayout(new BoxLayout(panelForm, BoxLayout.Y_AXIS));
+        panelForm.setOpaque(false);
+
+        JLabel lblClave = new JLabel("Clave del curso:");
+        lblClave.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(lblClave);
+
+        txtClaveCurso = new JTextField();
+        txtClaveCurso.setMaximumSize(new Dimension(180, 25)); // campo más pequeño
+        txtClaveCurso.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(txtClaveCurso);
+
+        panelForm.add(Box.createRigidArea(new Dimension(0, 10))); // espacio
+
+        JLabel lblMatricula = new JLabel("Matrícula del estudiante:");
+        lblMatricula.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(lblMatricula);
+
+        txtMatriculaEstudiante = new JTextField();
+        txtMatriculaEstudiante.setMaximumSize(new Dimension(180, 25)); // campo más pequeño
+        txtMatriculaEstudiante.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(txtMatriculaEstudiante);
+
+        panelForm.add(Box.createRigidArea(new Dimension(0, 15))); // espacio
+
+        btnInscribir = new JButton("Inscribir");
+        btnInscribir.setPreferredSize(new Dimension(120, 30));
+        btnInscribir.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(btnInscribir);
+
+        add(panelForm, BorderLayout.CENTER);
+
+        // Acción del botón
+        btnInscribir.addActionListener(e -> {
+            try {
+                fachada.agregarInscripcion(
+                    txtClaveCurso.getText(),
+                    txtMatriculaEstudiante.getText()
+                );
+                JOptionPane.showMessageDialog(this, "Inscripción realizada correctamente");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
+}
+
 
     class PanelListaInscritos extends JPanel {
 
@@ -557,48 +595,85 @@ public class Ventana_principal extends JFrame {
     }
 
     class PanelEnviarSolicitud extends JPanel {
-        private JTextField txtMatricula;
-        private JSpinner spCalificacion;
-        private JButton btnEnviar;
-        private Fachada fachada;
+    private JTextField txtMatricula;
+    private JSpinner spCalificacion;
+    private JButton btnEnviar;
+    private Fachada fachada;
+    private Image fondo;
 
-        public PanelEnviarSolicitud() {
-            fachada = new Fachada();
+    public PanelEnviarSolicitud() {
+        fachada = new Fachada();
+        setLayout(new BorderLayout(10, 10));
 
-            setLayout(new GridLayout(0, 2, 8, 8));
-
-            // Matrícula
-            add(new JLabel("Matrícula:"));
-            txtMatricula = new JTextField();
-            add(txtMatricula);
-
-            // Calificación
-            add(new JLabel("Calificación:"));
-            spCalificacion = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.1));
-            add(spCalificacion);
-
-            // Botón
-            add(new JLabel()); // espacio vacío
-            btnEnviar = new JButton("Enviar solicitud");
-            add(btnEnviar);
-
-            // Conexión con la fachada
-            btnEnviar.addActionListener(e -> {
-                try {
-                    String matricula = txtMatricula.getText();
-                    double calificacion = (double) spCalificacion.getValue();
-
-                     fachada.enviarSolicitudCalificacion(matricula, calificacion);
-
-                    JOptionPane.showMessageDialog(this, "Solicitud enviada correctamente");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                            "Error", JOptionPane.ERROR_MESSAGE);
+        // Panel de imagen a la izquierda
+        JPanel panelImagen = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (fondo != null) {
+                    g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
                 }
-            });
+            }
+        };
+        try {
+            fondo = ImageIO.read(new File("imagenes/fondoSolicitudCalificacion.png"));
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la imagen de fondo: " + e.getMessage());
         }
-        
+        panelImagen.setPreferredSize(new Dimension(350, 0)); // ancho más grande para la imagen
+        add(panelImagen, BorderLayout.WEST);
+
+        // Panel del formulario a la derecha
+        JPanel panelForm = new JPanel();
+        panelForm.setLayout(new BoxLayout(panelForm, BoxLayout.Y_AXIS));
+        panelForm.setOpaque(false);
+
+        JLabel lblMatricula = new JLabel("Matrícula:");
+        lblMatricula.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(lblMatricula);
+
+        txtMatricula = new JTextField();
+        txtMatricula.setMaximumSize(new Dimension(180, 25)); // campo más pequeño
+        txtMatricula.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(txtMatricula);
+
+        panelForm.add(Box.createRigidArea(new Dimension(0, 10))); // espacio
+
+        JLabel lblCalificacion = new JLabel("Calificación:");
+        lblCalificacion.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(lblCalificacion);
+
+        spCalificacion = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 10.0, 0.1));
+        spCalificacion.setMaximumSize(new Dimension(100, 25)); // spinner más pequeño
+        spCalificacion.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(spCalificacion);
+
+        panelForm.add(Box.createRigidArea(new Dimension(0, 15))); // espacio
+
+        btnEnviar = new JButton("Enviar solicitud");
+        btnEnviar.setPreferredSize(new Dimension(150, 30));
+        btnEnviar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelForm.add(btnEnviar);
+
+        add(panelForm, BorderLayout.CENTER);
+
+        // Acción del botón
+        btnEnviar.addActionListener(e -> {
+            try {
+                String matricula = txtMatricula.getText();
+                double calificacion = (double) spCalificacion.getValue();
+
+                fachada.enviarSolicitudCalificacion(matricula, calificacion);
+
+                JOptionPane.showMessageDialog(this, "Solicitud enviada correctamente");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
+}
+
 
     class PanelProcesarSolicitud extends JPanel {
 
