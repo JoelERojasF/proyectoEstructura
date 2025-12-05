@@ -51,11 +51,12 @@ public class Curso implements Comparable<Curso>{
     public boolean inscribir(Estudiante estudiante) {
         if (listaEstudiantes.tamanio() < cupoMaximo) {
             listaEstudiantes.agregar(estudiante);
+            roles.agregar(estudiante);
             System.out.println("Estudiante inscrito: " + estudiante.getNombreCompleto());
             return true;
         } else {
             System.out.println("Curso lleno, se envía a lista de espera: " + estudiante.getNombreCompleto());
-            listaEspera.agregar(estudiante);  
+            agregarAListaEspera(estudiante);  
             return false;
         }
     }
@@ -66,17 +67,22 @@ public class Curso implements Comparable<Curso>{
      * @param estudiante Estudiante a remover.
      * @return true si se removio, false si no estaba inscrito.
      */
-    public boolean removerInscrito(Estudiante estudiante) {
+    public Estudiante removerInscrito(Estudiante estudiante) throws Exception {
         int pos = listaEstudiantes.indexOf(estudiante);
         if (pos != -1) {
-            try {
-                listaEstudiantes.eliminar(pos);
-                return true;
-            } catch (Exception ex) {
-                System.out.println("Error al remover estudiante: " + ex.getMessage());
+                Estudiante e =listaEstudiantes.eliminar(pos);
+                int posR = roles.indexOf(estudiante);
+                roles.eliminar(posR);
+                inscribirTodosEstudiantesEspera();
+                return e;
+        }else{
+            int posE = listaEspera.indexOf(estudiante);
+            if(posE != -1){
+                Estudiante e =listaEspera.eliminar(posE);
+                return e;
             }
         }
-        return false;
+        return null;
     }
     
     public void agregarAListaEspera(Estudiante estudiante) {
@@ -102,6 +108,20 @@ public class Curso implements Comparable<Curso>{
         roles.eliminar(0);
         // Nuevo tutor/lider
         return roles.obtener(0);
+    }
+    
+    public void inscribirSiguienteEstudianteEspera() throws Exception{
+        if (listaEstudiantes.tamanio() < cupoMaximo && listaEspera.tamanio() > 0) {
+            Estudiante e =listaEspera.eliminar(0);
+            listaEstudiantes.agregar(e);
+            roles.agregar(e);
+        }
+    }
+    
+    public void inscribirTodosEstudiantesEspera() throws Exception{
+        while(listaEstudiantes.tamanio() < cupoMaximo && listaEspera.tamanio() > 0){
+            inscribirSiguienteEstudianteEspera();
+        }
     }
 
     public int getCupoMaximo() {

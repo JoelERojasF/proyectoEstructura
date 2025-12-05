@@ -48,7 +48,7 @@ public class RegistroCalificacionesTest {
         registroCalificaciones.registrarSolicitud(solicitud);
 
         // Procesar
-        registroCalificaciones.procesarSiguiente();
+        registroCalificaciones.procesarSiguienteSolicitud();
 
         Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
         assertEquals(95.0, e1.getCalificaciones().obtener(0));
@@ -59,7 +59,7 @@ public class RegistroCalificacionesTest {
         Calificacion solicitud = new Calificacion("002", 80.0);
         registroCalificaciones.registrarSolicitud(solicitud);
 
-        registroCalificaciones.procesarSiguiente();
+        registroCalificaciones.procesarSiguienteSolicitud();
 
         // Última acción debe ser sobre Luis
         Estudiante ultimo = registroCalificaciones.getEstudianteUltimaAccion();
@@ -71,13 +71,11 @@ public class RegistroCalificacionesTest {
         Calificacion solicitud = new Calificacion("001", 70.0);
         registroCalificaciones.registrarSolicitud(solicitud);
 
-        registroCalificaciones.procesarSiguiente();
+        registroCalificaciones.procesarSiguienteSolicitud();
 
         Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
         assertEquals(70.0, e1.getCalificaciones().obtener(0));
 
-        // Deshacer
-        registroCalificaciones.deshacer();
 
         // Lista de calificaciones debe estar vacía otra vez
         assertTrue(e1.getCalificaciones().vacio());
@@ -89,7 +87,7 @@ public class RegistroCalificacionesTest {
         registroCalificaciones.registrarSolicitud(new Calificacion("001", 90.0));
         registroCalificaciones.registrarSolicitud(new Calificacion("002", 80.0));
 
-        registroCalificaciones.procesarSolicitudes();
+        registroCalificaciones.procesarTodasSolicitudes();
 
         Estudiante e1 = registroEstudiantes.buscarPorMatricula("001");
         Estudiante e2 = registroEstudiantes.buscarPorMatricula("002");

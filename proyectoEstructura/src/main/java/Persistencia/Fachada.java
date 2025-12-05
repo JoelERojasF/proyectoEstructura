@@ -25,6 +25,7 @@ public class Fachada {
 //    RegistroCalificaciones calificaciones = new RegistroCalificaciones();
     RegistroCursos cursos = new RegistroCursos();
     RegistroInscripciones inscripciones = new RegistroInscripciones();
+    RegistroAcciones acciones = new RegistroAcciones();
     Validadores val = new Validadores();
     
     //estudiantes
@@ -178,4 +179,9 @@ public class Fachada {
     //calificaciones
     
     //aun no estoy seguro de como implementarlos aqui
+    
+    //acciones
+    public void deshacerUltimaAccion() throws Exception{
+        acciones.deshacerUltimaAccion();
+    }
 }

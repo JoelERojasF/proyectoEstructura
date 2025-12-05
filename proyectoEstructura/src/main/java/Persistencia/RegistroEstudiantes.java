@@ -7,6 +7,7 @@ package Persistencia;
 import EstructuraDatos.ArbolBinarioBusqueda;
 import EstructuraDatos.ListaEnlazadaSimple;
 import EstructuraDatos.NodoSimple;
+import ObjetosNegocio.Accion;
 import ObjetosNegocio.Estudiante;
 
 
@@ -20,6 +21,7 @@ import ObjetosNegocio.Estudiante;
  */
 public class RegistroEstudiantes {
     private static ArbolBinarioBusqueda<Estudiante> arbol;
+    RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroEstudiantes() {
         arbol = new ArbolBinarioBusqueda<>();
@@ -27,11 +29,29 @@ public class RegistroEstudiantes {
 
     public void agregarEstudiante(Estudiante estudiante) {
         arbol.insertar(estudiante);
+        Accion accion = new Accion(
+                Accion.TipoAccion.REGISTRO,
+                estudiante,
+                null,
+                -1.0,
+                -1.0,
+                true
+            );
+            acciones.registrarAccion(accion);
     }
     
     public void eliminarEstudiante(Estudiante estudiante) {
 //        Estudiante estudiante = new Estudiante(matricula, "", null);
         arbol.eliminar(estudiante);
+        Accion accion = new Accion(
+                Accion.TipoAccion.REGISTRO,
+                estudiante,
+                null,
+                -1.0,
+                -1.0,
+                false
+            );
+            acciones.registrarAccion(accion);
     }
     
     public Estudiante buscarPorMatricula(String matricula) {

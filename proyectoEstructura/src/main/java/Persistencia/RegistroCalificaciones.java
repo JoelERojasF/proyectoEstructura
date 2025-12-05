@@ -20,7 +20,7 @@ import ObjetosNegocio.Accion;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroCalificaciones {
-    private Pila<Accion> acciones = new Pila<>(); // Requerida en el documento
+    RegistroAcciones acciones = new RegistroAcciones();
     private Cola<Calificacion> solicitudes;
     private RegistroEstudiantes registroEstudiantes;
 
@@ -35,28 +35,32 @@ public class RegistroCalificaciones {
     }
 
     // Procesar solicitudes en orden FIFO
-    public void procesarSolicitudes() throws Exception {
+    public void procesarTodasSolicitudes() throws Exception {
         while (!solicitudes.vacio()) {
             Calificacion solicitud = solicitudes.eliminar(); // atiende la más antigua
             Estudiante estudiante = registroEstudiantes.buscarPorMatricula(solicitud.getMatricula());
             if (estudiante != null) {
-                estudiante.agregarCalificacion(solicitud.getNuevaCalificacion());
+                
+                Double calificacionNueva = solicitud.getNuevaCalificacion();
+                Double calificacionAnterior = 0.0;
+                
+                if (!estudiante.getCalificaciones().vacio()) {
+                    int ultimaPos = estudiante.getCalificaciones().tamanio() - 1;
+                    calificacionAnterior = estudiante.getCalificaciones().obtener(ultimaPos);
+                }
+                
+                estudiante.agregarCalificacion(calificacionNueva);
+                
+                Accion accion = new Accion(
+                Accion.TipoAccion.CALIFICACION,
+                estudiante,
+                null,
+                calificacionAnterior,
+                calificacionNueva,
+                true
+            );
+            acciones.registrarAccion(accion);
             }
-        }
-    }
-    
-    public void deshacer() {
-        if (acciones.vacio()) {
-            System.out.println("No hay acciones para deshacer.");
-            return;
-        }
-
-        try {
-            Accion ultima = acciones.eliminar();
-            ultima.revertir();
-            System.out.println("Se deshizo la accion: " + ultima);
-        } catch (Exception e) {
-            System.out.println("Error al deshacer accion: " + e.getMessage());
         }
     }
 
@@ -76,7 +80,7 @@ public class RegistroCalificaciones {
      * Actualiza la calificación del estudiante
      * Registra la acción en la pila para poder deshacer
      */
-    public void procesarSiguiente() {
+    public void procesarSiguienteSolicitud() {
         if (solicitudes.vacio()) {
             System.out.println("No hay solicitudes pendientes.");
             return;
@@ -111,9 +115,10 @@ public class RegistroCalificaciones {
                 estudiante,
                 null,
                 calificacionAnterior,
-                calificacionNueva
+                calificacionNueva,
+                true
             );
-            acciones.agregar(accion);
+            acciones.registrarAccion(accion);
 
             System.out.println("Procesada solicitud: " + estudiante.getNombreCompleto() +
                                " nueva calificación = " + calificacionNueva);
@@ -136,7 +141,7 @@ public class RegistroCalificaciones {
     public Estudiante getEstudianteUltimaAccion() {
         if (acciones.vacio()) return null;
         try {
-            return acciones.obtener(0).getEstudiante();
+            return acciones.ultimaAccion().getEstudiante();
         } catch (Exception e) {
             return null;
         }

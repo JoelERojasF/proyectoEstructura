@@ -6,6 +6,7 @@ package Persistencia;
 
 import EstructuraDatos.ArbolBinarioBusqueda;
 import EstructuraDatos.ListaEnlazadaSimple;
+import ObjetosNegocio.Accion;
 import ObjetosNegocio.Curso;
 /**
  * 
@@ -15,6 +16,7 @@ import ObjetosNegocio.Curso;
  */
 public class RegistroCursos implements Comparable<Curso>{
     private static ArbolBinarioBusqueda<Curso> arbol;
+    RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroCursos() {
         arbol = new ArbolBinarioBusqueda<>();
@@ -22,10 +24,28 @@ public class RegistroCursos implements Comparable<Curso>{
 
     public void agregarCurso(Curso curso) {
         arbol.insertar(curso);
+        Accion accion = new Accion(
+                Accion.TipoAccion.REGISTRO,
+                null,
+                curso,
+                -1.0,
+                -1.0,
+                true
+            );
+            acciones.registrarAccion(accion);
     }
     
     public void eliminarCurso(Curso curso){
         arbol.eliminar(curso);
+        Accion accion = new Accion(
+                Accion.TipoAccion.REGISTRO,
+                null,
+                curso,
+                -1.0,
+                -1.0,
+                false
+            );
+            acciones.registrarAccion(accion);
     }
 
     public Curso buscarPorClave(String clave) {

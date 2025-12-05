@@ -5,6 +5,7 @@
 package Persistencia;
 
 import EstructuraDatos.ListaEnlazadaSimple;
+import ObjetosNegocio.Accion;
 import ObjetosNegocio.Estudiante;
 import ObjetosNegocio.Curso;
 import ObjetosNegocio.Inscripcion;
@@ -20,6 +21,7 @@ import ObjetosNegocio.Inscripcion;
  */
 public class RegistroInscripciones {
     private static ListaEnlazadaSimple<Inscripcion> inscripciones;
+    RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroInscripciones() {
         inscripciones = new ListaEnlazadaSimple<>();
@@ -27,10 +29,28 @@ public class RegistroInscripciones {
 
     public void inscribirEstudianteEnCurso(Inscripcion inscripcion) {
         inscripciones.agregar(inscripcion);
+        Accion accion = new Accion(
+                Accion.TipoAccion.INSCRIPCION,
+                inscripcion.getEstudiante(),
+                inscripcion.getCurso(),
+                -1.0,
+                -1.0,
+                true
+            );
+            acciones.registrarAccion(accion);
     }
     
     public void eliminarInscripcion(Inscripcion ins) throws Exception{
         inscripciones.eliminar(inscripciones.indexOf(ins));
+        Accion accion = new Accion(
+                Accion.TipoAccion.BAJA,
+                ins.getEstudiante(),
+                ins.getCurso(),
+                -1.0,
+                -1.0,
+                true
+            );
+            acciones.registrarAccion(accion);
     }
     
     public Inscripcion buscarInscripcion(String id){
