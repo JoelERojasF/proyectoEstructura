@@ -24,8 +24,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Ventana_principal extends JFrame {
     private JPanel panelCentral;
+    private Fachada fachada;
 
     public Ventana_principal() {
+        fachada = new Fachada();
+        
         setTitle("Menú del Sistema Académico");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -166,121 +169,121 @@ public class Ventana_principal extends JFrame {
 
 //  Estudiantes 
     class PanelRegistrarEstudiante extends JPanel {
-    private JTextField txtNombre;
-    private JTextField txtTelefono;
-    private JTextField txtEmail;
-    private JTextField txtCalle;
-    private JTextField txtNumero;
-    private JTextField txtColonia;
-    private JTextField txtCiudad;
-    private JButton btnRegistrar;
-    private Fachada fachada;
-    private Image backgroundImage;
+        private JTextField txtNombre;
+        private JTextField txtTelefono;
+        private JTextField txtEmail;
+        private JTextField txtCalle;
+        private JTextField txtNumero;
+        private JTextField txtColonia;
+        private JTextField txtCiudad;
+        private JButton btnRegistrar;
+        private Fachada fachada;
+        private Image backgroundImage;
 
-    public PanelRegistrarEstudiante() {
-        fachada = new Fachada();
-        setLayout(new BorderLayout(10, 10));
+        public PanelRegistrarEstudiante() {
+            this.fachada = fachada;
+            setLayout(new BorderLayout(10, 10));
 
-        // Panel de imagen a la izquierda
-        JPanel panelImagen = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (backgroundImage != null) {
-                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            // Panel de imagen a la izquierda
+            JPanel panelImagen = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    if (backgroundImage != null) {
+                        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                    }
                 }
-            }
-        };
-        try {
-            backgroundImage = ImageIO.read(new File("imagenes/fondoRegistrarEstudiante.png"));
-        } catch (Exception e) {
-            System.out.println("No se pudo cargar la imagen: " + e.getMessage());
-        }
-        panelImagen.setPreferredSize(new Dimension(250, 0)); // ancho fijo para la imagen
-        add(panelImagen, BorderLayout.WEST);
-
-        // Panel del formulario a la derecha
-        JPanel panelForm = new JPanel();
-        panelForm.setLayout(new GridBagLayout());
-        panelForm.setOpaque(false);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // espacio pequeño entre componentes
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-
-        // Campos
-        panelForm.add(new JLabel("Nombre:"), gbc);
-        gbc.gridx = 1;
-        txtNombre = new JTextField(15);
-        panelForm.add(txtNombre, gbc);
-
-        gbc.gridx = 0; gbc.gridy++;
-        panelForm.add(new JLabel("Teléfono:"), gbc);
-        gbc.gridx = 1;
-        txtTelefono = new JTextField(15);
-        panelForm.add(txtTelefono, gbc);
-
-        gbc.gridx = 0; gbc.gridy++;
-        panelForm.add(new JLabel("Email:"), gbc);
-        gbc.gridx = 1;
-        txtEmail = new JTextField(15);
-        panelForm.add(txtEmail, gbc);
-
-        gbc.gridx = 0; gbc.gridy++;
-        panelForm.add(new JLabel("Calle:"), gbc);
-        gbc.gridx = 1;
-        txtCalle = new JTextField(15);
-        panelForm.add(txtCalle, gbc);
-
-        gbc.gridx = 0; gbc.gridy++;
-        panelForm.add(new JLabel("Número:"), gbc);
-        gbc.gridx = 1;
-        txtNumero = new JTextField(15);
-        panelForm.add(txtNumero, gbc);
-
-        gbc.gridx = 0; gbc.gridy++;
-        panelForm.add(new JLabel("Colonia:"), gbc);
-        gbc.gridx = 1;
-        txtColonia = new JTextField(15);
-        panelForm.add(txtColonia, gbc);
-
-        gbc.gridx = 0; gbc.gridy++;
-        panelForm.add(new JLabel("Ciudad:"), gbc);
-        gbc.gridx = 1;
-        txtCiudad = new JTextField(15);
-        panelForm.add(txtCiudad, gbc);
-
-        // Botón
-        gbc.gridx = 0; gbc.gridy++;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        btnRegistrar = new JButton("Registrar");
-        panelForm.add(btnRegistrar, gbc);
-
-        add(panelForm, BorderLayout.CENTER);
-
-        // Acción del botón
-        btnRegistrar.addActionListener(e -> {
+            };
             try {
-                fachada.agregarEstudiante(
-                    txtNombre.getText(),
-                    txtTelefono.getText(),
-                    txtEmail.getText(),
-                    txtCalle.getText(),
-                    txtNumero.getText(),
-                    txtColonia.getText(),
-                    txtCiudad.getText()
-                );
-                JOptionPane.showMessageDialog(this, "Estudiante registrado correctamente");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                backgroundImage = ImageIO.read(new File("imagenes/fondoRegistrarEstudiante.png"));
+            } catch (Exception e) {
+                System.out.println("No se pudo cargar la imagen: " + e.getMessage());
             }
-        });
+            panelImagen.setPreferredSize(new Dimension(250, 0)); // ancho fijo para la imagen
+            add(panelImagen, BorderLayout.WEST);
+
+            // Panel del formulario a la derecha
+            JPanel panelForm = new JPanel();
+            panelForm.setLayout(new GridBagLayout());
+            panelForm.setOpaque(false);
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(5, 5, 5, 5); // espacio pequeño entre componentes
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+
+            // Campos
+            panelForm.add(new JLabel("Nombre:"), gbc);
+            gbc.gridx = 1;
+            txtNombre = new JTextField(15);
+            panelForm.add(txtNombre, gbc);
+
+            gbc.gridx = 0; gbc.gridy++;
+            panelForm.add(new JLabel("Teléfono:"), gbc);
+            gbc.gridx = 1;
+            txtTelefono = new JTextField(15);
+            panelForm.add(txtTelefono, gbc);
+
+            gbc.gridx = 0; gbc.gridy++;
+            panelForm.add(new JLabel("Email:"), gbc);
+            gbc.gridx = 1;
+            txtEmail = new JTextField(15);
+            panelForm.add(txtEmail, gbc);
+
+            gbc.gridx = 0; gbc.gridy++;
+            panelForm.add(new JLabel("Calle:"), gbc);
+            gbc.gridx = 1;
+            txtCalle = new JTextField(15);
+            panelForm.add(txtCalle, gbc);
+
+            gbc.gridx = 0; gbc.gridy++;
+            panelForm.add(new JLabel("Número:"), gbc);
+            gbc.gridx = 1;
+            txtNumero = new JTextField(15);
+            panelForm.add(txtNumero, gbc);
+
+            gbc.gridx = 0; gbc.gridy++;
+            panelForm.add(new JLabel("Colonia:"), gbc);
+            gbc.gridx = 1;
+            txtColonia = new JTextField(15);
+            panelForm.add(txtColonia, gbc);
+
+            gbc.gridx = 0; gbc.gridy++;
+            panelForm.add(new JLabel("Ciudad:"), gbc);
+            gbc.gridx = 1;
+            txtCiudad = new JTextField(15);
+            panelForm.add(txtCiudad, gbc);
+
+            // Botón
+            gbc.gridx = 0; gbc.gridy++;
+            gbc.gridwidth = 2;
+            gbc.anchor = GridBagConstraints.CENTER;
+            btnRegistrar = new JButton("Registrar");
+            panelForm.add(btnRegistrar, gbc);
+
+            add(panelForm, BorderLayout.CENTER);
+
+            // Acción del botón
+            btnRegistrar.addActionListener(e -> {
+                try {
+                    fachada.agregarEstudiante(
+                        txtNombre.getText(),
+                        txtTelefono.getText(),
+                        txtEmail.getText(),
+                        txtCalle.getText(),
+                        txtNumero.getText(),
+                        txtColonia.getText(),
+                        txtCiudad.getText()
+                    );
+                    JOptionPane.showMessageDialog(this, "Estudiante registrado correctamente");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        }
     }
-}
 
 
     class PanelBuscarEstudiante extends JPanel {
@@ -290,51 +293,49 @@ public class Ventana_principal extends JFrame {
         private Fachada fachada;
         
         public PanelBuscarEstudiante() {
-            fachada = new Fachada();
+            this.fachada = fachada;
 
-        setLayout(new BorderLayout(8, 8));
+            setLayout(new BorderLayout(8, 8));
 
-        JPanel top = new JPanel(new GridLayout(1, 3, 8, 8));
-        top.add(new JLabel("Matrícula:"));
-        txtMatricula = new JTextField();
-        top.add(txtMatricula);
-        btnBuscar = new JButton("Buscar");
-        top.add(btnBuscar);
-        add(top, BorderLayout.NORTH);
+            JPanel top = new JPanel(new GridLayout(1, 3, 8, 8));
+            top.add(new JLabel("Matrícula:"));
+            txtMatricula = new JTextField();
+            top.add(txtMatricula);
+            btnBuscar = new JButton("Buscar");
+            top.add(btnBuscar);
+            add(top, BorderLayout.NORTH);
 
-        areaResultado = new JTextArea();
-        areaResultado.setEditable(false);
-        add(new JScrollPane(areaResultado), BorderLayout.CENTER);
+            areaResultado = new JTextArea();
+            areaResultado.setEditable(false);
+            add(new JScrollPane(areaResultado), BorderLayout.CENTER);
 
-        btnBuscar.addActionListener(e -> {
-            try {
-                String matricula = txtMatricula.getText().trim();
-                Estudiante est = fachada.buscarEstudiante(matricula);
+            btnBuscar.addActionListener(e -> {
+                try {
+                    String matricula = txtMatricula.getText().trim();
+                    Estudiante est = fachada.buscarEstudiante(matricula);
 
-                Contacto contacto = est.getContacto(); 
-                String telefono = (contacto != null) ? contacto.getTelefono() : "N/A";
-                String email    = (contacto != null) ? contacto.getEmail()    : "N/A";
+                    Contacto contacto = est.getContacto(); 
+                    String telefono = (contacto != null) ? contacto.getTelefono() : "N/A";
+                    String email    = (contacto != null) ? contacto.getEmail()    : "N/A";
 
-                Direccion direccion = (contacto != null) ? contacto.getDireccion() : null;
-                String direccionStr = (direccion != null) ? direccion.toString() : "N/A";
+                    Direccion direccion = (contacto != null) ? contacto.getDireccion() : null;
+                    String direccionStr = (direccion != null) ? direccion.toString() : "N/A";
 
-                String resultado =
-                        "Nombre: " + est.getNombreCompleto() + "\n" +
-                        "Matrícula: " + est.getMatricula() + "\n" +
-                        "Teléfono: " + telefono + "\n" +
-                        "Email: " + email + "\n" +
-                        "Dirección: " + direccionStr;
+                    String resultado =
+                            "Nombre: " + est.getNombreCompleto() + "\n" +
+                            "Matrícula: " + est.getMatricula() + "\n" +
+                            "Teléfono: " + telefono + "\n" +
+                            "Email: " + email + "\n" +
+                            "Dirección: " + direccionStr;
 
-                areaResultado.setText(resultado);
+                    areaResultado.setText(resultado);
 
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                areaResultado.setText("");
-            }
-        });
-
-
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    areaResultado.setText("");
+                }
+            });
         }
     }
 
@@ -346,7 +347,7 @@ public class Ventana_principal extends JFrame {
         private Image fondoAgregarCurso;
 
         public PanelAgregarCurso() {
-            fachada = new Fachada();
+            this.fachada = fachada;
 
             try {
                 // Carga la imagen desde archivo (ajusta la ruta a tu imagen)
@@ -406,7 +407,7 @@ public class Ventana_principal extends JFrame {
     private Image fondoEliminarCurso;
 
     public PanelEliminarCurso() {
-        fachada = new Fachada();
+        this.fachada = fachada;
         setLayout(new BorderLayout(10, 10));
 
         // Panel de imagen a la izquierda
@@ -477,7 +478,7 @@ public class Ventana_principal extends JFrame {
     private Fachada fachada;
 
     public PanelListarCursos() {
-        fachada = new Fachada();
+        this.fachada = fachada;
         setLayout(new BorderLayout());
 
         String[] cols = {"Clave", "Nombre", "Capacidad"};
@@ -519,7 +520,7 @@ public class Ventana_principal extends JFrame {
     private Image fondo;
 
     public PanelInscribirEstudiante() {
-        fachada = new Fachada();
+        this.fachada = fachada;
         setLayout(new BorderLayout(10, 10));
 
         // Panel de imagen a la izquierda
@@ -627,7 +628,7 @@ public class Ventana_principal extends JFrame {
     private Image fondo;
 
     public PanelEnviarSolicitud() {
-        fachada = new Fachada();
+        this.fachada = fachada;
         setLayout(new BorderLayout(10, 10));
 
         // Panel de imagen a la izquierda
@@ -718,7 +719,7 @@ public class Ventana_principal extends JFrame {
         private Fachada fachada;
 
         public PanelProcesarSolicitud() {
-            fachada = new Fachada();
+            this.fachada = fachada;
             setLayout(new FlowLayout());
 
             btnProcesar = new JButton("Procesar siguiente solicitud");
@@ -746,7 +747,7 @@ public class Ventana_principal extends JFrame {
         private Fachada fachada;
 
         public PanelDeshacerAccion() {
-            fachada = new Fachada();
+            this.fachada = fachada;
             setLayout(new FlowLayout());
 
             btnDeshacer = new JButton("Deshacer última acción");
@@ -776,7 +777,7 @@ public class Ventana_principal extends JFrame {
         private Fachada fachada;
 
         public PanelListarPorPromedio() {
-            fachada = new Fachada();
+            this.fachada = fachada;
             setLayout(new BorderLayout());
 
             btnListar = new JButton("Listar estudiantes por promedio");

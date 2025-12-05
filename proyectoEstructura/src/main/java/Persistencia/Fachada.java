@@ -52,7 +52,7 @@ public class Fachada {
         if(!val.validarDireccionColonia(colonia)){
             throw new IllegalArgumentException("colonia invalida");
         }
-        if(val.validarDireccionCiudad(ciudad)){
+        if(!val.validarDireccionCiudad(ciudad)){
             throw new IllegalArgumentException("ciudad invalida");
         }
         Direccion d = new Direccion(calle, numero, colonia, ciudad);

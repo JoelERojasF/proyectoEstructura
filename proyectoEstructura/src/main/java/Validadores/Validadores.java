@@ -28,28 +28,25 @@ public class Validadores {
         return matcher.matches();
     }
 
-    public boolean validarTelefono(String telefono){
-        // Patrón: ^\((?:55|33|81)\)[\s-]?\d{4}[\s-]?\d{4}$ | ^\(\d{3}\)[\s-]?\d{3}[\s-]?\d{4}$
-        // Formatos válidos:
-        // (55)1234-5678 , (33)12345678 , (81)1234 5678
-        // (644)123-4567 , (662)1234567
-        String patron = "^\\((?:55|33|81)\\)[\\s-]?\\d{4}[\\s-]?\\d{4}$|^\\(\\d{3}\\)[\\s-]?\\d{3}[\\s-]?\\d{4}$";
+    public boolean validarTelefono(String telefono) {
+        // Acepta exactamente 10 dígitos (ejemplo: 6621234567)
+        String patron = "^\\d{10}$";
         Pattern p = Pattern.compile(patron);
-        Matcher matcher = p.matcher(telefono);
-        return matcher.matches();    
-    }
-
-    public boolean validarEmail(String Email){
-        // Patrón: ^(?!.*\.\.)[A-Za-z0-9._]{1,20}@[A-Za-z0-9._]{1,20}$
-        // No permite ".."
-        // Usuario: letras, números, punto, guion bajo (1-20)
-        // @ obligatorio
-        // Dominio: letras, números, punto, guion bajo (1-20)
-        String patron = "^(?!.*\\.\\.)[A-Za-z0-9._]{1,20}@[A-Za-z0-9._]{1,20}$";
-        Pattern p = Pattern.compile(patron);
-        Matcher matcher = p.matcher(Email);
+        Matcher matcher = p.matcher(telefono.trim());
         return matcher.matches();
     }
+
+
+    public boolean validarEmail(String Email){
+        // Usuario: letras, números, punto, guion bajo (1-20)
+        // Dominio: letras, números, punto, guion bajo (1-20)
+        // Extensión: punto seguido de 2 o 3 letras
+        String patron = "^(?!.*\\.\\.)[A-Za-z0-9._]{1,20}@[A-Za-z0-9._]{1,20}\\.[A-Za-z]{1,3}$";
+        Pattern p = Pattern.compile(patron);
+        Matcher matcher = p.matcher(Email.trim());
+        return matcher.matches();
+    }
+
 
     public boolean validarDireccionCalle(String calle){
         // Patrón: ^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 .,]*$
@@ -78,12 +75,12 @@ public class Validadores {
         return matcher.matches();
     }
 
-    public boolean validarDireccionCiudad(String ciudad){
-        // Patrón: ^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 .,]*$
-        // Letras, números, espacios, punto y coma
-        String patron = "^[A-Za-z-zÁÉÍÓÚáéíóúÑñ0-9 .,]*$";
+    public boolean validarDireccionCiudad(String ciudad) {
+        // Debe contener al menos una letra (mayúscula/minúscula con acentos o ñ)
+        // y solo puede incluir letras, números, espacios, punto y coma
+        String patron = "^(?=.*[A-Za-zÁÉÍÓÚáéíóúÑñ])[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 .,]+$";
         Pattern p = Pattern.compile(patron);
-        Matcher matcher = p.matcher(ciudad);
+        Matcher matcher = p.matcher(ciudad.trim());
         return matcher.matches();
     }
 
@@ -120,8 +117,8 @@ public class Validadores {
     // promedio
     public boolean validarPromedio(String promedio){
         // Patrón: ^(?:0(?:\.\d+)?|[1-9]\d?(?:\.\d+)?|100(?:\.0+)?)$
-        // Igual que calificación: valores entre 0 y 100 con decimales opcionales
-        String patron = "^(?:0(?:\\.\\d+)?|[1-9]\\d?(?:\\.\\d+)?|100(?:\\.0+)?)$";
+        // Igual que calificación: valores entre 0 y 10 con decimales opcionales
+        String patron = "^(?:0(?:\\.\\d+)?|[1-9]\\d?(?:\\.\\d+)?|10(?:\\.0+)?)$";
         Pattern p = Pattern.compile(patron);
         Matcher matcher = p.matcher(promedio);
         return matcher.matches();
