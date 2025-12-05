@@ -5,6 +5,7 @@
 package interfaz;
 
 
+import EstructuraDatos.ListaDobleEnlazadaCircular;
 import java.awt.*;
 import javax.swing.*;
 import Persistencia.Fachada;
@@ -111,26 +112,26 @@ public class Ventana_principal extends JFrame {
         add(panelCentral, BorderLayout.CENTER);
 
         // Listeners para cambiar panel
-        registrarEstudiante.addActionListener(e -> cambiarPanel(new PanelRegistrarEstudiante()));
-        buscarEstudiante.addActionListener(e -> cambiarPanel(new PanelBuscarEstudiante()));
+        registrarEstudiante.addActionListener(e -> cambiarPanel(new PanelRegistrarEstudiante(fachada)));
+        buscarEstudiante.addActionListener(e -> cambiarPanel(new PanelBuscarEstudiante(fachada)));
 
-        agregarCurso.addActionListener(e -> cambiarPanel(new PanelAgregarCurso()));
-        eliminarCurso.addActionListener(e -> cambiarPanel(new PanelEliminarCurso()));
-        listarCursos.addActionListener(e -> cambiarPanel(new PanelListarCursos()));
+        agregarCurso.addActionListener(e -> cambiarPanel(new PanelAgregarCurso(fachada)));
+        eliminarCurso.addActionListener(e -> cambiarPanel(new PanelEliminarCurso(fachada)));
+        listarCursos.addActionListener(e -> cambiarPanel(new PanelListarCursos(fachada)));
 
-        inscribirEstudiante.addActionListener(e -> cambiarPanel(new PanelInscribirEstudiante()));
-        listaInscritos.addActionListener(e -> cambiarPanel(new PanelListaInscritos()));
-        listaEspera.addActionListener(e -> cambiarPanel(new PanelListaEspera()));
+        inscribirEstudiante.addActionListener(e -> cambiarPanel(new PanelInscribirEstudiante(fachada)));
+        listaInscritos.addActionListener(e -> cambiarPanel(new PanelListaInscritos(fachada)));
+        listaEspera.addActionListener(e -> cambiarPanel(new PanelListaEspera(fachada)));
 
-        enviarSolicitud.addActionListener(e -> cambiarPanel(new PanelEnviarSolicitud()));
-        procesarSolicitud.addActionListener(e -> cambiarPanel(new PanelProcesarSolicitud()));
+        enviarSolicitud.addActionListener(e -> cambiarPanel(new PanelEnviarSolicitud(fachada)));
+        procesarSolicitud.addActionListener(e -> cambiarPanel(new PanelProcesarSolicitud(fachada)));
 
-        deshacerAccion.addActionListener(e -> cambiarPanel(new PanelDeshacerAccion()));
+        deshacerAccion.addActionListener(e -> cambiarPanel(new PanelDeshacerAccion(fachada)));
 
-        listarPromedios.addActionListener(e -> cambiarPanel(new PanelListarPorPromedio()));
-        rotarTutor.addActionListener(e -> cambiarPanel(new PanelRotarRol()));
+        listarPromedios.addActionListener(e -> cambiarPanel(new PanelListarPorPromedio(fachada)));
+        rotarTutor.addActionListener(e -> cambiarPanel(new PanelRotarRol(fachada)));
         
-        acercadeItem.addActionListener(e -> cambiarPanel(new PanelMostrarIntegrantes()));
+        acercadeItem.addActionListener(e -> cambiarPanel(new PanelMostrarIntegrantes(fachada)));
 
         salirItem.addActionListener(e -> System.exit(0));
     }
@@ -180,7 +181,7 @@ public class Ventana_principal extends JFrame {
         private Fachada fachada;
         private Image backgroundImage;
 
-        public PanelRegistrarEstudiante() {
+        public PanelRegistrarEstudiante(Fachada fachada) {
             this.fachada = fachada;
             setLayout(new BorderLayout(10, 10));
 
@@ -292,7 +293,7 @@ public class Ventana_principal extends JFrame {
         private JTextArea areaResultado;
         private Fachada fachada;
         
-        public PanelBuscarEstudiante() {
+        public PanelBuscarEstudiante(Fachada fachada) {
             this.fachada = fachada;
 
             setLayout(new BorderLayout(8, 8));
@@ -346,7 +347,7 @@ public class Ventana_principal extends JFrame {
         private Fachada fachada;
         private Image fondoAgregarCurso;
 
-        public PanelAgregarCurso() {
+        public PanelAgregarCurso(Fachada fachada) {
             this.fachada = fachada;
 
             try {
@@ -406,7 +407,7 @@ public class Ventana_principal extends JFrame {
     private Fachada fachada;
     private Image fondoEliminarCurso;
 
-    public PanelEliminarCurso() {
+    public PanelEliminarCurso(Fachada fachada) {
         this.fachada = fachada;
         setLayout(new BorderLayout(10, 10));
 
@@ -477,7 +478,7 @@ public class Ventana_principal extends JFrame {
     private JButton btnListar;
     private Fachada fachada;
 
-    public PanelListarCursos() {
+    public PanelListarCursos(Fachada fachada) {
         this.fachada = fachada;
         setLayout(new BorderLayout());
 
@@ -519,7 +520,7 @@ public class Ventana_principal extends JFrame {
     private Fachada fachada;
     private Image fondo;
 
-    public PanelInscribirEstudiante() {
+    public PanelInscribirEstudiante(Fachada fachada) {
         this.fachada = fachada;
         setLayout(new BorderLayout(10, 10));
 
@@ -593,32 +594,129 @@ public class Ventana_principal extends JFrame {
 
 
     class PanelListaInscritos extends JPanel {
+        private Fachada fachada;
+        private JTextField txtClaveCurso;
+        private JButton btnMostrar;
+        private JTextArea areaResultados;
 
-        public PanelListaInscritos() {
+        public PanelListaInscritos(Fachada fachada) {
+            this.fachada = fachada; // usar la misma instancia compartida
             setLayout(new BorderLayout());
+
+            // Panel superior con campo y botón
             JPanel top = new JPanel(new FlowLayout());
             top.add(new JLabel("Clave curso:"));
-            top.add(new JTextField(12));
-            top.add(new JButton("Mostrar inscritos"));
+            txtClaveCurso = new JTextField(12);
+            top.add(txtClaveCurso);
+            btnMostrar = new JButton("Mostrar inscritos");
+            top.add(btnMostrar);
             add(top, BorderLayout.NORTH);
-            add(new JScrollPane(new JTextArea("Lista inscritos...")), BorderLayout.CENTER);
+
+            // Área de resultados
+            areaResultados = new JTextArea("Lista inscritos...");
+            areaResultados.setEditable(false);
+            add(new JScrollPane(areaResultados), BorderLayout.CENTER);
+
+            // Acción del botón
+            btnMostrar.addActionListener(e -> {
+                try {
+                    String clave = txtClaveCurso.getText().trim();
+                    Curso curso = fachada.buscarCurso(clave); // buscar curso por clave
+
+                    if (curso == null) {
+                        areaResultados.setText("No se encontró el curso con clave: " + clave);
+                        return;
+                    }
+
+                    ListaEnlazadaSimple<Estudiante> inscritos = curso.getListaEstudiantes();
+                    if (inscritos.vacio()) {
+                        areaResultados.setText("El curso " + curso.getNombre() + " no tiene estudiantes inscritos.");
+                    } else {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("Estudiantes inscritos en ").append(curso.getNombre()).append(":\n\n");
+                        for (Estudiante eInscrito : inscritos) {
+                            sb.append(eInscrito.getMatricula())
+                              .append(" - ")
+                              .append(eInscrito.getNombreCompleto())
+                              .append("\n");
+                        }
+                        areaResultados.setText(sb.toString());
+                    }
+                } catch (Exception ex) {
+                    areaResultados.setText("Error al mostrar inscritos: " + ex.getMessage());
+                }
+            });
         }
     }
+
 
     class PanelListaEspera extends JPanel {
+    private Fachada fachada;
+    private JTextField txtClaveCurso;
+    private JSpinner spinnerCantidad;
+    private JButton btnMostrar;
+    private JTextArea areaResultados;
 
-        public PanelListaEspera() {
+    public PanelListaEspera(Fachada fachada) {
+            this.fachada = fachada; // usar la misma instancia compartida
             setLayout(new BorderLayout());
+
+            // Panel superior con campo y botón
             JPanel top = new JPanel(new FlowLayout());
             top.add(new JLabel("Clave curso:"));
-            top.add(new JTextField(12));
+            txtClaveCurso = new JTextField(12);
+            top.add(txtClaveCurso);
+
             top.add(new JLabel("N primeros:"));
-            top.add(new JSpinner(new SpinnerNumberModel(5, 1, 100, 1)));
-            top.add(new JButton("Mostrar espera"));
+            spinnerCantidad = new JSpinner(new SpinnerNumberModel(5, 1, 100, 1));
+            top.add(spinnerCantidad);
+
+            btnMostrar = new JButton("Mostrar espera");
+            top.add(btnMostrar);
             add(top, BorderLayout.NORTH);
-            add(new JScrollPane(new JTextArea("Lista espera...")), BorderLayout.CENTER);
+
+            // Área de resultados
+            areaResultados = new JTextArea("Lista espera...");
+            areaResultados.setEditable(false);
+            add(new JScrollPane(areaResultados), BorderLayout.CENTER);
+
+            // Acción del botón
+            btnMostrar.addActionListener(e -> {
+                try {
+                    String clave = txtClaveCurso.getText().trim();
+                    int cantidad = (int) spinnerCantidad.getValue();
+
+                    Curso curso = fachada.buscarCurso(clave); // buscar curso por clave
+                    if (curso == null) {
+                        areaResultados.setText("No se encontró el curso con clave: " + clave);
+                        return;
+                    }
+
+                    ListaDobleEnlazadaCircular<Estudiante> listaEspera = curso.getListaEspera();
+                    if (listaEspera.vacio()) {
+                        areaResultados.setText("El curso " + curso.getNombre() + " no tiene estudiantes en lista de espera.");
+                    } else {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("Primeros ").append(cantidad)
+                          .append(" estudiantes en lista de espera del curso ")
+                          .append(curso.getNombre()).append(":\n\n");
+
+                        for (int i = 0; i < cantidad && i < listaEspera.tamanio(); i++) {
+                            Estudiante eEspera = listaEspera.obtener(i);
+                            sb.append(eEspera.getMatricula())
+                              .append(" - ")
+                              .append(eEspera.getNombreCompleto())
+                              .append("\n");
+                        }
+                        areaResultados.setText(sb.toString());
+                    }
+                } catch (Exception ex) {
+                    areaResultados.setText("Error al mostrar lista de espera: " + ex.getMessage());
+                }
+            });
         }
     }
+
 
     class PanelEnviarSolicitud extends JPanel {
     private JTextField txtMatricula, txtClaveCurso;
@@ -627,7 +725,7 @@ public class Ventana_principal extends JFrame {
     private Fachada fachada;
     private Image fondo;
 
-    public PanelEnviarSolicitud() {
+    public PanelEnviarSolicitud(Fachada fachada) {
         this.fachada = fachada;
         setLayout(new BorderLayout(10, 10));
 
@@ -718,7 +816,7 @@ public class Ventana_principal extends JFrame {
         private JButton btnProcesar;
         private Fachada fachada;
 
-        public PanelProcesarSolicitud() {
+        public PanelProcesarSolicitud(Fachada fachada) {
             this.fachada = fachada;
             setLayout(new FlowLayout());
 
@@ -746,7 +844,7 @@ public class Ventana_principal extends JFrame {
         private JButton btnDeshacer;
         private Fachada fachada;
 
-        public PanelDeshacerAccion() {
+        public PanelDeshacerAccion(Fachada fachada) {
             this.fachada = fachada;
             setLayout(new FlowLayout());
 
@@ -776,7 +874,7 @@ public class Ventana_principal extends JFrame {
         private JTextArea txtResultados;
         private Fachada fachada;
 
-        public PanelListarPorPromedio() {
+        public PanelListarPorPromedio(Fachada fachada) {
             this.fachada = fachada;
             setLayout(new BorderLayout());
 
@@ -814,7 +912,7 @@ public class Ventana_principal extends JFrame {
     private JTextField txtClave;
     private JButton btnRotar;
 
-    public PanelRotarRol() {
+    public PanelRotarRol(Fachada fachada) {
         try {
             // Carga la imagen desde carpeta relativa "imagenes"
             backgroundImage = ImageIO.read(new File("imagenes/fondoRotarRol.png"));
@@ -851,7 +949,7 @@ public class Ventana_principal extends JFrame {
     class PanelMostrarIntegrantes extends JPanel {
         private Image backgroundImage;
 
-        public PanelMostrarIntegrantes() {
+        public PanelMostrarIntegrantes(Fachada fachada) {
             try {
             // Carga la imagen desde carpeta relativa "imagenes"
             backgroundImage = ImageIO.read(new File("imagenes/fondoIntegrantes.png"));

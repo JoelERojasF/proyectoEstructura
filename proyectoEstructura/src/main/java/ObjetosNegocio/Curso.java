@@ -123,6 +123,18 @@ public class Curso implements Comparable<Curso>{
             inscribirSiguienteEstudianteEspera();
         }
     }
+    
+    public ListaEnlazadaSimple<Estudiante> getListaEstudiantes() {
+        return listaEstudiantes;
+    }
+
+    public ListaDobleEnlazadaCircular<Estudiante> getListaEspera() {
+        return listaEspera;
+    }
+
+    public ListaEnlazadaCircular<Estudiante> getRoles() {
+        return roles;
+    }
 
     public int getCupoMaximo() {
         return cupoMaximo;
