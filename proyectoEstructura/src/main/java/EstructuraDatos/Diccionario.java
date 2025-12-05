@@ -19,11 +19,10 @@ import java.util.Iterator;
  */
 public class Diccionario<K, V> {
     private ListaEnlazadaSimple<Entrada<K,V>>[] tabla;
-    private int capacidad;
+    private int capacidad = 30;
 
     @SuppressWarnings("unchecked")
-    public Diccionario(int capacidad) {
-        this.capacidad = capacidad;
+    public Diccionario() {
         tabla = new ListaEnlazadaSimple[capacidad];
         for (int i = 0; i < capacidad; i++) {
             tabla[i] = new ListaEnlazadaSimple<>();

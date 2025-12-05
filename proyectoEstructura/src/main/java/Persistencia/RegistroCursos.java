@@ -20,7 +20,7 @@ public class RegistroCursos implements Comparable<Curso>{
     RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroCursos() {
-        arbol = new Diccionario<>(30);
+        arbol = new Diccionario<>();
     }
 
     public void agregarCurso(Curso curso) {
