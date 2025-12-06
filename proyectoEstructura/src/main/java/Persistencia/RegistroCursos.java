@@ -16,7 +16,7 @@ import ObjetosNegocio.Curso;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroCursos implements Comparable<Curso>{
-    private static Diccionario<String ,Curso> cursos;
+    private Diccionario<String ,Curso> cursos;
     RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroCursos() {

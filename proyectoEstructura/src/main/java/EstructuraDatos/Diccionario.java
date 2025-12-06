@@ -99,7 +99,7 @@ public class Diccionario<K, V> {
     }
     
     private void redimensionar() {
-        int nuevaCapacidad = capacidad +1;
+        int nuevaCapacidad = capacidad +10;
 
         ListaEnlazadaSimple<Entrada<K, V>>[] nuevaTabla = new ListaEnlazadaSimple[nuevaCapacidad];
 

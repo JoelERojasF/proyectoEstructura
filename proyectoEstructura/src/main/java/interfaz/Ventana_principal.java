@@ -25,10 +25,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Ventana_principal extends JFrame {
     private JPanel panelCentral;
-    private Fachada fachada;
+    private final Fachada fachada;
 
     public Ventana_principal() {
-        fachada = new Fachada();
+        fachada = Fachada.getInstancia();
         
         setTitle("Menú del Sistema Académico");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,26 +112,26 @@ public class Ventana_principal extends JFrame {
         add(panelCentral, BorderLayout.CENTER);
 
         // Listeners para cambiar panel
-        registrarEstudiante.addActionListener(e -> cambiarPanel(new PanelRegistrarEstudiante(fachada)));
-        buscarEstudiante.addActionListener(e -> cambiarPanel(new PanelBuscarEstudiante(fachada)));
+        registrarEstudiante.addActionListener(e -> cambiarPanel(new PanelRegistrarEstudiante()));
+        buscarEstudiante.addActionListener(e -> cambiarPanel(new PanelBuscarEstudiante()));
 
-        agregarCurso.addActionListener(e -> cambiarPanel(new PanelAgregarCurso(fachada)));
-        eliminarCurso.addActionListener(e -> cambiarPanel(new PanelEliminarCurso(fachada)));
-        listarCursos.addActionListener(e -> cambiarPanel(new PanelListarCursos(fachada)));
+        agregarCurso.addActionListener(e -> cambiarPanel(new PanelAgregarCurso()));
+        eliminarCurso.addActionListener(e -> cambiarPanel(new PanelEliminarCurso()));
+        listarCursos.addActionListener(e -> cambiarPanel(new PanelListarCursos()));
 
-        inscribirEstudiante.addActionListener(e -> cambiarPanel(new PanelInscribirEstudiante(fachada)));
-        listaInscritos.addActionListener(e -> cambiarPanel(new PanelListaInscritos(fachada)));
-        listaEspera.addActionListener(e -> cambiarPanel(new PanelListaEspera(fachada)));
+        inscribirEstudiante.addActionListener(e -> cambiarPanel(new PanelInscribirEstudiante()));
+        listaInscritos.addActionListener(e -> cambiarPanel(new PanelListaInscritos()));
+        listaEspera.addActionListener(e -> cambiarPanel(new PanelListaEspera()));
 
-        enviarSolicitud.addActionListener(e -> cambiarPanel(new PanelEnviarSolicitud(fachada)));
-        procesarSolicitud.addActionListener(e -> cambiarPanel(new PanelProcesarSolicitud(fachada)));
+        enviarSolicitud.addActionListener(e -> cambiarPanel(new PanelEnviarSolicitud()));
+        procesarSolicitud.addActionListener(e -> cambiarPanel(new PanelProcesarSolicitud()));
 
-        deshacerAccion.addActionListener(e -> cambiarPanel(new PanelDeshacerAccion(fachada)));
+        deshacerAccion.addActionListener(e -> cambiarPanel(new PanelDeshacerAccion()));
 
-        listarPromedios.addActionListener(e -> cambiarPanel(new PanelListarPorPromedio(fachada)));
-        rotarTutor.addActionListener(e -> cambiarPanel(new PanelRotarRol(fachada)));
+        listarPromedios.addActionListener(e -> cambiarPanel(new PanelListarPorPromedio()));
+        rotarTutor.addActionListener(e -> cambiarPanel(new PanelRotarRol()));
         
-        acercadeItem.addActionListener(e -> cambiarPanel(new PanelMostrarIntegrantes(fachada)));
+        acercadeItem.addActionListener(e -> cambiarPanel(new PanelMostrarIntegrantes()));
 
         salirItem.addActionListener(e -> System.exit(0));
     }
@@ -178,11 +178,11 @@ public class Ventana_principal extends JFrame {
         private JTextField txtColonia;
         private JTextField txtCiudad;
         private JButton btnRegistrar;
-        private Fachada fachada;
+        private final Fachada fachada;
         private Image backgroundImage;
 
-        public PanelRegistrarEstudiante(Fachada fachada) {
-            this.fachada = fachada;
+        public PanelRegistrarEstudiante() {
+            fachada = Fachada.getInstancia();
             setLayout(new BorderLayout(10, 10));
 
             // Panel de imagen a la izquierda
@@ -291,10 +291,10 @@ public class Ventana_principal extends JFrame {
         private JTextField txtMatricula;
         private JButton btnBuscar;
         private JTextArea areaResultado;
-        private Fachada fachada;
+        private final Fachada fachada;
         
-        public PanelBuscarEstudiante(Fachada fachada) {
-            this.fachada = fachada;
+        public PanelBuscarEstudiante() {
+            fachada = Fachada.getInstancia();
 
             setLayout(new BorderLayout(8, 8));
 
@@ -345,11 +345,11 @@ public class Ventana_principal extends JFrame {
     private JTextField txtNombreCurso;
     private JTextField txtCapacidad;   // campo para capacidad
     private JButton btnAgregar;
-    private Fachada fachada;
+    private final Fachada fachada;
     private Image fondoAgregarCurso;
 
-    public PanelAgregarCurso(Fachada fachada) {
-        this.fachada = fachada;
+    public PanelAgregarCurso() {
+        fachada = Fachada.getInstancia();
 
         try {
             fondoAgregarCurso = ImageIO.read(new File("imagenes/fondoAgregarCurso.png"));
@@ -433,11 +433,11 @@ public class Ventana_principal extends JFrame {
     class PanelEliminarCurso extends JPanel {
     private JTextField txtClave;
     private JButton btnEliminar;
-    private Fachada fachada;
+    private final Fachada fachada;
     private Image fondoEliminarCurso;
 
-    public PanelEliminarCurso(Fachada fachada) {
-        this.fachada = fachada;
+    public PanelEliminarCurso() {
+        fachada = Fachada.getInstancia();
         setLayout(new BorderLayout(10, 10));
 
         // Panel de imagen a la izquierda
@@ -505,10 +505,10 @@ public class Ventana_principal extends JFrame {
     class PanelListarCursos extends JPanel {
     private JTable tabla;
     private JButton btnListar;
-    private Fachada fachada;
+    private final Fachada fachada;
 
-    public PanelListarCursos(Fachada fachada) {
-        this.fachada = fachada;
+    public PanelListarCursos() {
+        fachada = Fachada.getInstancia();
         setLayout(new BorderLayout());
 
         String[] cols = {"Clave", "Nombre", "Capacidad"};
@@ -546,11 +546,11 @@ public class Ventana_principal extends JFrame {
     private JTextField txtClaveCurso;
     private JTextField txtMatriculaEstudiante;
     private JButton btnInscribir;
-    private Fachada fachada;
+    private final Fachada fachada;
     private Image fondo;
 
-    public PanelInscribirEstudiante(Fachada fachada) {
-        this.fachada = fachada;
+    public PanelInscribirEstudiante() {
+        fachada = Fachada.getInstancia();
         setLayout(new BorderLayout(10, 10));
 
         // Panel de imagen a la izquierda
@@ -623,13 +623,13 @@ public class Ventana_principal extends JFrame {
 
 
     class PanelListaInscritos extends JPanel {
-        private Fachada fachada;
+        private final Fachada fachada;
         private JTextField txtClaveCurso;
         private JButton btnMostrar;
         private JTextArea areaResultados;
 
-        public PanelListaInscritos(Fachada fachada) {
-            this.fachada = fachada; // usar la misma instancia compartida
+        public PanelListaInscritos() {
+            fachada = Fachada.getInstancia();
             setLayout(new BorderLayout());
 
             // Panel superior con campo y botón
@@ -680,14 +680,14 @@ public class Ventana_principal extends JFrame {
 
 
     class PanelListaEspera extends JPanel {
-    private Fachada fachada;
+    private final Fachada fachada;
     private JTextField txtClaveCurso;
     private JSpinner spinnerCantidad;
     private JButton btnMostrar;
     private JTextArea areaResultados;
 
-    public PanelListaEspera(Fachada fachada) {
-            this.fachada = fachada; // usar la misma instancia compartida
+    public PanelListaEspera() {
+            fachada = Fachada.getInstancia();
             setLayout(new BorderLayout());
 
             // Panel superior con campo y botón
@@ -751,11 +751,11 @@ public class Ventana_principal extends JFrame {
     private JTextField txtMatricula, txtClaveCurso;
     private JSpinner spCalificacion;
     private JButton btnEnviar;
-    private Fachada fachada;
+    private final Fachada fachada;
     private Image fondo;
 
-    public PanelEnviarSolicitud(Fachada fachada) {
-        this.fachada = fachada;
+    public PanelEnviarSolicitud() {
+        fachada = Fachada.getInstancia();
         setLayout(new BorderLayout(10, 10));
 
         // Panel de imagen a la izquierda
@@ -843,10 +843,10 @@ public class Ventana_principal extends JFrame {
 
     class PanelProcesarSolicitud extends JPanel {
         private JButton btnProcesar;
-        private Fachada fachada;
+        private final Fachada fachada;
 
-        public PanelProcesarSolicitud(Fachada fachada) {
-            this.fachada = fachada;
+        public PanelProcesarSolicitud() {
+            fachada = Fachada.getInstancia();
             setLayout(new FlowLayout());
 
             btnProcesar = new JButton("Procesar siguiente solicitud");
@@ -871,10 +871,10 @@ public class Ventana_principal extends JFrame {
 //  Acciones 
     class PanelDeshacerAccion extends JPanel {
         private JButton btnDeshacer;
-        private Fachada fachada;
+        private final Fachada fachada;
 
-        public PanelDeshacerAccion(Fachada fachada) {
-            this.fachada = fachada;
+        public PanelDeshacerAccion() {
+            fachada = Fachada.getInstancia();
             setLayout(new FlowLayout());
 
             btnDeshacer = new JButton("Deshacer última acción");
@@ -901,10 +901,10 @@ public class Ventana_principal extends JFrame {
     class PanelListarPorPromedio extends JPanel {
         private JButton btnListar;
         private JTextArea txtResultados;
-        private Fachada fachada;
+        private final Fachada fachada;
 
-        public PanelListarPorPromedio(Fachada fachada) {
-            this.fachada = fachada;
+        public PanelListarPorPromedio() {
+            fachada = Fachada.getInstancia();
             setLayout(new BorderLayout());
 
             btnListar = new JButton("Listar estudiantes por promedio");
@@ -940,8 +940,10 @@ public class Ventana_principal extends JFrame {
     private Image backgroundImage;
     private JTextField txtClave;
     private JButton btnRotar;
+    private final Fachada fachada;
 
-    public PanelRotarRol(Fachada fachada) {
+    public PanelRotarRol() {
+        fachada = Fachada.getInstancia();
         try {
             // Carga la imagen desde carpeta relativa "imagenes"
             backgroundImage = ImageIO.read(new File("imagenes/fondoRotarRol.png"));
@@ -978,7 +980,7 @@ public class Ventana_principal extends JFrame {
     class PanelMostrarIntegrantes extends JPanel {
         private Image backgroundImage;
 
-        public PanelMostrarIntegrantes(Fachada fachada) {
+        public PanelMostrarIntegrantes() {
             try {
             // Carga la imagen desde carpeta relativa "imagenes"
             backgroundImage = ImageIO.read(new File("imagenes/fondoIntegrantes.png"));

@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroEstudiantes {
-    private static ArbolBinarioBusqueda<Estudiante> arbol;
+    private ArbolBinarioBusqueda<Estudiante> arbol;
     RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroEstudiantes() {
@@ -58,9 +58,6 @@ public class RegistroEstudiantes {
     public Estudiante buscarPorMatricula(String matricula) {
         Estudiante matriculaEstudiante = new Estudiante(matricula, "", null);
         Estudiante encontrado = arbol.buscar(matriculaEstudiante);
-        if (encontrado == null) {
-            throw new NoSuchElementException("No se encontró estudiante con matrícula: " + matricula);
-        }
         return encontrado;
     }
 

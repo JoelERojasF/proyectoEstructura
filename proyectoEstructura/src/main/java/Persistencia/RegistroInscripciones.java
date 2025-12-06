@@ -20,7 +20,7 @@ import ObjetosNegocio.Inscripcion;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroInscripciones {
-    private static ListaEnlazadaSimple<Inscripcion> inscripciones;
+    private ListaEnlazadaSimple<Inscripcion> inscripciones;
     RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroInscripciones() {

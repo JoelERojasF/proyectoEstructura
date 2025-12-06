@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroAcciones {
-    private static Pila<Accion> acciones = new Pila<>();
+    private Pila<Accion> acciones = new Pila<>();
     
     public void registrarAccion(Accion accion){
         acciones.agregar(accion);

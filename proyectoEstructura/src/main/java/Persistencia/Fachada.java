@@ -24,12 +24,28 @@ import java.util.NoSuchElementException;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class Fachada {
-    RegistroEstudiantes estudiantes = new RegistroEstudiantes();
-    RegistroCalificaciones calificaciones = new RegistroCalificaciones(estudiantes);
-    RegistroCursos cursos = new RegistroCursos();
-    RegistroInscripciones inscripciones = new RegistroInscripciones();
-    RegistroAcciones acciones = new RegistroAcciones();
+    RegistroEstudiantes estudiantes;
+    RegistroCalificaciones calificaciones;
+    RegistroCursos cursos;
+    RegistroInscripciones inscripciones;
+    RegistroAcciones acciones;
     Validadores val = new Validadores();
+    
+    private static Fachada instancia;
+
+    private Fachada(){
+        estudiantes = new RegistroEstudiantes();
+        calificaciones = new RegistroCalificaciones(estudiantes);
+        cursos = new RegistroCursos();
+        inscripciones = new RegistroInscripciones();
+        acciones = new RegistroAcciones();
+    }
+
+    public static Fachada getInstancia() {
+        if(instancia == null)
+            instancia = new Fachada();
+        return instancia;
+    }
     
     //estudiantes
     public Estudiante agregarEstudiante(String nombre, String telefono, String email, String calle, String numero, String colonia, String ciudad){
