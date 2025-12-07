@@ -395,7 +395,7 @@ public class Ventana_principal extends JFrame {
                 String nombre = txtNombreCurso.getText().trim();
                 String capacidadStr = txtCapacidad.getText().trim();
 
-                if (nombre.isEmpty() || capacidadStr.isEmpty()) {
+                if (nombre.isBlank() || capacidadStr.isBlank()) {
                     throw new IllegalArgumentException("Debe ingresar nombre y capacidad");
                 }
 
@@ -608,11 +608,24 @@ public class Ventana_principal extends JFrame {
         // Acción del botón
         btnInscribir.addActionListener(e -> {
             try {
-                Inscripcion i =fachada.agregarInscripcion(
-                    txtClaveCurso.getText(),
-                    txtMatriculaEstudiante.getText()
-                );
-                JOptionPane.showMessageDialog(this, "Inscripción realizada correctamente con la clave: " + i.getId());
+                if (txtClaveCurso.getText().isBlank() || txtMatriculaEstudiante.getText().isBlank()) {
+                    throw new IllegalArgumentException("Debe matricula del curso y del estudiante");
+                }
+                
+                Estudiante es = fachada.buscarEstudiante(txtMatriculaEstudiante.getText());
+                Curso c = fachada.buscarCurso(txtClaveCurso.getText());
+                
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Inscribir al estudiante " +es.getMatricula() +": " + es.getNombreCompleto() + " en el curso " + c.getClave() +": " + c.getNombre(), "Confirmar inscripcion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    Inscripcion i = fachada.agregarInscripcion(
+                            txtClaveCurso.getText(),
+                            txtMatriculaEstudiante.getText()
+                    );
+                    JOptionPane.showMessageDialog(this, "Inscripción realizada correctamente con la clave: " + i.getId());
+                }
+                
+                
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -825,13 +838,24 @@ public class Ventana_principal extends JFrame {
         // Acción del botón
         btnEnviar.addActionListener(e -> {
             try {
+                
+                if (txtClaveCurso.getText().isBlank() || txtClaveCurso.getText().isBlank()) {
+                    throw new IllegalArgumentException("Debe matricula del curso y del estudiante");
+                }
+                
                 String matriculaEstudiante = txtMatricula.getText();
                 String calveCurso = txtClaveCurso.getText();
-                double calificacion = (double) spCalificacion.getValue();
+                String calificacion = spCalificacion.getValue()+"";
+                
+                Estudiante es = fachada.buscarEstudiante(matriculaEstudiante);
+                Curso c = fachada.buscarCurso(calveCurso);
+                
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Subir calificacion "+calificacion + " para el estudiante " +es.getMatricula() +": " + es.getNombreCompleto() + " en el curso " + c.getClave() +": " + c.getNombre(), "Confirmar envio de calificacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
+                if (opcion == JOptionPane.YES_OPTION) {
                 fachada.registrarSolicitudCalificacion(matriculaEstudiante, calveCurso, calificacion);
-
                 JOptionPane.showMessageDialog(this, "Solicitud enviada correctamente");
+                }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
