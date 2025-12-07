@@ -8,7 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * Validadores.java
+ * 
+ * Se encargan de cumplir con la logica y formato de los datos que se piden,
+ * asegurandose de que no haya informacion en blanco o solo espacios
+ * 
  * @author Carmen Andrea Lara Osuna
  * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
