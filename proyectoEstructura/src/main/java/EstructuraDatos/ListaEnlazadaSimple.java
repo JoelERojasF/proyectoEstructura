@@ -221,11 +221,11 @@ public class ListaEnlazadaSimple<T> implements Iterable<T>, ILista<T> {
         int i = 0;
         while (nodo != null) {
             if (nodo.getDato().equals(dato)) {
-                return i;
+                return i; //Devuelve la posicion
             }
             nodo = nodo.getSig();
             i++;
         }
-        return -1;
+        return -1; //No encontro el dato
     }
 }

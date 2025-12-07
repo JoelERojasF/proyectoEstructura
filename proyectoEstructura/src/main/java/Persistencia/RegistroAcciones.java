@@ -24,13 +24,12 @@ public class RegistroAcciones {
     
     public Accion deshacerUltimaAccion() throws Exception{
     if (acciones.vacio()) {
-            throw new NoSuchElementException("No hay solicitudes pendientes");
+            throw new NoSuchElementException("No se detecto ninguna accion");
         }
-
-            Accion ultima = acciones.eliminar();
-            ultima.revertir();
+            Accion ultimaAccion = acciones.eliminar();
+            ultimaAccion.revertir();
 //            System.out.println("Se deshizo la accion: " + ultima);
-            return ultima;
+            return ultimaAccion;
     }
     
     public Estudiante getEstudianteUltimaAccion() {

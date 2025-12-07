@@ -6,6 +6,7 @@ interfaz\Ventana_principal$PanelListaInscritos.class
 EstructuraDatos\ILista.class
 ObjetosNegocio\Direccion.class
 interfaz\Ventana_principal$PanelEnviarSolicitud$1.class
+Excepciones\EstudianteInvalidoException.class
 Persistencia\RegistroAcciones.class
 ObjetosNegocio\Estudiante.class
 EstructuraDatos\ListaDobleEnlazadaCircular.class
@@ -27,6 +28,7 @@ interfaz\gestion.class
 interfaz\Ventana_principal$PanelEnviarSolicitud.class
 Persistencia\Fachada.class
 EstructuraDatos\NodoSimple.class
+Excepciones\CalificacionException.class
 ObjetosNegocio\Curso.class
 Validadores\Validadores.class
 EstructuraDatos\NodoDoble.class
@@ -40,8 +42,10 @@ EstructuraDatos\ListaEnlazadaSimple.class
 ObjetosNegocio\Accion$TipoAccion.class
 EstructuraDatos\ListaEnlazadaCircular.class
 interfaz\Ventana_principal$PanelEliminarCurso.class
+Excepciones\EstudianteNoEncontradoException.class
 Persistencia\RegistroCalificaciones.class
 interfaz\Ventana_principal$PanelEliminarCurso$1.class
+Excepciones\CursoNoEncontradoException.class
 ObjetosNegocio\Accion.class
 EstructuraDatos\Pila.class
 EstructuraDatos\Diccionario$Entrada.class
