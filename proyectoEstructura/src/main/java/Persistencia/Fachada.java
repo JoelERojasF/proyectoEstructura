@@ -5,6 +5,7 @@
 package Persistencia;
 
 import EstructuraDatos.ListaEnlazadaSimple;
+import ObjetosNegocio.Accion;
 import ObjetosNegocio.Calificacion;
 import ObjetosNegocio.Contacto;
 import ObjetosNegocio.Curso;
@@ -97,7 +98,7 @@ public class Fachada {
     }
     
     //cursos
-    public void agregarCurso(String nombre, String capacidad){
+    public Curso agregarCurso(String nombre, String capacidad){
             if(!val.validarNombreCurso(nombre)){
             throw new IllegalArgumentException("nombre de curso invalido");
         }
@@ -108,6 +109,7 @@ public class Fachada {
         
         Curso c  = new Curso(crearIdCurso(), nombre, cupo);
         cursos.agregarCurso(c);
+        return c;
     }
     
     public Curso buscarCurso(String clave){
@@ -127,12 +129,13 @@ public class Fachada {
     }
     
     //inscripciones
-    public void agregarInscripcion(String claveCurso, String matriculaEstudiante){
+    public Inscripcion agregarInscripcion(String claveCurso, String matriculaEstudiante){
         Curso c = cursos.buscarPorClave(claveCurso);
         Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
         
         Inscripcion i = new Inscripcion(crearIdInscripcion(), e, c);
         inscripciones.inscribirEstudianteEnCurso(i);
+        return i;
     }
     
     public Inscripcion buscarInscripcion(String id){
@@ -194,7 +197,7 @@ public class Fachada {
 
     
     //calificaciones
-    public void registrarSolicitudCalificacion(String matriculaEstudiante, String matriculaCurso, double calificacion){
+    public SolicitudCalificacion registrarSolicitudCalificacion(String matriculaEstudiante, String matriculaCurso, double calificacion){
         if(!val.validarCalificacion(matriculaCurso)){
             throw new IllegalArgumentException("calificacion invalida");
         }
@@ -208,6 +211,7 @@ public class Fachada {
         SolicitudCalificacion s = new SolicitudCalificacion(e, cal);
         
         calificaciones.registrarSolicitud(s);
+        return s;
     }
     
     
@@ -216,8 +220,8 @@ public class Fachada {
     } 
         
     //acciones
-    public void deshacerUltimaAccion() throws Exception{
-        acciones.deshacerUltimaAccion();
+    public Accion deshacerUltimaAccion() throws Exception{
+        return acciones.deshacerUltimaAccion();
     }
     
     private String crearIdEstudiante(){

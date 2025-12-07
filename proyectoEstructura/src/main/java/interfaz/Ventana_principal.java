@@ -268,7 +268,7 @@ public class Ventana_principal extends JFrame {
             // Acción del botón
             btnRegistrar.addActionListener(e -> {
                 try {
-                    fachada.agregarEstudiante(
+                        Estudiante es = fachada.agregarEstudiante(
                         txtNombre.getText(),
                         txtTelefono.getText(),
                         txtEmail.getText(),
@@ -277,7 +277,7 @@ public class Ventana_principal extends JFrame {
                         txtColonia.getText(),
                         txtCiudad.getText()
                     );
-                    JOptionPane.showMessageDialog(this, "Estudiante registrado correctamente");
+                    JOptionPane.showMessageDialog(this, "Estudiante registrado correctamente con la matricula: " + es.getMatricula());
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                             "Error", JOptionPane.ERROR_MESSAGE);
@@ -404,8 +404,8 @@ public class Ventana_principal extends JFrame {
                     throw new IllegalArgumentException("La capacidad debe ser mayor que cero");
                 }
 
-                fachada.agregarCurso(nombre, String.valueOf(capacidad));
-                JOptionPane.showMessageDialog(this, "Curso agregado correctamente");
+                Curso c = fachada.agregarCurso(nombre, String.valueOf(capacidad));
+                JOptionPane.showMessageDialog(this, "Curso agregado correctamente con la clave: " + c.getClave());
 
                 // limpiar campos
                 txtNombreCurso.setText("");
@@ -608,11 +608,11 @@ public class Ventana_principal extends JFrame {
         // Acción del botón
         btnInscribir.addActionListener(e -> {
             try {
-                fachada.agregarInscripcion(
+                Inscripcion i =fachada.agregarInscripcion(
                     txtClaveCurso.getText(),
                     txtMatriculaEstudiante.getText()
                 );
-                JOptionPane.showMessageDialog(this, "Inscripción realizada correctamente");
+                JOptionPane.showMessageDialog(this, "Inscripción realizada correctamente con la clave: " + i.getId());
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
