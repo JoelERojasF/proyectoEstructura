@@ -200,7 +200,7 @@ public class Ventana_principal extends JFrame {
             } catch (Exception e) {
                 System.out.println("No se pudo cargar la imagen: " + e.getMessage());
             }
-            panelImagen.setPreferredSize(new Dimension(250, 0)); // ancho fijo para la imagen
+            panelImagen.setPreferredSize(new Dimension(350, 0)); // ancho fijo para la imagen
             add(panelImagen, BorderLayout.WEST);
 
             // Panel del formulario a la derecha
@@ -966,6 +966,11 @@ public class Ventana_principal extends JFrame {
     private JButton btnRotar;
     private final Fachada fachada;
 
+    // Etiquetas para mostrar líderes
+    private JLabel lblAnterior;
+    private JLabel lblActual;
+    private JLabel lblSiguiente;
+
     public PanelRotarRol() {
         fachada = Fachada.getInstancia();
         try {
@@ -975,30 +980,74 @@ public class Ventana_principal extends JFrame {
             System.out.println("No se pudo cargar la imagen: " + e.getMessage());
         }
 
-        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        setLayout(new BorderLayout(10, 10));
+
+        // Panel central con clave y botón
+        JPanel panelForm = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panelForm.setOpaque(false);
 
         JLabel lblClave = new JLabel("Clave curso:");
         lblClave.setOpaque(false);
-        add(lblClave);
+        panelForm.add(lblClave);
 
         txtClave = new JTextField(12);
         txtClave.setOpaque(false); // transparente para ver el fondo
-        add(txtClave);
+        panelForm.add(txtClave);
 
         btnRotar = new JButton("Rotar rol tutor/líder");
         btnRotar.setPreferredSize(new Dimension(180, 30)); // tamaño compacto
-        add(btnRotar);
-        }
+        panelForm.add(btnRotar);
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (backgroundImage != null) {
-                // Dibuja la imagen escalada al tamaño del panel
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        add(panelForm, BorderLayout.CENTER);
+
+        // Panel inferior con etiquetas en la misma línea
+        JPanel panelLideres = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        panelLideres.setOpaque(false); // transparente para ver el fondo
+
+        lblAnterior  = new JLabel("Líder anterior: ");
+        lblActual    = new JLabel("Líder actual: ");
+        lblSiguiente = new JLabel("Siguiente líder: ");
+
+        panelLideres.add(lblAnterior);
+        panelLideres.add(lblActual);
+        panelLideres.add(lblSiguiente);
+
+        add(panelLideres, BorderLayout.SOUTH);
+
+        // Acción del botón Rotar
+        btnRotar.addActionListener(e -> {
+            try {
+                // Rota el rol en el curso
+                fachada.buscarCurso(txtClave.getText()).rotarRol();
+
+                // Obtén los líderes actualizados desde Fachada
+                String[] lideres = fachada.obtenerLideres(txtClave.getText());
+
+                // Actualiza las etiquetas
+                lblAnterior.setText("Líder anterior: " + lideres[0]);
+                lblActual.setText("Líder actual: " + lideres[1]);
+                lblSiguiente.setText("Siguiente líder: " + lideres[2]);
+
+                JOptionPane.showMessageDialog(this, "Rol rotado correctamente");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
+        });
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            // Dibuja la imagen escalada al tamaño del panel
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
+    }
 }
+
+
+
 
     
     class PanelMostrarIntegrantes extends JPanel {

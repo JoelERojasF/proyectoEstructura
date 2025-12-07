@@ -18,6 +18,7 @@ ObjetosNegocio\Contacto.class
 EstructuraDatos\ListaEnlazadaSimple$ListIterator.class
 EstructuraDatos\Cola.class
 interfaz\Ventana_principal$PanelRegistrarEstudiante.class
+Excepciones\CalificacionNoEncontradaException.class
 interfaz\Ventana_principal$PanelListaEspera.class
 Persistencia\RegistroCursos.class
 interfaz\Ventana_principal$PanelConFondo.class
@@ -28,7 +29,6 @@ interfaz\gestion.class
 interfaz\Ventana_principal$PanelEnviarSolicitud.class
 Persistencia\Fachada.class
 EstructuraDatos\NodoSimple.class
-Excepciones\CalificacionException.class
 ObjetosNegocio\Curso.class
 Validadores\Validadores.class
 EstructuraDatos\NodoDoble.class
@@ -41,6 +41,7 @@ ObjetosNegocio\Inscripcion.class
 EstructuraDatos\ListaEnlazadaSimple.class
 ObjetosNegocio\Accion$TipoAccion.class
 EstructuraDatos\ListaEnlazadaCircular.class
+Excepciones\AccionNoEncontradaException.class
 interfaz\Ventana_principal$PanelEliminarCurso.class
 Excepciones\EstudianteNoEncontradoException.class
 Persistencia\RegistroCalificaciones.class
@@ -50,7 +51,9 @@ ObjetosNegocio\Accion.class
 EstructuraDatos\Pila.class
 EstructuraDatos\Diccionario$Entrada.class
 interfaz\Ventana_principal$PanelRegistrarEstudiante$1.class
+Excepciones\InscripcionInvalidaException.class
 interfaz\Ventana_principal$PanelAgregarCurso.class
 interfaz\Ventana_principal$PanelInscribirEstudiante$1.class
 EstructuraDatos\ArbolBinarioBusqueda.class
+Excepciones\InscripcionDuplicadaException.class
 ObjetosNegocio\SolicitudCalificacion.class

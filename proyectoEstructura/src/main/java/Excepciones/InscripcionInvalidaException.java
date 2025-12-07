@@ -5,9 +5,14 @@
 package Excepciones;
 
 /**
- *
- * @author giova
+ * InscripcionInvalidaException.java
+ * 
+ * Se lanza cuando los datos de inscripción no son correctos.
+ * 
+ * @author Franco Giovanny Gastelum Barcelo
  */
-public class InscripcionInvalidaException {
-    
+public class InscripcionInvalidaException extends Exception{
+    public InscripcionInvalidaException(String mensaje){
+        super(mensaje);
+    }
 }

@@ -5,9 +5,14 @@
 package Excepciones;
 
 /**
+ * CursoNoEncontradoException.java
  *
- * @author giova
+ * Se lanza cuando no se encuentra un curso con la clave especificada.
+ *
+ * @author Franco Giovanny Gastelum Barcelo
  */
-public class CursoNoEncontradoException {
-    
+public class CursoNoEncontradoException extends Exception{
+    public CursoNoEncontradoException(String mensaje){
+        super(mensaje);
+    }
 }

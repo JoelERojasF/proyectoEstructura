@@ -5,9 +5,14 @@
 package Excepciones;
 
 /**
- *
- * @author giova
+ * InscripcionDuplicadaException.java
+ * 
+ * Se lanza cuando un estudiante ya está inscrito en el curso.
+ * 
+ * @author Franco Giovanny Gastelum Barcelo
  */
-public class InscripcionDuplicadaException {
-    
+public class InscripcionDuplicadaException extends Exception{
+    public InscripcionDuplicadaException(String mensaje){
+        super(mensaje);
+    }
 }

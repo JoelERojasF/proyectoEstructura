@@ -5,9 +5,14 @@
 package Excepciones;
 
 /**
+ * EstudianteNoEncontradoException.java
  *
- * @author giova
+ * Se lanza cuando no se encuentra un estudiante con la matrícula especificada.
+ *
+ * @author Franco Giovanny Gastelum Barcelo
  */
-public class EstudianteNoEncontradoException {
-    
+public class EstudianteNoEncontradoException extends Exception{
+    public EstudianteNoEncontradoException(String mensaje){
+        super(mensaje);
+    }
 }

@@ -11,6 +11,8 @@ package Excepciones;
  *
  * @author Franco Giovanny Gastelum Barcelo
  */
-public class AccionNoEncontradaException {
-    
+public class AccionNoEncontradaException extends Exception{
+    public AccionNoEncontradaException(String mensaje){
+        super(mensaje);
+    }
 }

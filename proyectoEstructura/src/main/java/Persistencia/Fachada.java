@@ -227,5 +227,14 @@ public class Fachada {
     public void procesarTodasSolicitudes() throws Exception {
         calificaciones.procesarTodasSolicitudes();
     }
+    
+    public String[] obtenerLideres(String claveCurso) throws Exception {
+        Curso curso = cursos.buscarPorClave(claveCurso);
+        String anterior  = curso.getLiderAnterior()  != null ? curso.getLiderAnterior().getNombreCompleto() : "N/A";
+        String actual    = curso.getLiderActual()    != null ? curso.getLiderActual().getNombreCompleto()   : "N/A";
+        String siguiente = curso.getSiguienteLider() != null ? curso.getSiguienteLider().getNombreCompleto(): "N/A";
+        return new String[]{anterior, actual, siguiente};
+    }
+
 
 }

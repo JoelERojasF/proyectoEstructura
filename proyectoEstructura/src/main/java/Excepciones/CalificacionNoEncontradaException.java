@@ -11,6 +11,8 @@ package Excepciones;
  * 
  * @author Franco Giovanny Gastelum Barcelo
  */
-public class CalificacionNoEncontradaException {
-    
+public class CalificacionNoEncontradaException extends Exception{
+    public CalificacionNoEncontradaException(String mensaje){
+        super(mensaje);
+    }
 }

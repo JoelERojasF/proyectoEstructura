@@ -124,6 +124,26 @@ public class Curso implements Comparable<Curso>{
         }
     }
     
+    public Estudiante getLiderActual() throws Exception {
+        if (roles.vacio()) return null;
+        return roles.obtener(0);
+    }
+
+    public Estudiante getLiderAnterior() throws Exception {
+        if (roles.vacio()) return null;
+        // El anterior sería el último en la lista circular
+        return roles.obtener(roles.tamanio() - 1);
+    }
+
+    public Estudiante getSiguienteLider() throws Exception {
+        if (roles.vacio()) return null;
+        if (roles.tamanio() > 1) {
+            return roles.obtener(1);
+        }
+        return null; // si solo hay un estudiante inscrito
+    }
+
+    
     public ListaEnlazadaSimple<Estudiante> getListaEstudiantes() {
         return listaEstudiantes;
     }

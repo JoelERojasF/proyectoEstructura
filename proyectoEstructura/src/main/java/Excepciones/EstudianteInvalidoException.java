@@ -5,9 +5,14 @@
 package Excepciones;
 
 /**
+ * EstudianteInvalidoException.java
  *
- * @author giova
+ * Se lanza cuando los datos de un estudiante no cumplen con las validaciones requeridas.
+ *
+ * @author Franco Giovanny Gastelum Barcelo
  */
-public class EstudianteInvalidoException {
-    
+public class EstudianteInvalidoException extends Exception{
+    public EstudianteInvalidoException(String mensaje){
+        super(mensaje);
+    }
 }
