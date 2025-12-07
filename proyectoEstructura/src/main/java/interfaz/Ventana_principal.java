@@ -316,11 +316,11 @@ public class Ventana_principal extends JFrame {
                     Estudiante est = fachada.buscarEstudiante(matricula);
 
                     Contacto contacto = est.getContacto(); 
-                    String telefono = (contacto != null) ? contacto.getTelefono() : "N/A";
-                    String email    = (contacto != null) ? contacto.getEmail()    : "N/A";
+                    String telefono = contacto.getTelefono();
+                    String email    = contacto.getEmail();
 
-                    Direccion direccion = (contacto != null) ? contacto.getDireccion() : null;
-                    String direccionStr = (direccion != null) ? direccion.toString() : "N/A";
+                    Direccion direccion = contacto.getDireccion();
+                    String direccionStr = direccion.toString();
 
                     String resultado =
                             "Nombre: " + est.getNombreCompleto() + "\n" +
