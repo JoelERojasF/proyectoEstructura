@@ -92,6 +92,7 @@ public class Fachada {
     }
     
      public Estudiante eliminarEstudiante(String id){
+        id = id.toUpperCase();
         Estudiante e = estudiantes.buscarPorMatricula(id);
         if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
         estudiantes.eliminarEstudiante(e);
@@ -110,6 +111,7 @@ public class Fachada {
     }
     
     public Estudiante buscarEstudiante(String id){
+        id = id.toUpperCase();
         Estudiante e = estudiantes.buscarPorMatricula(id);
         if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
         return e;
@@ -145,12 +147,14 @@ public class Fachada {
     }
     
     public Curso buscarCurso(String clave){
+        clave = clave.toUpperCase();
         Curso c = cursos.buscarPorClave(clave);
         if(c == null) throw new NoSuchElementException("Curso no encontrado");
         return cursos.buscarPorClave(clave);
     }
     
     public Curso eliminarCurso(String clave) throws Exception{
+        clave = clave.toUpperCase();
         Curso c = cursos.buscarPorClave(clave);
         if(c == null) throw new NoSuchElementException("Curso no encontrado");
         cursos.eliminarCurso(c);
@@ -172,6 +176,7 @@ public class Fachada {
     }
     
     public String[] obtenerLideres(String claveCurso) throws Exception {
+        claveCurso = claveCurso.toUpperCase();
         Curso curso = cursos.buscarPorClave(claveCurso);
         String anterior = curso.getLiderAnterior() != null ? curso.getLiderAnterior().getNombreCompleto() : "N/A";
         String actual = curso.getLiderActual() != null ? curso.getLiderActual().getNombreCompleto() : "N/A";
@@ -181,6 +186,9 @@ public class Fachada {
     
     //inscripciones
     public Inscripcion agregarInscripcion(String claveCurso, String matriculaEstudiante){
+        claveCurso = claveCurso.toUpperCase();
+        matriculaEstudiante = matriculaEstudiante.toUpperCase();
+
         Curso c = cursos.buscarPorClave(claveCurso);
         Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
         
@@ -200,12 +208,14 @@ public class Fachada {
     }
     
     public Inscripcion buscarInscripcion(String id){
+        id = id.toUpperCase();
         Inscripcion i = inscripciones.buscarInscripcion(id);
         if(i == null) throw new NoSuchElementException("Inscripcion no encontrada");
         return i;
     }
     
     public Inscripcion eliminarInscripcion(String id) throws Exception{
+        id= id.toUpperCase();
         Inscripcion i = inscripciones.buscarInscripcion(id);
         if(i == null) throw new NoSuchElementException("Inscripcion no encontrada");
         inscripciones.eliminarInscripcion(i);
@@ -236,6 +246,9 @@ public class Fachada {
     
     //calificaciones
     public SolicitudCalificacion registrarSolicitudCalificacion(String matriculaEstudiante, String matriculaCurso, String calificacion){
+        matriculaCurso = matriculaCurso.toUpperCase();
+        matriculaEstudiante = matriculaEstudiante.toUpperCase();
+        
         if(!val.validarCalificacion(calificacion)){
             throw new IllegalArgumentException("calificacion invalida");
         }
@@ -244,6 +257,8 @@ public class Fachada {
         if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
         Curso c = cursos.buscarPorClave(matriculaCurso);
         if(c == null) throw new NoSuchElementException("Curso no encontrado");
+        
+        if(c.buscarInscrito(matriculaEstudiante) == null) throw new NoSuchElementException("El estudiante no esta inscrito en el curso " + c.getClave() + ": " + c.getNombre());
         
         Calificacion cal = new Calificacion(c, Double.parseDouble(calificacion));
         SolicitudCalificacion s = new SolicitudCalificacion(e, cal);

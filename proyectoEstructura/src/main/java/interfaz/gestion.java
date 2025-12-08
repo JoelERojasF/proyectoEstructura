@@ -39,52 +39,52 @@ public class gestion {
         
         
         
-        
-        // Direcciones
-        Direccion dirFranco = new Direccion("Calle Reforma", "123", "Centro", "Ciudad Obregón");
-        Direccion dirJoel   = new Direccion("Av. Hidalgo", "456", "Norte", "Ciudad Obregón");
-        Direccion dirAndrea = new Direccion("Calle Morelos", "789", "Sur", "Ciudad Obregón");
-
-        // Contactos
-        Contacto contactoFranco = new Contacto("6621112233", "franco@mail.com", dirFranco);
-        Contacto contactoJoel   = new Contacto("6622223344", "joel@mail.com", dirJoel);
-        Contacto contactoAndrea = new Contacto("6623334455", "andrea@mail.com", dirAndrea);
-
-        // Estudiantes
-        Estudiante estFranco = new Estudiante("EST0001", "Franco Giovanny Gastelum Barcelo", contactoFranco);
-        Estudiante estJoel   = new Estudiante("EST0002", "Joel Eduardo Rojas Fuentes", contactoJoel);
-        Estudiante estAndrea = new Estudiante("EST0003", "Carmen Andrea Lara Osuna", contactoAndrea);
-
-        // Depuración en consola
-        System.out.println(">>> Estudiantes precargados:");
-        System.out.println(estFranco.getMatricula() + " | " + estFranco.getNombreCompleto() + " | " + estFranco.getContacto().getEmail());
-        System.out.println(estJoel.getMatricula()   + " | " + estJoel.getNombreCompleto()   + " | " + estJoel.getContacto().getEmail());
-        System.out.println(estAndrea.getMatricula() + " | " + estAndrea.getNombreCompleto() + " | " + estAndrea.getContacto().getEmail());
-
-        // Cursos
-        Curso cursoMatematicas = new Curso("CUR0001", "Matemáticas", 2);
-        Curso cursoProgramacion = new Curso("CUR0002", "Programación Orientada a Objetos", 3);
-
-        System.out.println("\n>>> Cursos precargados:");
-        System.out.println(cursoMatematicas.getClave() + " | " + cursoMatematicas.getNombre() + " | Cupo: " + cursoMatematicas.getCupoMaximo());
-        System.out.println(cursoProgramacion.getClave() + " | " + cursoProgramacion.getNombre() + " | Cupo: " + cursoProgramacion.getCupoMaximo());
-
-        // Inscripciones en curso Matemáticas
-        cursoMatematicas.inscribir(estFranco);
-        cursoMatematicas.inscribir(estJoel);
-        cursoMatematicas.inscribir(estAndrea); // este debería ir a lista de espera
-
-        System.out.println("\n>>> Inscritos en " + cursoMatematicas.getNombre() + ":");
-        for (int i = 0; i < cursoMatematicas.getListaEstudiantes().tamanio(); i++) {
-            Estudiante e = cursoMatematicas.getListaEstudiantes().obtener(i);
-            System.out.println("   - " + e.getMatricula() + " | " + e.getNombreCompleto());
-        }
-
-        System.out.println("\n>>> Lista de espera en " + cursoMatematicas.getNombre() + ":");
-        for (int i = 0; i < cursoMatematicas.getListaEspera().tamanio(); i++) {
-            Estudiante e = cursoMatematicas.getListaEspera().obtener(i);
-            System.out.println("   - " + e.getMatricula() + " | " + e.getNombreCompleto());
-        }
+//        
+//        // Direcciones
+//        Direccion dirFranco = new Direccion("Calle Reforma", "123", "Centro", "Ciudad Obregón");
+//        Direccion dirJoel   = new Direccion("Av. Hidalgo", "456", "Norte", "Ciudad Obregón");
+//        Direccion dirAndrea = new Direccion("Calle Morelos", "789", "Sur", "Ciudad Obregón");
+//
+//        // Contactos
+//        Contacto contactoFranco = new Contacto("6621112233", "franco@mail.com", dirFranco);
+//        Contacto contactoJoel   = new Contacto("6622223344", "joel@mail.com", dirJoel);
+//        Contacto contactoAndrea = new Contacto("6623334455", "andrea@mail.com", dirAndrea);
+//
+//        // Estudiantes
+//        Estudiante estFranco = new Estudiante("EST0001", "Franco Giovanny Gastelum Barcelo", contactoFranco);
+//        Estudiante estJoel   = new Estudiante("EST0002", "Joel Eduardo Rojas Fuentes", contactoJoel);
+//        Estudiante estAndrea = new Estudiante("EST0003", "Carmen Andrea Lara Osuna", contactoAndrea);
+//
+//        // Depuración en consola
+//        System.out.println(">>> Estudiantes precargados:");
+//        System.out.println(estFranco.getMatricula() + " | " + estFranco.getNombreCompleto() + " | " + estFranco.getContacto().getEmail());
+//        System.out.println(estJoel.getMatricula()   + " | " + estJoel.getNombreCompleto()   + " | " + estJoel.getContacto().getEmail());
+//        System.out.println(estAndrea.getMatricula() + " | " + estAndrea.getNombreCompleto() + " | " + estAndrea.getContacto().getEmail());
+//
+//        // Cursos
+//        Curso cursoMatematicas = new Curso("CUR0001", "Matemáticas", 2);
+//        Curso cursoProgramacion = new Curso("CUR0002", "Programación Orientada a Objetos", 3);
+//
+//        System.out.println("\n>>> Cursos precargados:");
+//        System.out.println(cursoMatematicas.getClave() + " | " + cursoMatematicas.getNombre() + " | Cupo: " + cursoMatematicas.getCupoMaximo());
+//        System.out.println(cursoProgramacion.getClave() + " | " + cursoProgramacion.getNombre() + " | Cupo: " + cursoProgramacion.getCupoMaximo());
+//
+//        // Inscripciones en curso Matemáticas
+//        cursoMatematicas.inscribir(estFranco);
+//        cursoMatematicas.inscribir(estJoel);
+//        cursoMatematicas.inscribir(estAndrea); // este debería ir a lista de espera
+//
+//        System.out.println("\n>>> Inscritos en " + cursoMatematicas.getNombre() + ":");
+//        for (int i = 0; i < cursoMatematicas.getListaEstudiantes().tamanio(); i++) {
+//            Estudiante e = cursoMatematicas.getListaEstudiantes().obtener(i);
+//            System.out.println("   - " + e.getMatricula() + " | " + e.getNombreCompleto());
+//        }
+//
+//        System.out.println("\n>>> Lista de espera en " + cursoMatematicas.getNombre() + ":");
+//        for (int i = 0; i < cursoMatematicas.getListaEspera().tamanio(); i++) {
+//            Estudiante e = cursoMatematicas.getListaEspera().obtener(i);
+//            System.out.println("   - " + e.getMatricula() + " | " + e.getNombreCompleto());
+//        }
 
         //Pruebas para mostrar estudiantes inscritos en un curso
 ////         1. Crear fachada
