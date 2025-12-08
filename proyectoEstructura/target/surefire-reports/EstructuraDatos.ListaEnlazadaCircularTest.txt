@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: EstructuraDatos.ListaEnlazadaCircularTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.046 s -- in EstructuraDatos.ListaEnlazadaCircularTest

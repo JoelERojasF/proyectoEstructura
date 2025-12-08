@@ -1,0 +1,11 @@
+Persistencia\RegistroCalificacionesTest.class
+EstructuraDatos\ListaEnlazadaSimpleTest.class
+EstructuraDatos\ArbolBinarioBusquedaTest.class
+EstructuraDatos\ColaTest.class
+Persistencia\RegistroInscripcionesTest.class
+EstructuraDatos\PilaTest.class
+Persistencia\RegistroEstudiantesTest.class
+Persistencia\RegistroCursosTest.class
+EstructuraDatos\ListaEnlazadaCircularTest.class
+EstructuraDatos\ListaDobleEnlazadaCircularTest.class
+EstructuraDatos\ArbolAVLTest.class
