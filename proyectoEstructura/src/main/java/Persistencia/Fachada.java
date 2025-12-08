@@ -34,7 +34,7 @@ public class Fachada {
     
     private static Fachada instancia;
 
-    private Fachada(){
+    private Fachada(){ 
         estudiantes = new RegistroEstudiantes();
         calificaciones = new RegistroCalificaciones(estudiantes);
         cursos = new RegistroCursos();
@@ -99,13 +99,13 @@ public class Fachada {
     
     //cursos
     public Curso agregarCurso(String nombre, String capacidad){
-            if(!val.validarNombreCurso(nombre)){
+        if(!val.validarNombreCurso(nombre)){
             throw new IllegalArgumentException("nombre de curso invalido");
         }
         if(!val.validarCupoCurso(capacidad)){
             throw new IllegalArgumentException("cupo invalido");
         }
-        int cupo= Integer.parseInt(capacidad);
+        int cupo = Integer.parseInt(capacidad);
         
         Curso c  = new Curso(crearIdCurso(), nombre, cupo);
         cursos.agregarCurso(c);

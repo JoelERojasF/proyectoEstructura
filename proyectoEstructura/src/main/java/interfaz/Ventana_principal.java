@@ -18,7 +18,11 @@ import javax.swing.table.DefaultTableModel;
 
 
 /**
- *
+ * Ventana_principal.java
+ * 
+ * Ventana principal que se encarga de mostrar todas las opciones para el
+ * usuario en la barra de menu y de mandar los datos a persistencia
+ * 
  * @author Carmen Andrea Lara Osuna
  * @author Joel Eduardo Rojas Fuentes
  * @author Franco Giovanny Gastelum Barcelo
@@ -395,16 +399,7 @@ public class Ventana_principal extends JFrame {
                 String nombre = txtNombreCurso.getText().trim();
                 String capacidadStr = txtCapacidad.getText().trim();
 
-                if (nombre.isBlank() || capacidadStr.isBlank()) {
-                    throw new IllegalArgumentException("Debe ingresar nombre y capacidad");
-                }
-
-                int capacidad = Integer.parseInt(capacidadStr);
-                if (capacidad <= 0) {
-                    throw new IllegalArgumentException("La capacidad debe ser mayor que cero");
-                }
-
-                Curso c = fachada.agregarCurso(nombre, String.valueOf(capacidad));
+                Curso c = fachada.agregarCurso(nombre, String.valueOf(capacidadStr));
                 JOptionPane.showMessageDialog(this, "Curso agregado correctamente con la clave: " + c.getClave());
 
                 // limpiar campos

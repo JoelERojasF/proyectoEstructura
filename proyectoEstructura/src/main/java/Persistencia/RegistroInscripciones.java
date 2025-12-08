@@ -29,15 +29,19 @@ public class RegistroInscripciones {
 
     public void inscribirEstudianteEnCurso(Inscripcion inscripcion) {
         inscripciones.agregar(inscripcion);
+
+        // Actualizar el curso con el estudiante
+        inscripcion.getCurso().inscribir(inscripcion.getEstudiante());
+
         Accion accion = new Accion(
-                Accion.TipoAccion.INSCRIPCION,
-                inscripcion.getEstudiante(),
-                inscripcion.getCurso(),
-                null,
-                -1.0,
-                true
-            );
-            acciones.registrarAccion(accion);
+            Accion.TipoAccion.INSCRIPCION,
+            inscripcion.getEstudiante(),
+            inscripcion.getCurso(),
+            null,
+            -1.0,
+            true
+        );
+        acciones.registrarAccion(accion);
     }
     
     public void eliminarInscripcion(Inscripcion ins) throws Exception{
