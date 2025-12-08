@@ -78,16 +78,7 @@ public class Fachada {
         Estudiante e = new Estudiante(crearIdEstudiante(), nombre, c);
         
         estudiantes.agregarEstudiante(e);
-        Accion accion = new Accion(
-                Accion.TipoAccion.REGISTRO,
-                e,
-                null,
-                null,
-                null,
-                -1.0,
-                true
-            );
-            acciones.registrarAccion(accion);
+        
         return e;
     }
     
@@ -97,16 +88,8 @@ public class Fachada {
         if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
         estudiantes.eliminarEstudiante(e);
         
-         Accion accion = new Accion(
-                Accion.TipoAccion.REGISTRO,
-                e,
-                null,
-                null,
-                null,
-                -1.0,
-                false
-            );
-            acciones.registrarAccion(accion);
+        
+           
             return e;
     }
     
@@ -133,16 +116,7 @@ public class Fachada {
         
         Curso c  = new Curso(crearIdCurso(), nombre, cupo);
         cursos.agregarCurso(c);
-        Accion accion = new Accion(
-                Accion.TipoAccion.REGISTRO,
-                null,
-                c,
-                null,
-                null,
-                -1.0,
-                true
-            );
-            acciones.registrarAccion(accion);
+        
         return c;
     }
     
@@ -158,16 +132,7 @@ public class Fachada {
         Curso c = cursos.buscarPorClave(clave);
         if(c == null) throw new NoSuchElementException("Curso no encontrado");
         cursos.eliminarCurso(c);
-        Accion accion = new Accion(
-                Accion.TipoAccion.REGISTRO,
-                null,
-                c,
-                null,
-                null,
-                -1.0,
-                false
-            );
-            acciones.registrarAccion(accion);
+      
             return c;
     }
     
@@ -194,16 +159,7 @@ public class Fachada {
         
         Inscripcion i = new Inscripcion(crearIdInscripcion(), e, c);
         inscripciones.inscribirEstudianteEnCurso(i);
-        Accion accion = new Accion(
-                Accion.TipoAccion.INSCRIPCION,
-                i.getEstudiante(),
-                i.getCurso(),
-                i,
-                null,
-                -1.0,
-                true
-            );
-            acciones.registrarAccion(accion);
+        
         return i;
     }
     
@@ -219,16 +175,7 @@ public class Fachada {
         Inscripcion i = inscripciones.buscarInscripcion(id);
         if(i == null) throw new NoSuchElementException("Inscripcion no encontrada");
         inscripciones.eliminarInscripcion(i);
-        Accion accion = new Accion(
-                Accion.TipoAccion.BAJA,
-                i.getEstudiante(),
-                i.getCurso(),
-                i,
-                null,
-                -1.0,
-                true
-            );
-            acciones.registrarAccion(accion);
+        
             return i;
     }
     
@@ -275,16 +222,7 @@ public class Fachada {
                 }
         
         calificaciones.registrarSolicitud(s);
-        Accion accion = new Accion(
-                Accion.TipoAccion.CALIFICACION,
-                e,
-                c,
-                null,
-                calificacionAnterior,
-                Double.parseDouble(calificacion),
-                true
-            );
-            acciones.registrarAccion(accion);
+        
         return s;
     }
     
