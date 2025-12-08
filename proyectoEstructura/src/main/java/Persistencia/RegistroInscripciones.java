@@ -44,18 +44,25 @@ public class RegistroInscripciones {
         acciones.registrarAccion(accion);
     }
     
-    public void eliminarInscripcion(Inscripcion ins) throws Exception{
+    public void eliminarInscripcion(Inscripcion ins) throws Exception {
+        // Eliminar de la lista global
         inscripciones.eliminar(inscripciones.indexOf(ins));
+
+        // Tambien actualizar el curso
+        ins.getCurso().removerInscrito(ins.getEstudiante());
+
+        // Registrar accion
         Accion accion = new Accion(
-                Accion.TipoAccion.BAJA,
-                ins.getEstudiante(),
-                ins.getCurso(),
-                null,
-                -1.0,
-                true
-            );
-            acciones.registrarAccion(accion);
+            Accion.TipoAccion.BAJA,
+            ins.getEstudiante(),
+            ins.getCurso(),
+            null,
+            -1.0,
+            true
+        );
+        acciones.registrarAccion(accion);
     }
+
     
     public Inscripcion buscarInscripcion(String id){
         for(Inscripcion i : inscripciones){
