@@ -97,13 +97,12 @@ public class Accion {
             }
                 break;
             case CALIFICACION:
-                if (calificacionAnterior != null) {
-                    if(aniadido){
-                        estudiante.reemplazarCalificacion(calificacionNueva, calificacionAnterior);
-                    }else{
-                        Calificacion c = new Calificacion(calificacionAnterior.getCurso(), calificacionNueva);
-                        estudiante.reemplazarCalificacion(calificacionAnterior.getCalificacion(), c);
-                    }
+                if (calificacionAnterior != null && estudiante != null) {
+                    // Restaurar la calificación anterior
+                    estudiante.reemplazarCalificacion(calificacionNueva, calificacionAnterior);
+                    System.out.println(">>> Se deshizo calificación de " + estudiante.getNombreCompleto() +
+                                       " en curso " + curso.getNombre() +
+                                       " | Valor restaurado: " + calificacionAnterior.getCalificacion());
                 }
                 break;
         }

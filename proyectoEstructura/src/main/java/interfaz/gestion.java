@@ -4,6 +4,7 @@
 
 package interfaz;
 //imports para pruebas
+import ObjetosNegocio.Accion;
 import ObjetosNegocio.Calificacion;
 import ObjetosNegocio.Contacto;
 import ObjetosNegocio.Curso;
@@ -11,6 +12,7 @@ import ObjetosNegocio.Direccion;
 import ObjetosNegocio.Estudiante;
 import ObjetosNegocio.SolicitudCalificacion;
 import Persistencia.Fachada;
+import Persistencia.RegistroAcciones;
 
 /**
  * gestion.java
@@ -40,51 +42,60 @@ public class gestion {
         
         
         
-        // Direcciones
-        Direccion dirFranco = new Direccion("Calle Reforma", "123", "Centro", "Ciudad Obregón");
-        Direccion dirJoel   = new Direccion("Av. Hidalgo", "456", "Norte", "Ciudad Obregón");
-        Direccion dirAndrea = new Direccion("Calle Morelos", "789", "Sur", "Ciudad Obregón");
+//            Fachada fachada = Fachada.getInstancia();
+//
+//            // Crear estudiantes precargados con agregarEstudiante
+//            Estudiante estFranco = fachada.agregarEstudiante(
+//                "Franco Giovanny Gastelum Barcelo",
+//                "6621112233",
+//                "franco@mail.com",
+//                "Calle Reforma", "252", "Cortinas", "Ciudad Obregón"
+//            );
+//
+//            Estudiante estJoel = fachada.agregarEstudiante(
+//                "Joel Eduardo Rojas Fuentes",
+//                "6622223344",
+//                "joel@mail.com",
+//                "Av. Hidalgo", "456", "Norte", "Ciudad Obregón"
+//            );
+//
+//            Estudiante estAndrea = fachada.agregarEstudiante(
+//                "Carmen Andrea Lara Osuna",
+//                "6623334455",
+//                "andrea@mail.com",
+//                "Calle Morelos", "789", "Sur", "Ciudad Obregón"
+//            );
+//
+//            System.out.println(">>> Estudiantes precargados:");
+//            System.out.println(estFranco.getMatricula() + " | " + estFranco.getNombreCompleto());
+//            System.out.println(estJoel.getMatricula()   + " | " + estJoel.getNombreCompleto());
+//            System.out.println(estAndrea.getMatricula() + " | " + estAndrea.getNombreCompleto());
+//
+//            // Crear cursos precargados
+//            Curso cursoMatematicas = fachada.agregarCurso("Matemáticas", "2");
+//            Curso cursoProgramacion = fachada.agregarCurso("Programación Orientada a Objetos", "3");
+//
+//            System.out.println("\n>>> Cursos precargados:");
+//            System.out.println(cursoMatematicas.getClave() + " | " + cursoMatematicas.getNombre() + " | Cupo: " + cursoMatematicas.getCupoMaximo());
+//            System.out.println(cursoProgramacion.getClave() + " | " + cursoProgramacion.getNombre() + " | Cupo: " + cursoProgramacion.getCupoMaximo());
+//
+//            // Inscripciones de prueba en curso Matemáticas
+//            fachada.agregarInscripcion(cursoMatematicas.getClave(), estFranco.getMatricula());
+//            fachada.agregarInscripcion(cursoMatematicas.getClave(), estJoel.getMatricula());
+//            fachada.agregarInscripcion(cursoMatematicas.getClave(), estAndrea.getMatricula()); // debería ir a lista de espera
+//
+//            System.out.println("\n>>> Inscritos en " + cursoMatematicas.getNombre() + ":");
+//            for (int i = 0; i < cursoMatematicas.getListaEstudiantes().tamanio(); i++) {
+//                Estudiante e = cursoMatematicas.getListaEstudiantes().obtener(i);
+//                System.out.println("   - " + e.getMatricula() + " | " + e.getNombreCompleto());
+//            }
+//
+//            System.out.println("\n>>> Lista de espera en " + cursoMatematicas.getNombre() + ":");
+//            for (int i = 0; i < cursoMatematicas.getListaEspera().tamanio(); i++) {
+//                Estudiante e = cursoMatematicas.getListaEspera().obtener(i);
+//                System.out.println("   - " + e.getMatricula() + " | " + e.getNombreCompleto());
+//            }
 
-        // Contactos
-        Contacto contactoFranco = new Contacto("6621112233", "franco@mail.com", dirFranco);
-        Contacto contactoJoel   = new Contacto("6622223344", "joel@mail.com", dirJoel);
-        Contacto contactoAndrea = new Contacto("6623334455", "andrea@mail.com", dirAndrea);
-
-        // Estudiantes
-        Estudiante estFranco = new Estudiante("EST0001", "Franco Giovanny Gastelum Barcelo", contactoFranco);
-        Estudiante estJoel   = new Estudiante("EST0002", "Joel Eduardo Rojas Fuentes", contactoJoel);
-        Estudiante estAndrea = new Estudiante("EST0003", "Carmen Andrea Lara Osuna", contactoAndrea);
-
-        // Depuración en consola
-        System.out.println(">>> Estudiantes precargados:");
-        System.out.println(estFranco.getMatricula() + " | " + estFranco.getNombreCompleto() + " | " + estFranco.getContacto().getEmail());
-        System.out.println(estJoel.getMatricula()   + " | " + estJoel.getNombreCompleto()   + " | " + estJoel.getContacto().getEmail());
-        System.out.println(estAndrea.getMatricula() + " | " + estAndrea.getNombreCompleto() + " | " + estAndrea.getContacto().getEmail());
-
-        // Cursos
-        Curso cursoMatematicas = new Curso("CUR0001", "Matemáticas", 2);
-        Curso cursoProgramacion = new Curso("CUR0002", "Programación Orientada a Objetos", 3);
-
-        System.out.println("\n>>> Cursos precargados:");
-        System.out.println(cursoMatematicas.getClave() + " | " + cursoMatematicas.getNombre() + " | Cupo: " + cursoMatematicas.getCupoMaximo());
-        System.out.println(cursoProgramacion.getClave() + " | " + cursoProgramacion.getNombre() + " | Cupo: " + cursoProgramacion.getCupoMaximo());
-
-        // Inscripciones en curso Matemáticas
-        cursoMatematicas.inscribir(estFranco);
-        cursoMatematicas.inscribir(estJoel);
-        cursoMatematicas.inscribir(estAndrea); // este debería ir a lista de espera
-
-        System.out.println("\n>>> Inscritos en " + cursoMatematicas.getNombre() + ":");
-        for (int i = 0; i < cursoMatematicas.getListaEstudiantes().tamanio(); i++) {
-            Estudiante e = cursoMatematicas.getListaEstudiantes().obtener(i);
-            System.out.println("   - " + e.getMatricula() + " | " + e.getNombreCompleto());
-        }
-
-        System.out.println("\n>>> Lista de espera en " + cursoMatematicas.getNombre() + ":");
-        for (int i = 0; i < cursoMatematicas.getListaEspera().tamanio(); i++) {
-            Estudiante e = cursoMatematicas.getListaEspera().obtener(i);
-            System.out.println("   - " + e.getMatricula() + " | " + e.getNombreCompleto());
-        }
 
         //Pruebas para mostrar estudiantes inscritos en un curso
 ////         1. Crear fachada
@@ -307,6 +318,49 @@ public class gestion {
 //        System.out.println("   Líder anterior: " + c.getLiderAnterior().getNombreCompleto());
 //        System.out.println("   Líder actual: " + c.getLiderActual().getNombreCompleto());
 //        System.out.println("   Siguiente líder: " + c.getSiguienteLider().getNombreCompleto());
+    // 1. Crear registros
+        RegistroAcciones registroAcciones = new RegistroAcciones();
+
+        // 2. Crear curso
+        Curso curso = new Curso("CUR0001", "Matemáticas", 2);
+
+        // 3. Crear estudiante con contacto y dirección
+        Direccion dir = new Direccion("Calle Reforma", "123", "Centro", "Ciudad Obregón");
+        Contacto contacto = new Contacto("6621112233", "franco@mail.com", dir);
+        Estudiante estudiante = new Estudiante("EST0001", "Franco Giovanny Gastelum Barcelo", contacto);
+
+        // 4. Inscribir estudiante en el curso
+        curso.inscribir(estudiante);
+        System.out.println(">>> Estudiante inscrito en curso: " + curso.getNombre());
+
+        // 5. Asignar calificación inicial
+        Calificacion califInicial = new Calificacion(curso, 80.0);
+        estudiante.getCalificaciones().agregar(califInicial);
+        System.out.println(">>> Calificación inicial: " + califInicial.getCalificacion());
+
+        // 6. Cambiar calificación y registrar acción
+        Calificacion califAnterior = califInicial;
+        double nueva = 95.0;
+        Calificacion califNueva = new Calificacion(curso, nueva);
+        estudiante.reemplazarCalificacion(califAnterior.getCalificacion(), califNueva);
+
+        Accion accionCalif = new Accion(
+            Accion.TipoAccion.CALIFICACION,
+            estudiante,
+            curso,
+            califAnterior,
+            nueva,
+            true
+        );
+        registroAcciones.registrarAccion(accionCalif);
+
+        System.out.println(">>> Calificación después de cambio: " + estudiante.getCalificaciones().obtener(0).getCalificacion());
+
+        // 7. Deshacer última acción
+        registroAcciones.deshacerUltimaAccion();
+
+        // 8. Mostrar resultado final
+        System.out.println(">>> Calificación después de deshacer: " + estudiante.getCalificaciones().obtener(0).getCalificacion());
 
     }
 }
