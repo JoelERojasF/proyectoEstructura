@@ -78,13 +78,35 @@ public class Fachada {
         Estudiante e = new Estudiante(crearIdEstudiante(), nombre, c);
         
         estudiantes.agregarEstudiante(e);
+        Accion accion = new Accion(
+                Accion.TipoAccion.REGISTRO,
+                e,
+                null,
+                null,
+                null,
+                -1.0,
+                true
+            );
+            acciones.registrarAccion(accion);
         return e;
     }
     
-    public void eliminarEstudiante(String id){
+     public Estudiante eliminarEstudiante(String id){
         Estudiante e = estudiantes.buscarPorMatricula(id);
         if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
         estudiantes.eliminarEstudiante(e);
+        
+         Accion accion = new Accion(
+                Accion.TipoAccion.REGISTRO,
+                e,
+                null,
+                null,
+                null,
+                -1.0,
+                false
+            );
+            acciones.registrarAccion(accion);
+            return e;
     }
     
     public Estudiante buscarEstudiante(String id){
@@ -109,6 +131,16 @@ public class Fachada {
         
         Curso c  = new Curso(crearIdCurso(), nombre, cupo);
         cursos.agregarCurso(c);
+        Accion accion = new Accion(
+                Accion.TipoAccion.REGISTRO,
+                null,
+                c,
+                null,
+                null,
+                -1.0,
+                true
+            );
+            acciones.registrarAccion(accion);
         return c;
     }
     
@@ -118,14 +150,33 @@ public class Fachada {
         return cursos.buscarPorClave(clave);
     }
     
-    public void eliminarCurso(String clave) throws Exception{
+    public Curso eliminarCurso(String clave) throws Exception{
         Curso c = cursos.buscarPorClave(clave);
         if(c == null) throw new NoSuchElementException("Curso no encontrado");
         cursos.eliminarCurso(c);
+        Accion accion = new Accion(
+                Accion.TipoAccion.REGISTRO,
+                null,
+                c,
+                null,
+                null,
+                -1.0,
+                false
+            );
+            acciones.registrarAccion(accion);
+            return c;
     }
     
     public ListaEnlazadaSimple<Curso> listarCursos(){
         return cursos.mostrarCursos();
+    }
+    
+    public String[] obtenerLideres(String claveCurso) throws Exception {
+        Curso curso = cursos.buscarPorClave(claveCurso);
+        String anterior = curso.getLiderAnterior() != null ? curso.getLiderAnterior().getNombreCompleto() : "N/A";
+        String actual = curso.getLiderActual() != null ? curso.getLiderActual().getNombreCompleto() : "N/A";
+        String siguiente = curso.getSiguienteLider() != null ? curso.getSiguienteLider().getNombreCompleto() : "N/A";
+        return new String[]{anterior, actual, siguiente};
     }
     
     //inscripciones
@@ -135,6 +186,16 @@ public class Fachada {
         
         Inscripcion i = new Inscripcion(crearIdInscripcion(), e, c);
         inscripciones.inscribirEstudianteEnCurso(i);
+        Accion accion = new Accion(
+                Accion.TipoAccion.INSCRIPCION,
+                i.getEstudiante(),
+                i.getCurso(),
+                i,
+                null,
+                -1.0,
+                true
+            );
+            acciones.registrarAccion(accion);
         return i;
     }
     
@@ -144,10 +205,21 @@ public class Fachada {
         return i;
     }
     
-    public void eliminarInscripcion(String id) throws Exception{
+    public Inscripcion eliminarInscripcion(String id) throws Exception{
         Inscripcion i = inscripciones.buscarInscripcion(id);
         if(i == null) throw new NoSuchElementException("Inscripcion no encontrada");
         inscripciones.eliminarInscripcion(i);
+        Accion accion = new Accion(
+                Accion.TipoAccion.BAJA,
+                i.getEstudiante(),
+                i.getCurso(),
+                i,
+                null,
+                -1.0,
+                true
+            );
+            acciones.registrarAccion(accion);
+            return i;
     }
     
     public ListaEnlazadaSimple<Curso> listarInscripcionesDeEstudiante(String matriculaEstudiante){
@@ -176,10 +248,38 @@ public class Fachada {
         Calificacion cal = new Calificacion(c, Double.parseDouble(calificacion));
         SolicitudCalificacion s = new SolicitudCalificacion(e, cal);
         
+        Calificacion calificacionAnterior = new Calificacion(c, 0.0);
+        
+        if (!e.getCalificaciones().vacio()) {
+                    ListaEnlazadaSimple<Calificacion> lista = e.getCalificaciones();
+                    for(Calificacion i : lista){
+                        if(i.getCurso().equals(c)){
+                            calificacionAnterior = i;
+                        }
+                    }
+                }
+        
         calificaciones.registrarSolicitud(s);
+        Accion accion = new Accion(
+                Accion.TipoAccion.CALIFICACION,
+                e,
+                c,
+                null,
+                calificacionAnterior,
+                Double.parseDouble(calificacion),
+                true
+            );
+            acciones.registrarAccion(accion);
         return s;
     }
     
+    public void procesarSiguienteSolicitud() throws Exception {
+        calificaciones.procesarSiguienteSolicitud();
+    }
+
+    public void procesarTodasSolicitudes() throws Exception {
+        calificaciones.procesarTodasSolicitudes();
+    }
     
     public ListaEnlazadaSimple<Promedio> listarPromedios() throws Exception{
         return calificaciones.obtenerListadoPromedios();
@@ -190,6 +290,120 @@ public class Fachada {
         return acciones.deshacerUltimaAccion();
     }
     
+    public Estudiante RagregarEstudiante(String matricula, String nombre, String telefono, String email, String calle, String numero, String colonia, String ciudad) {
+
+        if (!val.validarNombreEstudiante(nombre)) {
+            throw new IllegalArgumentException("nombre de estudiante invalido");
+        }
+        if (!val.validarTelefono(telefono)) {
+            throw new IllegalArgumentException("telefono invalido");
+        }
+        if (!val.validarEmail(email)) {
+            throw new IllegalArgumentException("e-mail invalido");
+        }
+        if (!val.validarDireccionCalle(calle)) {
+            throw new IllegalArgumentException("calle invalida");
+        }
+        if (!val.validarDireccionNumero(numero)) {
+            throw new IllegalArgumentException("numero de calle invalido");
+        }
+        if (!val.validarDireccionColonia(colonia)) {
+            throw new IllegalArgumentException("colonia invalida");
+        }
+        if (!val.validarDireccionCiudad(ciudad)) {
+            throw new IllegalArgumentException("ciudad invalida");
+        }
+        Direccion d = new Direccion(calle, numero, colonia, ciudad);
+        Contacto c = new Contacto(telefono, email, d);
+
+        Estudiante e = new Estudiante(matricula, nombre, c);
+
+        estudiantes.agregarEstudiante(e);
+        return e;
+    }
+    
+    public Estudiante ReliminarEstudiante(String id){
+        Estudiante e = estudiantes.buscarPorMatricula(id);
+        if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
+        estudiantes.eliminarEstudiante(e);
+            return e;
+    }
+    
+    public Curso RagregarCurso(String clave,String nombre, String capacidad){
+            if(!val.validarNombreCurso(nombre)){
+            throw new IllegalArgumentException("nombre de curso invalido");
+        }
+        if(!val.validarCupoCurso(capacidad)){
+            throw new IllegalArgumentException("cupo invalido");
+        }
+        int cupo= Integer.parseInt(capacidad);
+        
+        Curso c  = new Curso(clave, nombre, cupo);
+        cursos.agregarCurso(c);
+        return c;
+    }
+    
+    public Curso ReliminarCurso(String clave) throws Exception{
+        Curso c = cursos.buscarPorClave(clave);
+        if(c == null) throw new NoSuchElementException("Curso no encontrado");
+        cursos.eliminarCurso(c);
+        return c;
+    }
+    
+    public Inscripcion RagregarInscripcion(String claveCurso, String matriculaEstudiante){
+        Curso c = cursos.buscarPorClave(claveCurso);
+        Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
+        
+        Inscripcion i = new Inscripcion(crearIdInscripcion(), e, c);
+        inscripciones.inscribirEstudianteEnCurso(i);
+        return i;
+    }
+    
+    public Inscripcion ReliminarInscripcion(String id) throws Exception{
+        Inscripcion i = inscripciones.buscarInscripcion(id);
+        if(i == null) throw new NoSuchElementException("Inscripcion no encontrada");
+        inscripciones.eliminarInscripcion(i);
+            return i;
+    }
+    
+    public SolicitudCalificacion RregistrarSolicitudCalificacion(String matriculaEstudiante, String matriculaCurso, String calificacion){
+        if(!val.validarCalificacion(calificacion)){
+            throw new IllegalArgumentException("calificacion invalida");
+        }
+        
+        Estudiante e = estudiantes.buscarPorMatricula(matriculaEstudiante);
+        if(e == null) throw new NoSuchElementException("Estudiante no encontrado");
+        Curso c = cursos.buscarPorClave(matriculaCurso);
+        if(c == null) throw new NoSuchElementException("Curso no encontrado");
+        
+        Calificacion cal = new Calificacion(c, Double.parseDouble(calificacion));
+        SolicitudCalificacion s = new SolicitudCalificacion(e, cal);
+        
+        Calificacion calificacionAnterior = new Calificacion(c, 0.0);
+        
+        if (!e.getCalificaciones().vacio()) {
+                    ListaEnlazadaSimple<Calificacion> lista = e.getCalificaciones();
+                    for(Calificacion i : lista){
+                        if(i.getCurso().equals(c)){
+                            calificacionAnterior = i;
+                        }
+                    }
+                }
+        
+        calificaciones.registrarSolicitud(s);
+        return s;
+    }
+    
+    public Estudiante getEstudianteUltimaAccion() {
+        if (acciones.vacio()) return null;
+        try {
+            return acciones.ultimaAccion().getEstudiante();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    //otros
     private String crearIdEstudiante(){
         int numero =estudiantes.tamanio()+1;
         String matricula = String.format("EST%04d", numero);
@@ -219,22 +433,4 @@ public class Fachada {
         }
         return matricula;
     }
-    
-    public void procesarSiguienteSolicitud() throws Exception {
-        calificaciones.procesarSiguienteSolicitud();
-    }
-
-    public void procesarTodasSolicitudes() throws Exception {
-        calificaciones.procesarTodasSolicitudes();
-    }
-    
-    public String[] obtenerLideres(String claveCurso) throws Exception {
-        Curso curso = cursos.buscarPorClave(claveCurso);
-        String anterior  = curso.getLiderAnterior()  != null ? curso.getLiderAnterior().getNombreCompleto() : "N/A";
-        String actual    = curso.getLiderActual()    != null ? curso.getLiderActual().getNombreCompleto()   : "N/A";
-        String siguiente = curso.getSiguienteLider() != null ? curso.getSiguienteLider().getNombreCompleto(): "N/A";
-        return new String[]{anterior, actual, siguiente};
-    }
-
-
 }

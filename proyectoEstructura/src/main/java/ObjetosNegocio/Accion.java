@@ -4,6 +4,7 @@
  */
 package ObjetosNegocio;
 
+import Persistencia.Fachada;
 import Persistencia.RegistroCursos;
 import Persistencia.RegistroEstudiantes;
 
@@ -21,12 +22,14 @@ public class Accion {
         REGISTRO, INSCRIPCION, BAJA, CALIFICACION
     }
 
+    private Fachada fachada;
     private TipoAccion tipo;
     private Estudiante estudiante;
     private Curso curso;
     private Calificacion calificacionAnterior;
     private Double calificacionNueva;
     private Boolean aniadido;
+    private Inscripcion inscripcion;
     RegistroEstudiantes registroEstudiante = new RegistroEstudiantes();
     RegistroCursos registroCurso = new RegistroCursos();
 
@@ -39,14 +42,16 @@ public class Accion {
      * @param calificacionAnterior Calificación previa (si aplica).
      * @param calificacionNueva Calificación nueva (si aplica).
      */
-    public Accion(TipoAccion tipo, Estudiante estudiante, Curso curso,
+    public Accion(TipoAccion tipo, Estudiante estudiante, Curso curso, Inscripcion inscripcion,
                   Calificacion calificacionAnterior, Double calificacionNueva, Boolean aniadido) {
         this.tipo = tipo;
         this.estudiante = estudiante;
         this.curso = curso;
+        this.inscripcion = inscripcion;
         this.calificacionAnterior = calificacionAnterior;
         this.calificacionNueva = calificacionNueva;
         this.aniadido = aniadido;
+        this.fachada = Fachada.getInstancia();
     }
 
     /**
@@ -59,30 +64,38 @@ public class Accion {
      * - CALIFICACION: restaurar calificación anterior.
      */
     public void revertir() throws Exception {
+        System.out.println("se revertira la accion: " + toString());
         switch (tipo) {
             case REGISTRO:
                 // Si la acción fue registrar un estudiante o un curso, al deshacer se elimina del BST
                 if (estudiante != null) {
                     if(aniadido){
-                        registroEstudiante.eliminarEstudiante(estudiante);
+                        fachada.ReliminarEstudiante(estudiante.getMatricula());
+                        System.out.println("se elimino el estudiante: " + estudiante.toString());
                     }else{
-                        registroEstudiante.agregarEstudiante(estudiante);
+                        fachada.RagregarEstudiante(estudiante.getMatricula(),estudiante.getNombreCompleto(), estudiante.getContacto().getTelefono(), estudiante.getContacto().getEmail(), estudiante.getContacto().getDireccion().getCalle(), estudiante.getContacto().getDireccion().getNumero(), estudiante.getContacto().getDireccion().getColonia(), estudiante.getContacto().getDireccion().getCiudad());
+                        System.out.println("se registro al estudiante: " + estudiante.toString());
                     }   
             }   else if(curso != null){
                     if(aniadido){
-                        registroCurso.eliminarCurso(curso);
+                        fachada.ReliminarCurso(curso.getClave());
+                        System.out.println("se elimino el curso: " + curso.toString());
                     }else{
-                        registroCurso.agregarCurso(curso);
+                        fachada.RagregarCurso(curso.getClave(), curso.getNombre(), curso.getCupoMaximo()+"");
+                        System.out.println("se registro el curso: " + curso.toString());
                     }
             }
                 break;
             case INSCRIPCION:
                 // Si la acción fue inscribir, al deshacer se quita al estudiante del curso
-            if (curso != null && estudiante != null) {
+            if (curso != null && estudiante != null && inscripcion != null) {
                 if(aniadido){
-                    curso.removerInscrito(estudiante);
+                    fachada.ReliminarInscripcion(inscripcion.getId());
+                    System.out.println("se elimino la inscripcion del estudiante: " + estudiante.toString() + " al curso: "+ curso.toString());
                 }else{
-                    curso.inscribir(estudiante);
+                    fachada.RagregarInscripcion(curso.getClave(), estudiante.getMatricula());
+                    System.out.println("se agrego la inscripcion del estudiante: " + estudiante.toString() + " al curso: " + curso.toString());
+
                 }
             }
                 break;
@@ -90,19 +103,24 @@ public class Accion {
                 // Si la acción fue dar de baja, al deshacer se vuelve a inscribir
             if (curso != null && estudiante != null) {
                 if(aniadido){
-                    curso.inscribir(estudiante);
+                    fachada.RagregarInscripcion(curso.getClave(), estudiante.getMatricula());
+                    System.out.println("se agrego la inscripcion del estudiante: " + estudiante.toString() + " al curso: " + curso.toString());
                 }else{
-                    curso.removerInscrito(estudiante);
+                    fachada.ReliminarInscripcion(inscripcion.getId());
+                    System.out.println("se elimino la inscripcion del estudiante: " + estudiante.toString() + " al curso: " + curso.toString());
                 }
             }
                 break;
             case CALIFICACION:
                 if (calificacionAnterior != null) {
                     if(aniadido){
-                        estudiante.reemplazarCalificacion(calificacionNueva, calificacionAnterior);
+                        fachada.RregistrarSolicitudCalificacion(estudiante.getMatricula(), curso.getClave(), calificacionNueva+"");
+                        System.out.println("se reemplazo la calificacion :"+ calificacionAnterior.toString() + " por: " + calificacionNueva);
                     }else{
                         Calificacion c = new Calificacion(calificacionAnterior.getCurso(), calificacionNueva);
                         estudiante.reemplazarCalificacion(calificacionAnterior.getCalificacion(), c);
+                        System.out.println("se reemplazo la calificacion :" + c.toString() + " por: " + calificacionAnterior.getCalificacion());
+
                     }
                 }
                 break;

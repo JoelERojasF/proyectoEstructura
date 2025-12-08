@@ -11,7 +11,6 @@ import ObjetosNegocio.Calificacion;
 import ObjetosNegocio.Promedio;
 import EstructuraDatos.ArbolAVL;
 import EstructuraDatos.ListaEnlazadaSimple;
-import ObjetosNegocio.Accion;
 import ObjetosNegocio.SolicitudCalificacion;
 import java.util.NoSuchElementException;
 /**
@@ -22,7 +21,6 @@ import java.util.NoSuchElementException;
  * @author Franco Giovanny Gastelum Barcelo
  */
 public class RegistroCalificaciones {
-    RegistroAcciones acciones = new RegistroAcciones();
     private Cola<SolicitudCalificacion> solicitudes;
     private RegistroEstudiantes registroEstudiantes;
 
@@ -59,16 +57,6 @@ public class RegistroCalificaciones {
                 }
                 
                 estudiante.agregarCalificacion(solicitud.getCalificacion());
-                
-                Accion accion = new Accion(
-                Accion.TipoAccion.CALIFICACION,
-                estudiante,
-                null,
-                calificacionAnterior,
-                calificacionNueva,
-                true
-            );
-            acciones.registrarAccion(accion);
             }
         }
     }
@@ -110,16 +98,7 @@ public class RegistroCalificaciones {
             // 4. Agregar la nueva calificación
             estudiante.agregarCalificacion(solicitud.getCalificacion());
 
-            // 5. Registrar acción en la pila
-            Accion accion = new Accion(
-                Accion.TipoAccion.CALIFICACION,
-                estudiante,
-                null,
-                calificacionAnterior,
-                calificacionNueva,
-                true
-            );
-            acciones.registrarAccion(accion);
+            
 
             System.out.println("Procesada solicitud: " + estudiante.getNombreCompleto() +
                                " nueva calificación = " + calificacionNueva);
@@ -149,15 +128,6 @@ public class RegistroCalificaciones {
         try {
             SolicitudCalificacion solicitud = solicitudes.obtener(0);
             return registroEstudiantes.buscarPorMatricula(solicitud.getEstudiante().getMatricula());
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public Estudiante getEstudianteUltimaAccion() {
-        if (acciones.vacio()) return null;
-        try {
-            return acciones.ultimaAccion().getEstudiante();
         } catch (Exception e) {
             return null;
         }
