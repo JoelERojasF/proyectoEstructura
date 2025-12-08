@@ -110,6 +110,13 @@ public class Curso implements Comparable<Curso>{
         return roles.obtener(0);
     }
     
+    public Estudiante buscarInscrito(String id){
+        for(Estudiante e : listaEstudiantes){
+        if(e.getMatricula().equalsIgnoreCase(id))return e;
+        }
+        return null;
+    }
+    
     public void inscribirSiguienteEstudianteEspera() throws Exception{
         if (listaEstudiantes.tamanio() < cupoMaximo && listaEspera.tamanio() > 0) {
             Estudiante e =listaEspera.eliminar(0);

@@ -617,7 +617,8 @@ public class Ventana_principal extends JFrame {
                             txtClaveCurso.getText(),
                             txtMatriculaEstudiante.getText()
                     );
-                    JOptionPane.showMessageDialog(this, "Inscripción realizada correctamente con la clave: " + i.getId());
+                    if(c.buscarInscrito(es.getMatricula()) == null) JOptionPane.showMessageDialog(this, "Curso "+c.getClave() + ": " +c.getNombre() +" lleno, inscripción del estudiante "+es.getMatricula() + ": " + es.getNombreCompleto()+" realizada a la lista de espera con la clave: " + i.getId());
+                    JOptionPane.showMessageDialog(this, "Inscripción del estudiante "+es.getMatricula() + ": " + es.getNombreCompleto()+" realizada correctamente al curso "+c.getClave() + ": " +c.getNombre() +" con la clave: " + i.getId());
                 }
                 
                 
@@ -902,10 +903,40 @@ public class Ventana_principal extends JFrame {
             // Acción del botón
             btnDeshacer.addActionListener(e -> {
                 try {
-                    fachada.deshacerUltimaAccion();
-                    JOptionPane.showMessageDialog(this,
-                            "Se deshizo la última acción correctamente",
-                            "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    Accion a =fachada.deshacerUltimaAccion();
+                    
+                    if(a.getTipo() == Accion.TipoAccion.BAJA){
+                        if (a.getAniadido()) {
+                            JOptionPane.showMessageDialog(this, "Se reiscribio al estudiante " +a.getEstudiante().getMatricula() + ": " + a.getEstudiante().getNombreCompleto()+" al curso "+ a.getCurso().getClave() +": " + a.getCurso().getNombre() +" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Se deshizo la última inscripcion del estudiante " +a.getEstudiante().getMatricula() + ": " + a.getEstudiante().getNombreCompleto()+" al curso "+ a.getCurso().getClave() +": " + a.getCurso().getNombre() +" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                    if(a.getTipo() == Accion.TipoAccion.CALIFICACION){
+                        JOptionPane.showMessageDialog(this, "Se deshizo la calificacion del estudiante " +a.getEstudiante().getMatricula() + ": " + a.getEstudiante().getNombreCompleto()+" en el curso "+ a.getCurso().getClave() +": " + a.getCurso().getNombre() +" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    if(a.getTipo() == Accion.TipoAccion.INSCRIPCION){
+                        if (a.getAniadido()) {
+                            JOptionPane.showMessageDialog(this, "Se deshizo la última inscripcion del estudiante " +a.getEstudiante().getMatricula() + ": " + a.getEstudiante().getNombreCompleto()+" al curso "+ a.getCurso().getClave() +": " + a.getCurso().getNombre() +" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Se reiscribio al estudiante " +a.getEstudiante().getMatricula() + ": " + a.getEstudiante().getNombreCompleto()+" al curso "+ a.getCurso().getClave() +": " + a.getCurso().getNombre() +" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                    if(a.getTipo() == Accion.TipoAccion.REGISTRO){
+                        if(a.getAniadido()){
+                            if(a.getEstudiante() != null){
+                                JOptionPane.showMessageDialog(this, "Se deshizo el último registro del estudiante " + a.getEstudiante().getNombreCompleto()  +" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            }else{
+                                JOptionPane.showMessageDialog(this, "Se deshizo el último registro del curso "+a.getCurso().getNombre()+" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }else{
+                            if (a.getEstudiante() != null) {
+                                JOptionPane.showMessageDialog(this, "Se deshizo la última eliminacion del estudiante " + a.getEstudiante().getNombreCompleto()  +" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Se deshizo la última eliminacion del curso "+a.getCurso().getNombre()+" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                        }
+                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this,
                             "No se pudo deshacer la acción: " + ex.getMessage(),

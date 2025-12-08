@@ -4,10 +4,8 @@
  */
 package Persistencia;
 
-import EstructuraDatos.ArbolBinarioBusqueda;
 import EstructuraDatos.Diccionario;
 import EstructuraDatos.ListaEnlazadaSimple;
-import ObjetosNegocio.Accion;
 import ObjetosNegocio.Curso;
 /**
  * 
@@ -17,7 +15,6 @@ import ObjetosNegocio.Curso;
  */
 public class RegistroCursos implements Comparable<Curso>{
     private Diccionario<String ,Curso> cursos;
-    RegistroAcciones acciones = new RegistroAcciones();
 
     public RegistroCursos() {
         cursos = new Diccionario<>();
@@ -25,28 +22,10 @@ public class RegistroCursos implements Comparable<Curso>{
 
     public void agregarCurso(Curso curso) {
         cursos.put(curso.getClave(), curso);
-        Accion accion = new Accion(
-                Accion.TipoAccion.REGISTRO,
-                null,
-                curso,
-                null,
-                -1.0,
-                true
-            );
-            acciones.registrarAccion(accion);
     }
     
     public void eliminarCurso(Curso curso) throws Exception{
         cursos.remove(curso.getClave());
-        Accion accion = new Accion(
-                Accion.TipoAccion.REGISTRO,
-                null,
-                curso,
-                null,
-                -1.0,
-                false
-            );
-            acciones.registrarAccion(accion);
     }
 
     public Curso buscarPorClave(String clave) {
