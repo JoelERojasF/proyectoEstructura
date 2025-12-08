@@ -292,6 +292,10 @@ public class Fachada {
         calificaciones.procesarSiguienteSolicitud();
     }
 
+    public SolicitudCalificacion obtenerSigSolicitud() throws Exception{
+        return calificaciones.getSiguienteSolicitud();
+    }
+    
     public void procesarTodasSolicitudes() throws Exception {
         calificaciones.procesarTodasSolicitudes();
     }
@@ -407,6 +411,10 @@ public class Fachada {
         
         calificaciones.registrarSolicitud(s);
         return s;
+    }
+    
+    public Accion obtenerUltimaAccion() throws Exception{
+        return acciones.ultimaAccion();
     }
     
     public Estudiante getEstudianteUltimaAccion() {

@@ -122,6 +122,10 @@ public class RegistroCalificaciones {
         return solicitudes;
     }
     
+    public SolicitudCalificacion getSiguienteSolicitud() throws Exception{
+        if (solicitudes.vacio()) return null;
+        return solicitudes.obtener(0);
+    }
         
     public Estudiante getEstudianteSiguienteSolicitud() {
         if (solicitudes.vacio()) return null;

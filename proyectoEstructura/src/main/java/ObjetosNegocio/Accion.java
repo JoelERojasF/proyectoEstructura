@@ -114,7 +114,7 @@ public class Accion {
             case CALIFICACION:
                 if (calificacionAnterior != null) {
                     if(aniadido){
-                        fachada.RregistrarSolicitudCalificacion(estudiante.getMatricula(), curso.getClave(), calificacionNueva+"");
+                        estudiante.reemplazarCalificacion(calificacionNueva, calificacionAnterior);
                         System.out.println("se reemplazo la calificacion :"+ calificacionAnterior.toString() + " por: " + calificacionNueva);
                     }else{
                         Calificacion c = new Calificacion(calificacionAnterior.getCurso(), calificacionNueva);

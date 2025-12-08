@@ -12,6 +12,8 @@ import Persistencia.Fachada;
 import EstructuraDatos.ListaEnlazadaSimple;
 import ObjetosNegocio.*;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.table.DefaultTableModel;
 
@@ -128,9 +130,21 @@ public class Ventana_principal extends JFrame {
         listaEspera.addActionListener(e -> cambiarPanel(new PanelListaEspera()));
 
         enviarSolicitud.addActionListener(e -> cambiarPanel(new PanelEnviarSolicitud()));
-        procesarSolicitud.addActionListener(e -> cambiarPanel(new PanelProcesarSolicitud()));
+        procesarSolicitud.addActionListener(e -> {
+            try {
+                cambiarPanel(new PanelProcesarSolicitud());
+            } catch (Exception ex) {
+                Logger.getLogger(Ventana_principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
-        deshacerAccion.addActionListener(e -> cambiarPanel(new PanelDeshacerAccion()));
+        deshacerAccion.addActionListener(e -> {
+            try {
+                cambiarPanel(new PanelDeshacerAccion());
+            } catch (Exception ex) {
+                Logger.getLogger(Ventana_principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         listarPromedios.addActionListener(e -> cambiarPanel(new PanelListarPorPromedio()));
         rotarTutor.addActionListener(e -> cambiarPanel(new PanelRotarRol()));
@@ -864,13 +878,28 @@ public class Ventana_principal extends JFrame {
     class PanelProcesarSolicitud extends JPanel {
         private JButton btnProcesar;
         private final Fachada fachada;
+        private JLabel siguiente;
 
-        public PanelProcesarSolicitud() {
+        public PanelProcesarSolicitud() throws Exception {
+            
+            
             fachada = Fachada.getInstancia();
             setLayout(new FlowLayout());
+            SolicitudCalificacion pendiente =fachada.obtenerSigSolicitud();
+            siguiente  = new JLabel("no hay solicitud de calificacion pendiente");
+            
+            if(pendiente != null){
+            siguiente.setText("Solicitud de calificacion : " + 
+                    pendiente.getCalificacion().getCalificacion() +
+                    " en el curso " + pendiente.getCalificacion().getCurso().getClave() +
+                    ": " + pendiente.getCalificacion().getCurso().getNombre() + "para el alumno " 
+                    + pendiente.getEstudiante().getMatricula() + ": " + 
+                    pendiente.getEstudiante().getNombreCompleto());
+            }
 
             btnProcesar = new JButton("Procesar siguiente solicitud");
             add(btnProcesar);
+            add(siguiente);
 
             btnProcesar.addActionListener(e -> {
                 try {
@@ -878,6 +907,17 @@ public class Ventana_principal extends JFrame {
                     JOptionPane.showMessageDialog(this,
                             "Solicitud procesada correctamente",
                             "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    SolicitudCalificacion siguienteS =fachada.obtenerSigSolicitud();
+                    if(siguienteS != null){
+                    siguiente.setText("Solicitud de calificacion : " + 
+                    siguienteS.getCalificacion().getCalificacion() +
+                    " en el curso " + siguienteS.getCalificacion().getCurso().getClave() +
+                    ": " + siguienteS.getCalificacion().getCurso().getNombre() + " para el alumno " 
+                    + siguienteS.getEstudiante().getMatricula() + ": " + 
+                    siguienteS.getEstudiante().getNombreCompleto());
+                    }else{
+                    siguiente.setText("no hay solicitud de calificacion pendiente");
+                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this,
                             "Error al procesar la solicitud: " + ex.getMessage(),
@@ -892,13 +932,52 @@ public class Ventana_principal extends JFrame {
     class PanelDeshacerAccion extends JPanel {
         private JButton btnDeshacer;
         private final Fachada fachada;
-
-        public PanelDeshacerAccion() {
+        private JLabel siguiente;
+        
+        public PanelDeshacerAccion() throws Exception {
             fachada = Fachada.getInstancia();
             setLayout(new FlowLayout());
 
             btnDeshacer = new JButton("Deshacer última acción");
+            siguiente = new JLabel("no hay acciones registradas");
             add(btnDeshacer);
+            add(siguiente);
+            
+            Accion u = fachada.obtenerUltimaAccion();
+            if(u != null){
+                if(u.getTipo() == Accion.TipoAccion.BAJA){
+                        if (u.getAniadido()) {
+                            siguiente.setText("Se elimino al estudiante"  + u.getEstudiante().getMatricula() + ": " + u.getEstudiante().getNombreCompleto()+" al curso "+ u.getCurso().getClave() +": " + u.getCurso().getNombre());
+                        } else {
+                            siguiente.setText("Se inscribion del estudiante " +u.getEstudiante().getMatricula() + ": " + u.getEstudiante().getNombreCompleto()+" al curso "+ u.getCurso().getClave() +": " + u.getCurso().getNombre());
+                        }
+                    }
+                    if(u.getTipo() == Accion.TipoAccion.CALIFICACION){
+                        siguiente.setText("Se registro la calificacion del estudiante " + u.getEstudiante().getMatricula() + ": " + u.getEstudiante().getNombreCompleto() + " en el curso " + u.getCurso().getClave() + ": " + u.getCurso().getNombre());
+                    }
+                    if(u.getTipo() == Accion.TipoAccion.INSCRIPCION){
+                        if (u.getAniadido()) {
+                            siguiente.setText("Se inscribio del estudiante " + u.getEstudiante().getMatricula() + ": " + u.getEstudiante().getNombreCompleto() + " al curso " + u.getCurso().getClave() + ": " + u.getCurso().getNombre());
+                        } else {
+                            siguiente.setText("Se elimino al estudiante " + u.getEstudiante().getMatricula() + ": " + u.getEstudiante().getNombreCompleto() + " al curso " + u.getCurso().getClave() + ": " + u.getCurso().getNombre());
+                        }
+                    }
+                    if(u.getTipo() == Accion.TipoAccion.REGISTRO){
+                        if(u.getAniadido()){
+                            if(u.getEstudiante() != null){
+                                siguiente.setText("Se registro al estudiante " + u.getEstudiante().getNombreCompleto());
+                            }else{
+                                siguiente.setText("Se registro el curso " + u.getCurso().getNombre());
+                            }
+                        }else{
+                            if (u.getEstudiante() != null) {
+                                siguiente.setText("Se elimino al estudiante " + u.getEstudiante().getNombreCompleto() );
+                            } else {
+                                siguiente.setText("Se elimino el curso "+u.getCurso().getNombre());
+                            }
+                        }
+                    }
+            }
 
             // Acción del botón
             btnDeshacer.addActionListener(e -> {
@@ -935,6 +1014,45 @@ public class Ventana_principal extends JFrame {
                             } else {
                                 JOptionPane.showMessageDialog(this, "Se deshizo la última eliminacion del curso "+a.getCurso().getNombre()+" correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                             }
+                        }
+                        
+                        Accion ultima = fachada.obtenerUltimaAccion();
+                        
+                        if(ultima != null){
+                if(ultima.getTipo() == Accion.TipoAccion.BAJA){
+                        if (ultima.getAniadido()) {
+                            siguiente.setText("Se elimino al estudiante"  + ultima.getEstudiante().getMatricula() + ": " + ultima.getEstudiante().getNombreCompleto()+" al curso "+ ultima.getCurso().getClave() +": " + ultima.getCurso().getNombre());
+                        } else {
+                            siguiente.setText("Se inscribion del estudiante " +ultima.getEstudiante().getMatricula() + ": " + ultima.getEstudiante().getNombreCompleto()+" al curso "+ ultima.getCurso().getClave() +": " + ultima.getCurso().getNombre());
+                        }
+                    }
+                    if(ultima.getTipo() == Accion.TipoAccion.CALIFICACION){
+                        siguiente.setText("Se registro la calificacion del estudiante " + ultima.getEstudiante().getMatricula() + ": " + ultima.getEstudiante().getNombreCompleto() + " en el curso " + ultima.getCurso().getClave() + ": " + ultima.getCurso().getNombre());
+                    }
+                    if(ultima.getTipo() == Accion.TipoAccion.INSCRIPCION){
+                        if (ultima.getAniadido()) {
+                            siguiente.setText("Se inscribio del estudiante " + ultima.getEstudiante().getMatricula() + ": " + ultima.getEstudiante().getNombreCompleto() + " al curso " + ultima.getCurso().getClave() + ": " + ultima.getCurso().getNombre());
+                        } else {
+                            siguiente.setText("Se elimino al estudiante " + ultima.getEstudiante().getMatricula() + ": " + ultima.getEstudiante().getNombreCompleto() + " al curso " + ultima.getCurso().getClave() + ": " + ultima.getCurso().getNombre());
+                        }
+                    }
+                    if(ultima.getTipo() == Accion.TipoAccion.REGISTRO){
+                        if(ultima.getAniadido()){
+                            if(ultima.getEstudiante() != null){
+                                siguiente.setText("Se registro al estudiante " + ultima.getEstudiante().getNombreCompleto());
+                            }else{
+                                siguiente.setText("Se registro el curso " + ultima.getCurso().getNombre());
+                            }
+                        }else{
+                            if (ultima.getEstudiante() != null) {
+                                siguiente.setText("Se elimino al estudiante " + ultima.getEstudiante().getNombreCompleto() );
+                            } else {
+                                siguiente.setText("Se elimino el curso "+ultima.getCurso().getNombre());
+                            }
+                        }
+                    }
+                    }else{
+                    siguiente.setText("no hay mas acciones registradas");
                         }
                     }
                 } catch (Exception ex) {

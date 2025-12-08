@@ -55,18 +55,18 @@ public class Estudiante implements Comparable<Estudiante> {
         calificaciones.agregar(calificacion);
     }
     
-    public void reemplazarCalificacion(Double calificacionNueva, Calificacion calificacionAnterior) throws Exception {
-        if (calificaciones == null || calificaciones.vacio()) return;
+    public void reemplazarCalificacion(Double valorViejo, Calificacion nueva) throws Exception {
+    if (calificaciones == null || calificaciones.vacio()) return;
 
-        // Buscar la posición de la calificación nueva
-        int pos = calificaciones.indexOf(calificacionAnterior);
-
-        if (pos != -1) {
-//            try {
-                calificaciones.obtener(pos).setCalificacion(calificacionNueva);
-//            } catch (Exception e) {
-//                System.out.println("Error al reemplazar calificación: " + e.getMessage());
-//            }
+    // Buscar la posición de la calificación con el valor viejo
+    for (int i = 0; i < calificaciones.tamanio(); i++) {
+        Calificacion c = calificaciones.obtener(i);
+            if (c.getCalificacion().equals(valorViejo)) {
+                // Reemplazar por el nuevo objeto
+                calificaciones.eliminar(i);
+                calificaciones.insertar(nueva, i);
+                return;
+            }
         }
     }
 
